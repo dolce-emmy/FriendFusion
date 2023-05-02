@@ -3,20 +3,26 @@ import mongoose from 'mongoose';
 //import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import fileUpload from 'express-fileupload';
+// import fileUpload from 'express-fileupload';
 
 // we will import the routes here
 
 
 // app config
 
-const app = express();
+
 dotenv.config();
-const PORT = process.env.PORT || 4000;
+
+console.log(process.env)
+
+const app = express();
+
+
 
 // middlewares
 app.use(express.json());
 app.use(morgan('dev'));
+
 // app.use(cors({exposedHeaders: ['token']}));
 // app.use(fileUpload({
 //     useTempFiles: true
