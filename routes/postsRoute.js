@@ -1,39 +1,43 @@
 import express from 'express';
-import { getAllPost } from '../controllers/postsController.js';
+import { getAllPosts, getSinglePost, createPost, likePost, updatePost, deletePost } from '../controllers/postsController.js';
 
-const app = express.Router();
-
-
+const router = express.Router();
 
 
-//getAllPOst//
-
-app.get ('/', getAllPost);
 
 
-// for delete post//
-
-app.delete('/:Id',);
+//getAllPost//
+router.get ('/', getAllPosts);
 
 
 //get all single post//
-
-app.post('/:id',);
-
+router.post('/:id', getSinglePost);
 
 // for new post//
+router.post('/', createPost );
 
-app.post('/', );
-
-// update post//
-
-
-app.patch('/:id', );
 
 //like post //
 
+//here we want to update the post with the like button so we will use patch method//
+// we will use the id of post to like the post//
+router.patch('/:id/like', likePost);
 
-app.get('/:id',);
+// update post//
+router.patch('/:id', updatePost );
+
+// for delete post//
+router.delete('/:Id', deletePost );
+
+export default router;
+
+
+
+
+
+
+
+
 
 
 

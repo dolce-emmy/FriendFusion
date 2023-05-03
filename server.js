@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import usersRoute from "./routes/usersRoute.js"
+import postsRoute from "./routes/postsRoute.js"
 // import fileUpload from 'express-fileupload';
 
 // we will import the routes here
@@ -41,6 +42,8 @@ mongoose
 // routes
 
 app.use("/users", usersRoute)
+
+app.use("/posts", postsRoute);
 
 
 // listen

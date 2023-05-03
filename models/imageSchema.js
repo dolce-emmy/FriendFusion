@@ -6,7 +6,7 @@ const imageSchema = new Schema({
     fileSize: Number,
     filePath: String,
     contentType: String,
-    userId: {typeof: Schema.Types.ObjectId, ref: 'User'},
+    userId: {type: Schema.Types.ObjectId, ref: 'User'},
 
 
 })
