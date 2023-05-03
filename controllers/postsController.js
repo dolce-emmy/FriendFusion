@@ -46,15 +46,18 @@ export const likePost = async (req, res) => {
 
         const post = await PostCollection.findById(postId);
 
+        // here I am checking if the user has already liked the post or not
+        // if the user has not liked the post then I will add the user to the likes array
+        // if the user has already liked the post then I will remove the user from the likes array
+        // here I am using the includes method to check if the user is already in the likes array or not
         if(!post.likes.includes(userId)){
-            await post.update({$push: {likes: userId}});
-            res.status(200).json({success: true, message: "Post has been liked"});
-        }else{
+          post.likes.push(userId)
+        } else {
 
-            // here I am removing the user from the likes array
-            await post.update({$pull: {likes: userId}});
-            res.status(200).json({success: true, message: "Post has been disliked"});
+           post.likes = post.likes.filter(user => user !== userId)
         }
+           
+        post.save()
        
     }catch(error) {
         res.status(500).json({ message: error.message });

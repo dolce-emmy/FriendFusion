@@ -8,7 +8,7 @@ const postSchema = new Schema({
     userId: {type: Schema.Types.ObjectId, ref: 'User'},
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
     // here I am using the userId as the reference to the user who liked the post
-   likes: [],
+   likes: [{type: Schema.Types.ObjectId, ref:'User'}],
     picturePath: [{type: Schema.Types.ObjectId, ref: 'Image'}],
    
 

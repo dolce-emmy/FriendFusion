@@ -21,7 +21,7 @@ router.post('/', createPost );
 
 //here we want to update the post with the like button so we will use patch method//
 // we will use the id of post to like the post//
-router.patch('/:id/like', likePost);
+router.post('/:id/like', likePost);
 
 // update post//
 router.patch('/:id', updatePost );
