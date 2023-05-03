@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 //import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import usersRoute from "./routes/usersRoute"
+import usersRoute from "./routes/usersRoute.js"
 // import fileUpload from 'express-fileupload';
 
 // we will import the routes here

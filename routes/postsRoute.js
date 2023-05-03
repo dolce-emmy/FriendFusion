@@ -1,9 +1,14 @@
+import express from 'express';
+import { getAllPost } from '../controllers/postsController.js';
+
+const app = express.Router();
+
 
 
 
 //getAllPOst//
 
-app.get ('/',);
+app.get ('/', getAllPost);
 
 
 // for delete post//
