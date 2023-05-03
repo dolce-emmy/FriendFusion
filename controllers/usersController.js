@@ -11,14 +11,14 @@ export const registerUser = async (req, res) => {
         res.status(201).json({success: true, data: user});
 
     } catch (error) {
-        res.status(400).json({success: false, error: error.message});
+        res.status(500).json({success: false, error: error.message});
     }
 };
 
 export const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await UserCollection.findOne({ email });
+        const user = await UserCollection.findOne({ email:email });
         if (user) {
             const verifyPassword = bcrypt.compareSync(password, user.password);
             if (verifyPassword) {
@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
             res.status(400).json({ success: false, message: "Invalid email" });
         }
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
@@ -50,7 +50,7 @@ export const getAllUsers = async (req, res) => {
         const users = await UserCollection.find();
         res.status(200).json({success: true, data: users});
     } catch (error) {
-        res.status(404).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -68,7 +68,7 @@ export const getSingleUser = async (req, res) => {
             res.status(404).json({success: false, message: "User not found"});
         }
     } catch (error) {
-        res.status(404).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -82,7 +82,7 @@ export const updateUser = async (req, res) => {
         );
         res.json({success: true, data: updateUser});
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -92,7 +92,7 @@ export const deleteUser = async (req, res) => {
         const deletedUser = await UserCollection.findByIdAndDelete(id);
         res.json({ success: true, data: deletedUser });
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -124,7 +124,7 @@ export const addFriend = async (req, res) => {
          }
              
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -150,7 +150,7 @@ export const removeFriend = async (req, res) => {
             }
         }
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -164,7 +164,7 @@ export const getUserFriends = async (req, res) => {
             res.status(200).json({success: true, data: user.friends});
         }
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 
@@ -180,7 +180,7 @@ export const searchUsers = async (req, res) => {
         });
         res.status(200).json({success: true, data: users});
     } catch (error) {
-        res.status(400).json({success: false, message: error.message});
+        res.status(500).json({success: false, message: error.message});
     }
 };
 

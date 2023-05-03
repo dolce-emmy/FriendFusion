@@ -54,10 +54,12 @@ export const likePost = async (req, res) => {
           post.likes.push(userId)
         } else {
 
-           post.likes = post.likes.filter(user => user !== userId)
+           post.likes = post.likes.filter(user => user.toString() !== userId)
         }
-           
+        // here I am saving the post after updating the likes array so that the changes are reflected in the database
+         
         post.save()
+        res.status(200).json({success:true, data: post})
        
     }catch(error) {
         res.status(500).json({ message: error.message });
@@ -89,7 +91,12 @@ export const likePost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     const updatedPost = await PostCollection.findById(req.params.id);
-    if (updatedPost.userId === req.body.userId) {
+
+    // here I am checking if the user is the owner of the post or not and if the user is the owner of the post then I will update the post
+    // if the user is not the owner of the post then I will send a message that the user can only update his/her post
+    // here I am using the toString() method to convert the userId to string because the userId is an object
+    // and the updatedPost.userId is a string so we need to convert the userId to string so that we can compare them
+    if (updatedPost.userId === req.body.userId.toString()) {
       await updatedPost.updateOne({ $set: req.body });
       res.status(200).json({ message: "Post has been updated" });
     } else {
@@ -104,7 +111,14 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const deletedPost = await PostCollection.findById(req.params.id);
-    if (deletedPost.userId === req.body.userId) {
+
+    // here I am checking if the user is the owner of the post or not
+    // if the user is the owner of the post then I will delete the post from the database
+    // if the user is not the owner of the post then I will send a message that the user can only delete his/her post
+    // here I am using the toString() method to convert the userId to string because the userId is an object
+    // and the deletedPost.userId is a string so we need to convert the userId to string so that we can compare them
+
+    if (deletedPost.userId === req.body.userId.toString()) {
       await deletedPost.deleteOne();
       res.status(200).json({ message: "Post has been deleted" });
     } else {
