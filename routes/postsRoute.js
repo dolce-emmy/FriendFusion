@@ -19,8 +19,6 @@ router.post('/', createPost );
 
 //like post //
 
-
-
 router.post('/:id/like', likePost);
 
 // update post//
