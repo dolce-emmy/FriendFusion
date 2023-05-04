@@ -95,6 +95,9 @@ export const updatePost = async (req, res) => {
       const user = req.body.userId
     const updatedPost = await PostCollection.findById(req.params.id);
     
+    // here I am checking if the user is the same user who created the post or not
+    // if the user is the same user who created the post then I will update the post
+    // if the user is not the same user who created the post then I will send a message that the user can only update his own post
     
     if (updatedPost.userId.toString() === user) {
 
