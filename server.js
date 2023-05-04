@@ -3,8 +3,12 @@ import mongoose from 'mongoose';
 //import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import usersRoute from "./routes/usersRoute"
+import usersRoute from "./routes/usersRoute.js"
+import postsRoute from "./routes/postsRoute.js"
 // import fileUpload from 'express-fileupload';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './docs/swagger.json' assert {type:"json"};
+
 
 // we will import the routes here
 
@@ -18,6 +22,7 @@ console.log(process.env)
 
 const app = express();
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // middlewares
@@ -41,6 +46,8 @@ mongoose
 // routes
 
 app.use("/users", usersRoute)
+
+app.use("/posts", postsRoute);
 
 
 // listen

@@ -2,12 +2,14 @@ import {Schema, model} from 'mongoose';
 
 const postSchema = new Schema({
 
-    description: String,
-    userId: {typeof: Schema.Types.ObjectId, ref: 'User'},
-    comments: [{typeof: Schema.Types.ObjectId, ref: 'Comment'}],
+    description: {
+        type:String
+    },
+    userId: {type: Schema.Types.ObjectId, ref: 'User'},
+    comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
     // here I am using the userId as the reference to the user who liked the post
-   likes: [{typeof: Schema.Types.ObjectId, ref: 'userId'}],
-    picturePath: [{typeof: Schema.Types.ObjectId, ref: 'Image'}],
+   likes: [{type: Schema.Types.ObjectId, ref:'User'}],
+    picturePath: [{type: Schema.Types.ObjectId, ref: 'Image'}],
    
 
 },

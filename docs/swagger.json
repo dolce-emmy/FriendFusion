@@ -1,0 +1,265 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Friend Fusion - OpenAPI 3.0",
+    "description": "Friend Fusion Final DCI project created bz ....."
+},
+  "servers": [
+    {
+      "url": "http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "post",
+      "description": "All about the posts"
+    },
+    {
+      "name": "comment",
+      "description": "All the comments for the posts"
+    },
+    {
+      "name": "image",
+      "description": "Operations on image"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "tags": ["post"],
+        "summary": "Find all the posts",
+        "description": "Returns all the posts",
+        "operationId": "getAllPosts",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Invalid ID supplied or invalid permissions."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "petstore_auth": ["write:pets", "read:pets"]
+          }
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": ["post"],
+        "summary": "Find post by id",
+        "description": "Returns the post",
+        "operationId": "getSinglePost ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "get post by id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["post"],
+        "summary": "Updates a post",
+        "description": "Updates the post from these values",
+        "operationId": "updatePost",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of post that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existent post",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "You can only update your post"
+          },
+          "500": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": ["write:pets", "read:pets"]
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["post"],
+        "summary": "Deletes a post",
+        "description": "delete a post",
+        "operationId": "deletePost",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post id to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "You can only delete your post"
+          },
+          "500": {
+            "description": "Invalid Operation"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Long text of a post",
+            "description": "Long text related to a post"
+          },
+          "userId": {
+            "type": "string",
+            "example": "32894u83247z98IUHEUKDFHwiue",
+            "description": "Mongo Id of a registered user"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['32784624ieuZUEHGjk',''327842648iughjhajsd]",
+            "description": "contains list of comment ids which are added bz a user"
+          },
+          "likes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "[]",
+            "description": "list of users who liked the post"
+          },
+
+          "picturePath": {
+            "type": "array",
+            "example": "/path/to/file/location/image.png",
+            "description": "file path or the location of picture of the post"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "fileSize": {
+            "type": "string"
+          },
+          "filePath": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "picturePath": {
+            "type": "array",
+            "example": "/path/to/file/location/image.png",
+            "description": "file path or the location of picture of the post"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      }
+    }
+  }
+}

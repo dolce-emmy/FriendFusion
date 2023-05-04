@@ -7,3 +7,9 @@ git push origin branchname
 5- on the github we make a pull request from your branch to dev branch
 6- Mohammed will merge the pull request and delete that branch in the github.
 7- start again from the first step
+
+
+
+### to kill terminal
+
+npx kill-port 4000

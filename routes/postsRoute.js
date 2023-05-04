@@ -1,34 +1,45 @@
+import express from 'express';
+import { getAllPosts, getSinglePost, createPost, likePost, updatePost, deletePost } from '../controllers/postsController.js';
+
+const router = express.Router();
 
 
 
-//getAllPOst//
 
-app.get ('/',);
-
-
-// for delete post//
-
-app.delete('/:Id',);
+//getAllPost//
+router.get ('/', getAllPosts);
 
 
 //get all single post//
-
-app.post('/:id',);
-
+router.get('/:id', getSinglePost);
 
 // for new post//
+router.post('/', createPost );
 
-app.post('/', );
-
-// update post//
-
-
-app.patch('/:id', );
 
 //like post //
 
+router.post('/:id/like', likePost);
 
-app.get('/:id',);
+// update post//
+router.patch('/:id', updatePost );
+
+// for delete post//
+router.delete('/:id', deletePost );
+
+export default router;
+
+
+
+
+/// /post/id  - delete
+// /post/id - patch
+
+
+
+
+
+
 
 
 
