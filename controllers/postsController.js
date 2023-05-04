@@ -1,5 +1,5 @@
 import PostCollection from "../models/postSchema.js";
-import UserCollection from "../models/userSchema.js";
+
 
 
 // getAllPost//
@@ -88,43 +88,45 @@ export const likePost = async (req, res) => {
 // }
 
 // for update post//
+
+
 export const updatePost = async (req, res) => {
   try {
+      const user = req.body.userId
     const updatedPost = await PostCollection.findById(req.params.id);
+    
+    
+    if (updatedPost.userId.toString() === user) {
 
-    // here I am checking if the user is the owner of the post or not and if the user is the owner of the post then I will update the post
-    // if the user is not the owner of the post then I will send a message that the user can only update his/her post
-    // here I am using the toString() method to convert the userId to string because the userId is an object
-    // and the updatedPost.userId is a string so we need to convert the userId to string so that we can compare them
-    if (updatedPost.userId === req.body.userId.toString()) {
+      
+
       await updatedPost.updateOne({ $set: req.body });
-      res.status(200).json({ message: "Post has been updated" });
+      res.status(200).json({success: true, message: "Post has been updated"});
     } else {
-      res.status(403).json({ message: "You can only update your post" });
+
+      res.status(403).json({success: false, message: "You can update only your post" });
     }
-  } catch (error) {
-    res.status(500).json({success: false, message: error.message });
-  }
-};
+
+    }catch(error) {
+      res.status(500).json({success: false, message: error.message });
+    }
+  };
+  
+
+
 
 // for delete post//
 export const deletePost = async (req, res) => {
   try {
-    const deletedPost = await PostCollection.findById(req.params.id);
-
-    // here I am checking if the user is the owner of the post or not
-    // if the user is the owner of the post then I will delete the post from the database
-    // if the user is not the owner of the post then I will send a message that the user can only delete his/her post
-    // here I am using the toString() method to convert the userId to string because the userId is an object
-    // and the deletedPost.userId is a string so we need to convert the userId to string so that we can compare them
-
-    if (deletedPost.userId === req.body.userId.toString()) {
-      await deletedPost.deleteOne();
-      res.status(200).json({ message: "Post has been deleted" });
+    const user = req.body.userId
+    const deletePost = await PostCollection.findById(req.params.id);
+    if (deletePost.userId.toString() === user) {
+      await deletePost.deleteOne();
+      res.status(200).json({success: true, message: "Post has been deleted" });
     } else {
-      res.status(403).json({ message: "You can only delete your post" });
+      res.status(403).json({success: false, message: "You can delete only your post" });
     }
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
-};
+}
