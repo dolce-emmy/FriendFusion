@@ -3,8 +3,12 @@ import mongoose from 'mongoose';
 //import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import usersRoute from "./routes/usersRoute.js"
+
 import postsRoute from "./routes/postsRoute.js"
+import commentsRoute from "./routes/commentsRoute.js"
+
+import usersRoute from "./routes/usersRoute.js"
+
 // import fileUpload from 'express-fileupload';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/swagger.json' assert {type:"json"};
@@ -48,6 +52,11 @@ mongoose
 app.use("/users", usersRoute)
 
 app.use("/posts", postsRoute);
+
+
+
+app.use("/posts")
+app.use("/comments")
 
 
 // listen
