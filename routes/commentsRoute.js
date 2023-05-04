@@ -1,36 +1,30 @@
-
 import express from "express";
+const router = express.Router();
+import {
+  getAllComments,
+  getSingleCommentById,
+  createComment,
+  updateCommentById,
+  deleteCommentById,
+  replyComment,
+} from "../controllers/commentsController.js";
 
-const router= express.Router ();
-// get all comments
+//GET all comments
+router.get("/", getAllComments);
 
+//GET to get a single comment
+router.get("/:id", getSingleCommentById);
 
+//POST to add a new comment
+router.post("/:postId", createComment);
 
-router.get('/', );
+//PATCH to update a single comment
+router.patch("/:id", updateCommentById);
 
+//DELETE to delete a single comment
+router.delete("/:id", deleteCommentById);
 
-// get single comment
+//POST to reply to comment
+router.post("/reply/:commentId", replyComment);
 
-router.get('/:id',);
-
-
-// create new comments
-
-router.post('/', );
-
-
-//update comments
-
-router.put('/:id',);
-
-// delete comments
-
-
-router.delete ('/:id',);
-
-
-
-
-
-
-export default router
+export default router;
