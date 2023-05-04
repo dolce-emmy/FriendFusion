@@ -1,15 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
-//import cors from 'cors';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-
+import cloudinary from 'cloudinary';
 import postsRoute from "./routes/postsRoute.js"
 import commentsRoute from "./routes/commentsRoute.js"
+import imagesRoute from "./routes/imagesRoute.js"
 
 import usersRoute from "./routes/usersRoute.js"
 
-// import fileUpload from 'express-fileupload';
+import fileUpload from 'express-fileupload';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/swagger.json' assert {type:"json"};
 
@@ -33,10 +34,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(morgan('dev'));
 
-// app.use(cors({exposedHeaders: ['token']}));
-// app.use(fileUpload({
-//     useTempFiles: true
-// }));
+app.use(cors({exposedHeaders: ['token']}));
+app.use(fileUpload({
+    useTempFiles: true
+}));
 
 mongoose
 .connect(process.env.MONGODB_URI)
@@ -47,11 +48,22 @@ mongoose
     console.log(err);
 });
 
+// Configuration 
+cloudinary.v2.config({
+  cloud_name: "dwy0uq9ax",
+  api_key: "293539981143343",
+  api_secret: "XMyUweAUHXc5khN5HQBEw-4m6jw"
+});
+
+
 // routes
 
 app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
 app.use("/comments", commentsRoute);
+app.use("/images", imagesRoute);
+
+
 
 
 // listen
