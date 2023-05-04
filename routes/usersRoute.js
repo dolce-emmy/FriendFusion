@@ -1,4 +1,6 @@
 import express from 'express';
+import { auth } from '../middlewares/auth.js';
+import { rules } from '../middlewares/validators.js';
 import {
     deleteUser,
     getAllUsers,
@@ -16,37 +18,37 @@ import {
 const router = express.Router();
 
 // users/register
-router.post('/register', registerUser);
+router.post('/register', auth, rules, registerUser);
 
 // users/login
 router.post('/login', loginUser);
 
 // getAllUsers
-router.get('/', getAllUsers);
+router.get('/', auth, getAllUsers);
 
 // get request "users/:id/friends/:id"
 
-router.get('/getUserFriends/:id', getUserFriends);
+router.get('/getUserFriends/:id', auth, getUserFriends);
 
 // post request add users/:id/friends
-router.post('/addFriend/:id', addFriend);
+router.post('/addFriend/:id', auth, addFriend);
 
 //
-router.delete('/removeFriend/:id', removeFriend);
+router.delete('/removeFriend/:id', auth, removeFriend);
 
 // get SingleUser
-router.get('/:id', getSingleUser);
+router.get('/:id', auth, getSingleUser);
 
 // update singleUser
-router.patch('/:id', updateUser);
+router.patch('/:id', auth, updateUser);
 
 // delete singleUser
-router.delete('/:id', deleteUser);
+router.delete('/:id', auth, deleteUser);
 
 // get refreshPage
-router.get('/refreshPage', refreshPage);
+router.get('/refreshPage', auth, refreshPage);
 
 // get searchUsers
-router.get('/searchUsers/:searchTerm', searchUsers);
+router.get('/searchUsers/:searchTerm', auth, searchUsers);
 
 export default router;
