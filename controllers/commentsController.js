@@ -73,7 +73,7 @@ export const deleteCommentById = async (req, res) => {
 // reply comment by Id
 export const replyCommentById = async (req, res) => {
   try {
-    const { commentId } = req.params;
+    const { id } = req.params;
     const { content, replies } = req.body;
     const { _id } = req.user;
     const createdComment = await CommentCollection.create({
@@ -83,7 +83,7 @@ export const replyCommentById = async (req, res) => {
     });
 
     if (createdComment) {
-      const comment = await CommentCollection.findById(commentId);
+      const comment = await CommentCollection.findById(id);
       if (comment.replies) {
         comment.replies.push(createdComment);
       } else {

@@ -6,7 +6,7 @@ import {
   createComment,
   updateCommentById,
   deleteCommentById,
-  replyComment,
+  replyCommentById,
 } from "../controllers/commentsController.js";
 
 //GET all comments
@@ -25,6 +25,6 @@ router.patch("/:id", updateCommentById);
 router.delete("/:id", deleteCommentById);
 
 //POST to reply to comment
-router.post("/reply/:commentId", replyComment);
+router.post("/:id/reply", replyCommentById);
 
 export default router;
