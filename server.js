@@ -49,14 +49,9 @@ mongoose
 
 // routes
 
-app.use("/users", usersRoute)
-
+app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
-
-
-
-app.use("/posts")
-app.use("/comments")
+app.use("/comments", commentsRoute);
 
 
 // listen
