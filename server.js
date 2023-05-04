@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 //import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import postsRoute from "./routes/postsRoute.js"
+import commentsRoute from "./routes/commentsRoute.js"
 // import fileUpload from 'express-fileupload';
 
 // we will import the routes here
@@ -38,6 +40,11 @@ mongoose
 });
 
 // routes
+
+
+
+app.use("/posts")
+app.use("/comments")
 
 
 // listen
