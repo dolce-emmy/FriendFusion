@@ -2,14 +2,12 @@ import {Schema, model} from 'mongoose';
 
 const imageSchema = new Schema({
 
-    fileName: String,
-    fileSize: Number,
-    filePath: String,
+    name: String,
+    size: Number,
+    url: String,
     contentType: String,
     userId: {type: Schema.Types.ObjectId, ref: 'User'},
-
-
-})
+}, {timestamps: true})
 
 const ImageCollection = model('Image', imageSchema);
 

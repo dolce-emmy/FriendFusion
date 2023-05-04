@@ -1,31 +1,52 @@
-import ImageCollection from "../models/imageSchema.js";
+import ImageCollection from '../models/imageSchema.js';
+import cloudinary from 'cloudinary';
 
 // get single image by Id
 export const getSingleImageById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const images = await ImageCollection.findById(id);
+    try {
+        const { id } = req.params;
+        const images = await ImageCollection.findById(id);
 
-    res.status(200).json({ success: true, data: images });
-  } catch (err) {
-    res.status(404).json({ success: false, message: err.message });
-  }
+        res.status(200).json({ success: true, data: images });
+    } catch (err) {
+        res.status(404).json({ success: false, message: err.message });
+    }
 };
 
-// create a new image
+// upload image
+
 export const createImage = async (req, res) => {
-  try {
-    const { fileName, fileSize, filePath, contentType } = req.body;
-    const { _id } = req.user;
-    const createdImage = await ImageCollection.create({
-      fileName,
-      fileSize,
-      filePath,
-      contentType,
-      userId: _id,
-    });
-    res.status(201).json({ success: true, data: createdImage });
-  } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
-  }
+  const { file } = req.files;
+  const fileName = new Date().getTime() + '-' + file.name;
+  const contentType = file.mimetype //'image/png'
+  const extension = contentType.split('/')[1] // 'png'
+  // 123454321234-new-size.png => extension
+  const fileNameWithoutExtension= fileName.replace('.'+extension ,'')
+
+  // console.log
+    const result = cloudinary.v2.uploader.upload(
+        file.tempFilePath,
+        // 123454321234-new-size.png
+        { public_id: fileNameWithoutExtension }
+    );
+
+    result
+        .then(async (data) => {
+            //console.log(data);
+            // console.log(data.secure_url);
+            const createdImage = await ImageCollection.create({
+              name:fileName,
+              size: data.bytes,
+              url: data.secure_url,
+              contentType: data.format,
+              // userId: req.user._id,
+          });
+
+          res.status(201).json({ success: true, data: createdImage });
+        })
+        .catch((err) => {
+            res.status(400).json({ success: false, message: err.message });
+        });
+
+    // res.status(500).json({ success: false, message: "Something went wrong" });
 };
