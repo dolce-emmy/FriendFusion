@@ -50,9 +50,9 @@ mongoose
 
 // Configuration 
 cloudinary.v2.config({
-  cloud_name: "dwy0uq9ax",
-  api_key: "293539981143343",
-  api_secret: "XMyUweAUHXc5khN5HQBEw-4m6jw"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 
