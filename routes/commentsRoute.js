@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import {
   getAllComments,
+  getAllCommentsByIds,
   getSingleCommentById,
   createComment,
   updateCommentById,
@@ -12,6 +13,8 @@ import { auth } from "../middlewares/auth.js";
 
 //GET all comments
 router.get("/", getAllComments);
+
+router.post("/", getAllCommentsByIds);
 
 //GET to get a single comment
 router.get("/:id", getSingleCommentById);
@@ -26,6 +29,6 @@ router.patch("/:id", updateCommentById);
 router.delete("/:id", deleteCommentById);
 
 //POST to reply to comment
-router.post("/:id/reply", replyCommentById);
+router.post("/:id/reply", auth, replyCommentById);
 
 export default router;

@@ -12,6 +12,17 @@ export const getAllComments = async (req, res) => {
   }
 };
 
+export const getAllCommentsByIds = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    const comments = await CommentCollection.find({_id: {$in: ids}});
+
+    res.status(200).json({ success: true, data: comments });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+}
+
 // get single comment by Id
 export const getSingleCommentById = async (req, res) => {
   try {
@@ -30,6 +41,9 @@ export const createComment = async (req, res) => {
     const { postId } = req.params;
     const { content } = req.body;
     const { _id } = req.user;
+    
+
+    
     const createdComment = await CommentCollection.create({
       content,
       user: _id,
