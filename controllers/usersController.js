@@ -16,34 +16,31 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        const user = await UserCollection.findOne({ email:email });
-        if (user) {
-            const verifyPassword = bcrypt.compareSync(password, user.password);
-            if (verifyPassword) {
-                const token = jwt.sign(
-                    {_id: user._id, email: user.email},
-                    process.env.JWT_SECRET,
-                    {expiresIn: "1h"}
-                );
-                res.header('auth-token', token).json({
-                    success: true,
-                    data: user,
-                });
-            } else {
-                res.status(400).json({
-                    success: false,
-                    message: "Invalid password",
-                });
-            }
-        } else {
-            res.status(400).json({ success: false, message: "Invalid email" });
-        }
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+  try {
+    const { email, password } = req.body;
+    const user = await UserCollection.findOne({ email });
+    if (user) {
+      const verifyPassword = bcrypt.compareSync(password, user.password);
+      if (verifyPassword) {
+        const token = jwt.sign(
+          { id: user._id, email: user.email },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
+        );
+        res.header("token", token).json({ success: true, data: user });
+      } else {
+        res.status(403).json({
+          success: false,
+          data: "Invalid password",
+        });
+      }
+    } else {
+      res.status(403).json({ success: false, data: "Invalid email" });
     }
-};
+  } catch (error) {
+    res.status(500).json({ success: false, data: error.message });
+  }
+}
 
 export const getAllUsers = async (req, res) => {
     try {

@@ -11,6 +11,10 @@ export const auth = async (req, res, next) => {
 
         const user = await UserCollection.findById(payload.id)
 
+        if (!user) {
+          return res.status(401).json({ success: false, data: "unauthorized" });
+        }
+
         req.user = user;
 
         next();
