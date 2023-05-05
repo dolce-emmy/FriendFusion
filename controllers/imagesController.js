@@ -16,6 +16,8 @@ export const getSingleImageById = async (req, res) => {
 // upload image
 
 export const createImage = async (req, res) => {
+// logic to add more than one file
+
   const { file } = req.files;
   const fileName = new Date().getTime() + '-' + file.name;
   const contentType = file.mimetype //'image/png'
@@ -41,7 +43,7 @@ export const createImage = async (req, res) => {
               contentType: data.format,
               // userId: req.user._id,
           });
-
+    
           res.status(201).json({ success: true, data: createdImage });
         })
         .catch((err) => {
