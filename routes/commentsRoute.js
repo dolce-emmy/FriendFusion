@@ -8,6 +8,7 @@ import {
   deleteCommentById,
   replyCommentById,
 } from "../controllers/commentsController.js";
+import { auth } from "../middlewares/auth.js";
 
 //GET all comments
 router.get("/", getAllComments);
@@ -16,7 +17,7 @@ router.get("/", getAllComments);
 router.get("/:id", getSingleCommentById);
 
 //POST to add a new comment
-router.post("/:postId", createComment);
+router.post("/:postId", auth, createComment);
 
 //PATCH to update a single comment
 router.patch("/:id", updateCommentById);
