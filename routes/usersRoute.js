@@ -18,7 +18,7 @@ import {
 const router = express.Router();
 
 // users/register
-router.post('/register', auth, rules, registerUser);
+router.post('/register', rules, registerUser);
 
 // users/login
 router.post('/login', loginUser);
@@ -46,7 +46,7 @@ router.patch('/:id', auth, updateUser);
 router.delete('/:id', auth, deleteUser);
 
 // get refreshPage
-router.get('/refreshPage', auth, refreshPage);
+router.post('/refreshPage', auth, refreshPage);
 
 // get searchUsers
 router.get('/searchUsers/:searchTerm', auth, searchUsers);
