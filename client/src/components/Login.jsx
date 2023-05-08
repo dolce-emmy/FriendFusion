@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 // import { MyContext } from '../context/ContextContainer';
 function Login() {
