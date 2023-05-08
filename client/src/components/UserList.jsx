@@ -1,7 +1,10 @@
+//import { useContext } from "react";
+import {AppContext} from "../context/AppContext"
 import { useAppContext } from "../context/AppContext";
 
  const UserList = () => {
-    const {users} = useAppContext();
+    //const {users} = useContext(AppContext);
+    const {users} = useAppContext(AppContext);
   return (
     <div>
       User List

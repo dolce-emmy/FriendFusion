@@ -1,5 +1,5 @@
 import './App.css'
-import FriendList from './components/FriendList'
+// import FriendList from './components/FriendList'
 import UserList from "./components/UserList"
 import AppContextProvider from './context/AppContext'
 
@@ -14,7 +14,7 @@ function App() {
     <AppContextProvider>
     <Title/>
     <UserList />
-    <FriendList/>
+    {/* <FriendList/> */}
     </AppContextProvider>
   )
 }

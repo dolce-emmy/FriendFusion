@@ -8,10 +8,12 @@ export default function AppContextProvider({ children }) {
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    api.get("/users").then((res) => {
-      console.log(res.data.data);
-      setUsers(res.data.data);
-    });
+    api
+      .get("/users")
+      .then((res) => {
+        console.log(res.data.data)
+        setUsers(res.data.data);
+      });
   }, []);
 
   console.log(children);
@@ -27,5 +29,14 @@ AppContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const useAppContext = () => useContext(AppContext);
+
+// export const useAppContext = () => {
+// const {users} = useContext(AppContext);
+
+// return users;
+// }
+
+export const useAppContext = () => 
+ useContext(AppContext);
+
 
