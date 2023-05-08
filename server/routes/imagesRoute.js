@@ -12,6 +12,7 @@ router.get("/:id", getSingleImageById);
 //POST to add a new Image
 router.post("/", createImage);
 
+
 // post to add multiple images
 router.post("/multiple", createMultipleImages);
 

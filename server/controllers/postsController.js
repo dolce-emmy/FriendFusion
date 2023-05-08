@@ -67,6 +67,11 @@ export const likePost = async (req, res) => {
 }
 
 
+// to upload image to post//
+
+
+
+
 // export const likePost = async (req, res) => {
 //     try {
 //         const post = await PostCollection.findById(req.params.id);
