@@ -16,6 +16,9 @@ router.get('/:id', getSinglePost);
 // for new post//
 router.post('/', createPost );
 
+// for uploading image to post//
+
+
 
 //like post //
 
