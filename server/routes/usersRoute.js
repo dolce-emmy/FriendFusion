@@ -24,7 +24,7 @@ router.post('/register', rules, registerUser);
 router.post('/login', loginUser);
 
 // getAllUsers
-router.get('/', auth, getAllUsers);
+router.get('/', getAllUsers);
 
 // get request "users/:id/friends/:id"
 

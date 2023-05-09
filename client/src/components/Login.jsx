@@ -1,8 +1,16 @@
+import axios from 'axios';
+import {AppContext} from "../context/AppContext"
+import { useAppContext } from "../context/AppContext";
 import { useState } from 'react';
 // import { MyContext } from '../context/ContextContainer';
 function Login() {
+
+  
+
  const [username, setUsername] = useState('');
 //   const { username, setUsername } = useContext(MyContext);
+const {setUsers} = useAppContext(AppContext);
+
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
