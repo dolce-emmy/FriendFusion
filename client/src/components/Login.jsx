@@ -1,27 +1,41 @@
-import axios from 'axios';
-import {AppContext} from "../context/AppContext"
+import api from "../api";
 import { useAppContext } from "../context/AppContext";
 import { useState } from 'react';
-// import { MyContext } from '../context/ContextContainer';
+import { useNavigate } from "react-router-dom";
+
 function Login() {
-
-  
-
- const [username, setUsername] = useState('');
-//   const { username, setUsername } = useContext(MyContext);
-const {setUsers} = useAppContext(AppContext);
-
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  
+  const {setUser} = useAppContext();
+
   const handleLoginSubmit = (event) => {
     event.preventDefault();
-   api.post('/users/login', JSON.stringyfy({email: event.target.email.value, password: event.target.password.value}))
+
+    api.post('/users/login', JSON.stringify({ email: event.target.email.value, password: event.target.password.value }))
+      .then((res) => {
+        if(res.data.success){
+          console.log(res.data);
+          const token = res.headers.token;
+          console.log({token})
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(res.data.data));
+          setUser(res.data.data);
+          navigate('/');
+        } else {
+          prompt(res.data.message);
+        }
+      });
+  };
 
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();
   };
+
   return (
     <div className='contact-container'>
       {!showForgotPassword ? (
@@ -31,12 +45,12 @@ const {setUsers} = useAppContext(AppContext);
             {/* <label htmlFor='username'>Username:</label> */}
             <br />
             <input
-              placeholder='Username'
-              type='text'
-              id='username'
-              name='username'
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              placeholder='email'
+              type='email'
+              id='email'
+              name='email'
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <br />
             <br />
@@ -81,4 +95,5 @@ const {setUsers} = useAppContext(AppContext);
     </div>
   );
 }
+
 export default Login;
