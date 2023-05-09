@@ -1,12 +1,9 @@
 import { useState } from "react";
-import axios from 'axios'
-import {useNavigate} from "react-router-dom"
-
+import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-
-const navigate = useNavigate()
-
+  const navigate = useNavigate();
   // State for registration form
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,7 +11,6 @@ const navigate = useNavigate()
     email: "",
     password: "",
   });
-
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
@@ -24,9 +20,6 @@ const navigate = useNavigate()
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setSubmitted(false);
   };
-
-
-
 
   // Handling the form submission
   const handleSubmit = (e) => {
@@ -39,8 +32,21 @@ const navigate = useNavigate()
     ) {
       setError(true);
     } else {
-      setSubmitted(true);
-      setError(false);
+      api
+        .post("/users/register", JSON.stringify(formData))
+        .then((res) => {
+          console.log(res.data);
+          setSubmitted(true);
+          setError(false);
+          if (res.data.success) {
+            navigate("/login");
+          } else {
+            console.log(res.data.message);
+          }
+        })
+        .catch((err) => {
+          setError(true);
+        });
     }
   };
 
