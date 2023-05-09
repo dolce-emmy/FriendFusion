@@ -1,6 +1,12 @@
 import { useState } from "react";
+import axios from 'axios'
+import {useNavigate} from "react-router-dom"
+
 
 const Register = () => {
+
+const navigate = useNavigate()
+
   // State for registration form
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,6 +24,9 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setSubmitted(false);
   };
+
+
+
 
   // Handling the form submission
   const handleSubmit = (e) => {
