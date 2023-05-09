@@ -8,10 +8,12 @@ export default function AppContextProvider({ children }) {
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    api.get("/users").then((res) => {
-      console.log(res.data.data);
-      setUsers(res.data.data);
-    });
+    api
+      .get("/users")
+      .then((res) => {
+        console.log(res.data.data)
+        setUsers(res.data.data);
+      });
   }, []);
 
   console.log(children);
@@ -23,9 +25,33 @@ export default function AppContextProvider({ children }) {
   );
 }
 
-AppContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+// AppContextProvider.propTypes = {
+//   children: PropTypes.node.isRequired,
+// };
 
-export const useAppContext = () => useContext(AppContext);
 
+// export const useAppContext = () => {
+// const {users} = useContext(AppContext);
+
+// return users;
+// }
+
+export const useAppContext = () => 
+
+ useContext(AppContext);
+
+
+
+// import PropTypes from "prop-types";
+
+// export const Login = ({ firstName, lastName, email, password }) => {
+//   console.log({ firstName, lastName, email, password });
+//   return <div>Login</div>;
+// };
+
+// Login.propTypes = {
+//   firstName: PropTypes.number.isRequired,
+//   lastName: PropTypes.string.isRequired,
+//   email: PropTypes.bool.isRequired,
+//   password: PropTypes.string.isRequired,
+// };
