@@ -12,18 +12,12 @@ function Login() {
 const {setUsers} = useAppContext(AppContext);
 
   const [password, setPassword] = useState('');
+  
   const [message, setMessage] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const handleLoginSubmit = (event) => {
     event.preventDefault();
-    if (username !== ' ' && password.length >= 6) {
-      setMessage(`you have logged in successfully ${username}`);
-    } else {
-      setMessage(
-        'You have entered a wrong username or password. Please try again.'
-      );
-    }
-  };
+   api.post('/users/login', JSON.stringyfy({email: event.target.email.value, password: event.target.password.value}))
 
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();

@@ -35,6 +35,7 @@ const Register = () => {
       api
         .post("/users/register", JSON.stringify(formData))
         .then((res) => {
+          
           console.log(res.data);
           setSubmitted(true);
           setError(false);
