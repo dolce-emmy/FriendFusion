@@ -1,25 +1,35 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import PropTypes from "prop-types";
 import api from "../api";
+import {useNavigate} from 'react-router-dom';
 
 export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
-  const [users, setUsers] = useState(null);
-
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    api
-      .get("/users")
-      .then((res) => {
-        console.log(res.data.data)
-        setUsers(res.data.data);
-      });
-  }, []);
-
-  console.log(children);
+    console.log({user})
+    const token = localStorage.getItem("token");
+    if(!token) {
+      navigate("/login");
+    }
+    else {
+      const userObj = JSON.parse(localStorage.getItem("user"));
+      if(userObj && !user) {
+        api
+          .get(`/users/${userObj._id}`)
+          .then((res) => {
+            console.log(res.data.data)
+            setUser(res.data.data);
+          });
+      }
+    }
+  }, [user]);
 
   return (
-    <AppContext.Provider value={{ users, setUsers }}>
+    <AppContext.Provider value={{ user, setUser }}>
       {children}
     </AppContext.Provider>
   );
