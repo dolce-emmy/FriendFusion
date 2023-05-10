@@ -33,8 +33,9 @@ const Register = () => {
       setError(true);
     } else {
       api
-        .post("/users/register", JSON.stringify(formData))
+        .post("/users/register", JSON.stringify(formData), {headers: {"Content-Type": "application/json"}})
         .then((res) => {
+          
           console.log(res.data);
           setSubmitted(true);
           setError(false);

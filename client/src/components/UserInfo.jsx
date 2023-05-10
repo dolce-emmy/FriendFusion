@@ -6,6 +6,7 @@ import { useAppContext } from "../context/AppContext";
     <div>
       User Info
       Welcome {user?.firstName}!
+      <img src={user?.profileImage} alt="user" />
     </div>
   );
 };
