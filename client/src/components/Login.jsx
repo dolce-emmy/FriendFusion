@@ -16,8 +16,9 @@ function Login() {
   const handleLoginSubmit = (event) => {
     event.preventDefault();
 
-    api.post('/users/login', JSON.stringify({ email: event.target.email.value, password: event.target.password.value }))
+    api.post('/users/login', JSON.stringify({ email: event.target.email.value, password: event.target.password.value }),{headers: {"Content-Type": "application/json"}})
       .then((res) => {
+        console.log(res);
         if(res.data.success){
           console.log(res.data);
           const token = res.headers.token;
@@ -37,7 +38,7 @@ function Login() {
   };
 
   return (
-    <div className='contact-container'>
+    <div className='contact-container text-blue-500 hover:text-green-500 font-roboto bg-navyBlue'>
       {!showForgotPassword ? (
         <>
           <h2>Log in</h2>
