@@ -17,7 +17,7 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode, userName }) => {
                 {isNightMode ? 'Day Mode' : 'Night Mode'}
             </button> */}
                 <i
-                    className={isNightMode ? 'fas fa-san' : 'fas fa-moon'}
+                    className={isNightMode ? 'fas fa-moon' : 'fas fa-sun'} 
                     onClick={onToggleNightMode}
                 ></i>
                 <Link to='/comments'>
