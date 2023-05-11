@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const PostForm = () => {
-  const { user } = useAppContext();
+  const { user, updatePosts } = useAppContext();
   const [images, setImages] = useState([]);
 
   const onSubmitHandler = (e) => {
@@ -17,7 +17,7 @@ const PostForm = () => {
     };
 
     api.post("/posts", data).then((res) => {
-      console.log(res.data);
+      updatePosts(res.data.data);
     });
   };
 

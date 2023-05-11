@@ -34,8 +34,11 @@ export const createPost = async (req, res) => {
     picturePath: images,
   });
   try {
-    await newPost.save();
-    res.status(201).json({ success: true, data: newPost });
+    const createdPost = await newPost.save();
+    const data = await PostCollection.findById(createdPost._id).populate(
+      "userId picturePath"
+    );
+    res.status(201).json({ success: true, data });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

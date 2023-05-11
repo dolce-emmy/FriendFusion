@@ -37,8 +37,14 @@ export default function AppContextProvider({ children }) {
       });
     }
   }, [user]);
+
+  const updatePosts = (post) => {
+    setPosts([...posts, post]);
+  };
   return (
-    <AppContext.Provider value={{ user, setUser, posts, setPosts }}>
+    <AppContext.Provider
+      value={{ user, setUser, posts, setPosts, updatePosts }}
+    >
       {children}
     </AppContext.Provider>
   );
