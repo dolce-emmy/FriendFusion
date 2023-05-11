@@ -30,11 +30,13 @@ function Login() {
         if (res.data.success) {
           console.log(res.data);
           const token = res.headers.token;
+
           console.log({ token });
           localStorage.setItem("token", token);
           localStorage.setItem("user", JSON.stringify(res.data.data));
           setUser(res.data.data);
           navigate("/");
+
         } else {
           prompt(res.data.message);
         }
