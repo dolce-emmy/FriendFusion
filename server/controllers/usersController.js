@@ -70,27 +70,70 @@ export const getSingleUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
+
     try {
         const { id } = req.params;
-        const updateUser = await UserCollection.findByIdAndUpdate(
-            id,
-            req.body,
-            { new: true }
-        );
-        res.json({success: true, data: updateUser});
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
-};
+       //console.log(id)
+    
+    
+    
+        if (req.files) {
+            const { file } = req.files;
+          const fileName = new Date().getTime() + "-" + file.name;
+          const contentType = file.mimetype; //'image/png'
+          const extension = contentType.split("/")[1]; // 'png'
+          // 123454321234-new-size.png => extension
+          const fileNameWithoutExtension = fileName.replace("." + extension, "");
+    
+          // console.log
+          //console.log(fileNameWithoutExtension)
+    
+          const result = await cloudinary.v2.uploader.upload(
+            file.tempFilePath,
+            // 123454321234-new-size.png
+            { public_id: fileNameWithoutExtension }
+          );
+    
+            console.log(result)
+    
+    
+    
+              const createdImage = await ImageCollection.create({
+                    name: fileName,
+                    size: result.bytes,
+                    url: result.secure_url,
+                    contentType: result.format,
+                    // userId: req.user._id,
+                  });
+    
+                //   userUpdate.profileImage = createdImage.url;
+    
+                //   await userUpdate.save();
+                const user = await UserCollection.findByIdAndUpdate(id,{...req.body, profileImage:createdImage.url},{new:true});
+    
+                  return res.status(200).json({ success: true, data: user });
+    
+        }
+    
+        const updateUser = await UserCollection.findByIdAndUpdate(id,req.body,{new:true});
+    
+    
+        res.status(200).json({ success: true, data: updateUser });
+      } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
+    };
+    
+
 
 export const deleteUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const deletedUser = await UserCollection.findByIdAndDelete(id);
-        res.json({ success: true, data: deletedUser });
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
+   try {
+    const { id } = req.params;
+    const deletedUser = await UserCollection.findByIdAndDelete(id);
+    res.status(200).json({ success: true, data: deletedUser });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 export const addFriend = async (req, res) => {
@@ -98,32 +141,33 @@ export const addFriend = async (req, res) => {
         const { id } = req.params;
         const { friendId } = req.body;
         const user = await UserCollection.findById(id);
-         if (!user) {
-            res.status(404).json({success: false, message: "User not found"});
-         } else {
-            const friend = await UserCollection.findById(friendId);
-            if (!friend) {
-                res.status(404).json({success: false, message: "Friend not found"});
+        if (!user) {
+          res.status(404).json({ success: false, message: "User not found" });
+        } else {
+          const friend = await UserCollection.findById(friendId);
+          if (!friend) {
+            res.status(404).json({ success: false, message: "Friend not found" });
+          } else {
+            const isFriend = user.friends.includes(friendId);
+            if (isFriend) {
+              res
+                .status(400)
+                .json({ success: false, message: "Friend already added" });
             } else {
-                const isFriend = user.friends.includes(friendId);
-                if (isFriend) {
-                    res.status(400).json({success: false, message: "Friend already added"});
-                } else {
-                    user.friends.push(friendId);
-                    await user.save();
-                    res.status(201).json({
-                        success: true,
-                        message: "Friend added successfully",
-                        data: user
-                    });
-                }
+              user.friends.push(friendId);
+              await user.save();
+              res.status(201).json({
+                success: true,
+    
+                data: user,
+              });
             }
-         }
-             
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
-};
+          }
+        }
+      } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
+    };
 
 export const removeFriend = async (req, res) => {
     try {
@@ -131,53 +175,55 @@ export const removeFriend = async (req, res) => {
         const { friendId } = req.body;
         const user = await UserCollection.findById(id);
         if (!user) {
-            res.status(404).json({success: false, message: "User not found"});
+          res.status(404).json({ success: false, message: "User not found" });
         } else {
-            const isFriend = user.friends.includes(friendId);
-            if (!isFriend) {
-                res.status(400).json({success: false, message: "Friend not found"});
-            } else {
-                user.friends = user.friends.filter((friend) => friend.toString() !== friendId.toString());
-                await user.save();
-                res.status(201).json({ 
-                    success: true,
-                     message: "Friend removed successfully",
-                      data: user
-                     });
-            }
+          const isFriend = user.friends.includes(friendId);
+          if (!isFriend) {
+            res.status(400).json({ success: false, message: "Friend not found" });
+          } else {
+            user.friends = user.friends.filter(
+              (friend) => friend.toString() !== friendId.toString()
+            );
+            await user.save();
+            res.status(200).json({
+              success: true,
+    
+              data: user,
+            });
+          }
         }
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
-};
+      } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
+    };
 
 export const getUserFriends = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await UserCollection.findById(id).populate("friends");
         if (!user) {
-            res.status(404).json({success: false, message: "User not found"});
+          res.status(404).json({ success: false, message: "User not found" });
         } else {
-            res.status(200).json({success: true, data: user.friends});
+          res.status(200).json({ success: true, data: user.friends });
         }
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
-};
+      } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
+    };
 
 export const searchUsers = async (req, res) => {
     try {
-        const { searchTerm } = req.params;
-        const users = await UserCollection.find({
-            $or: [
-                { firstName: { $regex: searchTerm, $options: "i" } },
-                { lastName: { $regex: searchTerm, $options: "i" } },
-                { email: { $regex: searchTerm, $options: "i" } },
-            ],
-        });
-        res.status(200).json({success: true, data: users});
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message});
-    }
+    const { searchTerm } = req.params;
+    const users = await UserCollection.find({
+      $or: [
+        { firstName: { $regex: searchTerm, $options: "i" } },
+        { lastName: { $regex: searchTerm, $options: "i" } },
+        { email: { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+    res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
