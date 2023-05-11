@@ -1,7 +1,9 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useAppContext } from "../context/AppContext";
 
-const Header = ({ onSearch, isNightMode, onToggleNightMode, userName }) => {
+const Header = ({ onSearch, isNightMode, onToggleNightMode, }) => {
+    const {user} = useAppContext();
     return (
         <header>
             <div className='left'>
@@ -30,7 +32,8 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode, userName }) => {
                 <Link to='/help'>
                     <i className='fas fa-question-circle'></i>
                 </Link>
-                {userName && <span>Welcome, {userName}!</span>}
+                {/* {userName && <span>Welcome, {userName}!</span>} */}
+                <span>Welcome {user?.firstName}</span>
             </div>
         </header>
     );
