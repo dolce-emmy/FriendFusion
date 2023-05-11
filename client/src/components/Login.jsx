@@ -24,8 +24,8 @@ function Login() {
           const token = res.headers.token;
           console.log({token})
           localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(res.data.data));
-          setUser(res.data.data);
+          localStorage.setItem('user', JSON.stringify(res.data.users));
+          setUser(res.data.users);
           navigate('/');
         } else {
           prompt(res.data.message);

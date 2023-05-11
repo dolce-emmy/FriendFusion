@@ -5,12 +5,12 @@ import Home from './components/Home'
 import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
-import FormLogin from './components/FormLogin'
+//import FormLogin from './components/FormLogin'
 
 function App() {
   return (
     <AppContextProvider>
-      <FormLogin/>
+      {/* <FormLogin/> */}
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/register" element={<Register/>}/>
