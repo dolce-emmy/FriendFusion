@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
-import Header from './Header.jsx'
+import Header from './Header'
+import { useAppContext } from "../context/AppContext";
 
-const Home = ({userName}) => {
+const Home = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -24,7 +25,7 @@ const Home = ({userName}) => {
   };
 
   //const isNightMode = false;
-  
+
   return (
     <div>
      <button onClick={handleLogout}>Logout</button>
@@ -32,9 +33,8 @@ const Home = ({userName}) => {
       <dev>
         <Header onSearch={handleSearch} 
         isNightMode={isNightMode} 
-        onToggleNightMode={handleToggleNightMode} 
-        userName={userName} />
-        <h2>Welcome to FriendFusion!</h2>
+        onToggleNightMode={handleToggleNightMode} />
+        
       </dev>
     <UserInfo />
     {/* Main create post, post component
