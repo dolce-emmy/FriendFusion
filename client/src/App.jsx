@@ -4,23 +4,19 @@ import {Routes, Route} from 'react-router-dom'
 import Home from './components/Home'
 import Register from './components/Register'
 import Login from './components/Login'
-import Profile from './components/Profile'
-import FormLogin from './components/FormLogin'
+import Profile from "./components/Profile";
 
 function App() {
   return (
     <AppContextProvider>
-      <FormLogin/>
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/profile" element={<Profile/>}/>   
-        
-            
-    </Routes>
+        <Route path="/" exact element={<Home />} />
+        <Route path="/register" exact element={<Register />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/profile" exact element={<Profile />} />
+      </Routes>
     </AppContextProvider>
-  )
+  );
 }
 
 export default App
