@@ -7,6 +7,7 @@ export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [post, setPost] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,7 +35,7 @@ export default function AppContextProvider({ children }) {
   }, [user]);
   ;
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser, post, setPost }}>
       {children}
     </AppContext.Provider>
   );
