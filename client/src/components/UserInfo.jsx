@@ -3,7 +3,7 @@ import { useAppContext } from "../context/AppContext";
  const UserInfo = () => {
     const {user} = useAppContext();
     return (
-      <div className="flex flex-col gap-4 max-w-xs bg-neutral-800 rounded-lg p-5">
+      <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-5">
         <div className="flex gap-4 items-center border-b border-neutral-700 pb-4">
           <span className="block rounded-full max-w-[60px] h-full overflow-hidden">
             <img
