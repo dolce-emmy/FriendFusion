@@ -5,8 +5,8 @@ import PostCollection from "../models/postSchema.js";
 // getAllPost//
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostCollection.find();
-    res.status(200).json(posts);
+    const posts = await PostCollection.find().populate("userId", "picturePath");
+    res.status(200).json({success: true, posts:posts});
   } catch {
     res.status(500).json({ message: error.message });
   }
@@ -16,8 +16,8 @@ export const getAllPosts = async (req, res) => {
 
 export const getSinglePost = async (req, res) => {
     try {
-        const post = await PostCollection.findById(req.params.id);
-        res.status(200).json({success: true, data:post});
+        const post = await PostCollection.findById(req.params.id).populate("userId", "picturePath");
+        res.status(200).json({success: true, posts:post});
     } catch {
         res.status(500).json({ message: error.message });
     }
@@ -25,10 +25,11 @@ export const getSinglePost = async (req, res) => {
 
 // for new post//
 export const createPost = async (req, res) => {
-  const newPost = new PostCollection(req.body);
+  const {description} = req.body;
+  const newPost = new PostCollection({description});
   try {
     await newPost.save();
-    res.status(201).json({success: true, data:newPost});
+    res.status(201).json({success: true, posts:newPost});
   } catch (error) {
     res.status(500).json({success: false, message: error.message });
   }
@@ -59,7 +60,7 @@ export const likePost = async (req, res) => {
         // here I am saving the post after updating the likes array so that the changes are reflected in the database
          
         post.save()
-        res.status(200).json({success:true, data: post})
+        res.status(200).json({success:true, posts: post})
        
     }catch(error) {
         res.status(500).json({ message: error.message });
@@ -98,7 +99,7 @@ export const likePost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
       const user = req.body.userId
-    const updatedPost = await PostCollection.findById(req.params.id);
+    const updatedPost = await PostCollection.findById(req.params.id).populate("userId", "picturePath");
     
     // here I am checking if the user is the same user who created the post or not
     // if the user is the same user who created the post then I will update the post
@@ -108,8 +109,8 @@ export const updatePost = async (req, res) => {
 
       
 
-      await updatedPost.updateOne({ $set: req.body });
-      res.status(200).json({success: true, message: "Post has been updated"});
+  const updatedPost=     await updatedPost.updateOne({ $set: req.body }).populate("userId", "picturePath");
+      res.status(200).json({success: true, posts: updatedPost});
     } else {
 
       res.status(403).json({success: false, message: "You can update only your post" });
@@ -130,7 +131,7 @@ export const deletePost = async (req, res) => {
     const deletePost = await PostCollection.findById(req.params.id);
     if (deletePost.userId.toString() === user) {
       await deletePost.deleteOne();
-      res.status(200).json({success: true, message: "Post has been deleted" });
+      res.status(200).json({success: true, posts: deletePost });
     } else {
       res.status(403).json({success: false, message: "You can delete only your post" });
     }

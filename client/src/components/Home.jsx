@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
 import Header from './Header.jsx'
+import PostForm from './PostForm'
 
 const Home = ({userName}) => {
   const handleLogout = () => {
@@ -37,6 +38,7 @@ const Home = ({userName}) => {
         <h2>Welcome to FriendFusion!</h2>
       </dev>
     <UserInfo />
+    <PostForm/>
     {/* Main create post, post component
     advertisements
     friends list */}

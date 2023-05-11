@@ -6,7 +6,7 @@ export const getAllComments = async (req, res) => {
   try {
     const comments = await CommentCollection.find();
 
-    res.status(200).json({ success: true, data: comments });
+    res.status(200).json({ success: true, comments: comments });
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }
@@ -17,7 +17,7 @@ export const getAllCommentsByIds = async (req, res) => {
     const { ids } = req.body;
     const comments = await CommentCollection.find({_id: {$in: ids}});
 
-    res.status(200).json({ success: true, data: comments });
+    res.status(200).json({ success: true, comments: comments });
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }
@@ -27,9 +27,9 @@ export const getAllCommentsByIds = async (req, res) => {
 export const getSingleCommentById = async (req, res) => {
   try {
     const { id } = req.params;
-    const comments = await CommentCollection.findById(id);
+    const comment = await CommentCollection.findById(id);
 
-    res.status(200).json({ success: true, data: comments });
+    res.status(200).json({ success: true, comments: comment });
   } catch (err) {
     res.status(404).json({ success: false, message: err.message });
   }
@@ -52,7 +52,7 @@ export const createComment = async (req, res) => {
       const post = await PostCollection.findById(postId);
       post.comments.push(createdComment);
       post.save();
-      res.status(201).json({ success: true, data: createdComment });
+      res.status(201).json({ success: true, comments: createdComment });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
@@ -67,7 +67,7 @@ export const updateCommentById = async (req, res) => {
       id,
       req.body
     );
-    res.status(200).json({ success: true, data: updatedComment });
+    res.status(200).json({ success: true, comments: updatedComment });
   } catch (err) {
     res.status(404).json({ success: false, message: err.message });
   }
@@ -78,7 +78,7 @@ export const deleteCommentById = async (req, res) => {
   try {
     const { id } = req.params;
     const removedComment = await CommentCollection.findByIdAndRemove(id);
-    res.status(200).json({ success: true, data: removedComment });
+    res.status(200).json({ success: true, comments: removedComment });
   } catch (err) {
     res.status(404).json({ success: false, message: err.message });
   }
@@ -104,7 +104,7 @@ export const replyCommentById = async (req, res) => {
         comment.replies = [createdComment];
       }
       comment.save();
-      res.status(200).json({ success: true, data: comment });
+      res.status(200).json({ success: true, comments: comment });
     }
   } catch (err) {
     res.status(404).json({ success: false, message: err.message });

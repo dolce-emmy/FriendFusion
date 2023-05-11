@@ -40,7 +40,7 @@ router.delete('/removeFriend/:id', auth, removeFriend);
 router.get('/:id', auth, getSingleUser);
 
 // update singleUser
-router.patch('/:id', auth, updateUser);
+router.patch('/:id',auth, updateUser);
 
 // delete singleUser
 router.delete('/:id', auth, deleteUser);

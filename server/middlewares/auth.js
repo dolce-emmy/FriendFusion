@@ -4,9 +4,11 @@ import UserCollection from "../models/userSchema.js";
 export const auth = async (req, res, next) => {
   try {
     const token = req.headers.token;
+    
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log(payload)
     const user = await UserCollection.findById(payload.id);
 
     if (!user) {
@@ -23,6 +25,7 @@ export const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ success: false, message: "Unauthorized" });
   }
 };

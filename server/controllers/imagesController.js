@@ -5,9 +5,9 @@ import cloudinary from 'cloudinary';
 export const getSingleImageById = async (req, res) => {
     try {
         const { id } = req.params;
-        const images = await ImageCollection.findById(id);
+        const image = await ImageCollection.findById(id);
 
-        res.status(200).json({ success: true, data: images });
+        res.status(200).json({ success: true, images: image });
     } catch (err) {
         res.status(404).json({ success: false, message: err.message });
     }
@@ -44,7 +44,7 @@ export const createImage = async (req, res) => {
               // userId: req.user._id,
           });
     
-          res.status(201).json({ success: true, data: createdImage });
+          res.status(201).json({ success: true, images: createdImage });
         })
         .catch((err) => {
             res.status(400).json({ success: false, message: err.message });
@@ -84,7 +84,7 @@ export const createMultipleImages = async (req, res) => {
         createdImages.push(createdImage);
       }
   
-      res.status(201).json({ success: true, data: createdImages });
+      res.status(201).json({ success: true, images: createdImages });
     } catch (error) {
         console.log(error.message);
       res.status(500).json({ success: false, message: "Something went wrong" });

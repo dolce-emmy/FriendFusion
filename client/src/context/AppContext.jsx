@@ -7,6 +7,7 @@ export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [post, setPost] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,7 +27,7 @@ export default function AppContextProvider({ children }) {
       if (userObj && !user) {
         api.get(`/users/${userObj._id}`).then((res) => {
           //console.log("userObj:", userObj._id)
-          //console.log(res.data.data);
+          console.log(res.data.users);
           setUser(res.data.users);
         });
       }
@@ -34,7 +35,7 @@ export default function AppContextProvider({ children }) {
   }, [user]);
   ;
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser, post, setPost }}>
       {children}
     </AppContext.Provider>
   );
