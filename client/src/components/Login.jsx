@@ -60,7 +60,7 @@ function Login() {
                   Email
                 </label>
                 <input
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 text-black"
                   type="email"
                   id="email"
                   name="email"
@@ -77,7 +77,7 @@ function Login() {
                   Password
                 </label>
                 <input
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 text-black"
                   type="password"
                   id="password"
                   name="password"

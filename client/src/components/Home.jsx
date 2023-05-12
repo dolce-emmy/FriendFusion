@@ -3,6 +3,7 @@ import { useState } from 'react'
 import UserInfo from './UserInfo'
 import Header from './Header'
 import { useAppContext } from "../context/AppContext";
+import Help from './Help.jsx'
 
 const Home = () => {
   const handleLogout = () => {
@@ -41,6 +42,8 @@ const Home = () => {
     advertisements
     friends list */}
     {/* Footer */}
+
+
     </div>
   )
 }
