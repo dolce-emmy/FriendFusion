@@ -28,12 +28,23 @@ const userSchema = new Schema({
     occupation: {
         type: String,
     },
+    mobile: {
+        type: String,
+    },
+    birthday: {
+        type: Date,
+    },
     picturePath: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Image',
         },
     ],
+    profileImage: {
+
+        type:String,
+    },
+
     followers: [
         {
             type: Schema.Types.ObjectId,
