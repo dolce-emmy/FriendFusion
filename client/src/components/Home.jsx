@@ -31,12 +31,12 @@ const Home = () => {
     <div>
      <button onClick={handleLogout}>Logout</button>
       {/* Header */}
-      <dev>
+      <div>
         <Header onSearch={handleSearch} 
         isNightMode={isNightMode} 
         onToggleNightMode={handleToggleNightMode} />
         
-      </dev>
+      </div>
     <UserInfo />
     <PostForm />
     {/* Main create post, post component

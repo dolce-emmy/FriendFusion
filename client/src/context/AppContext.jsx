@@ -28,7 +28,7 @@ export default function AppContextProvider({ children }) {
         api.get(`/users/${userObj._id}`).then((res) => {
           //console.log("userObj:", userObj._id)
           //console.log(res.data.data);
-          setUser(res.data.users);
+          setUser(res.data.data);
         });
       }
     }

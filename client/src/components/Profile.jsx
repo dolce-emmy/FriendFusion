@@ -45,7 +45,7 @@ const Profile = () => {
         setError(false);
 
         if (res.data.success) {
-          setUser(res.data.users);
+          setUser(res.data.data);
 
           navigate("/");
         } else {
