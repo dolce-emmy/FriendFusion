@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, setUser } = useAppContext();
-  //console.log (user)
+  console.log (user)
 
   const navigate = useNavigate();
   // const [formData, setFormData] = useState({
@@ -32,29 +32,37 @@ const Profile = () => {
 
   // Handling the form submission
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData(e.target);
+    const formData = new FormData();
+    const file = e.target.file.files[0];
+    formData.append("file", file, file.name);
 
-    api
-      .patch(`/users/${user._id}`, data)
-      .then((res) => {
-        console.log(res.data);
-        setSubmitted(true);
-        setError(false);
+    const imgRes = await api.post("/images", formData);
+    if (imgRes.data.success) {
+      const data = new FormData(e.target);
+      data.append("image", imgRes.data.data._id);
+      api
+        .patch(`/users/${user._id}`, data)
+        .then((res) => {
+          console.log(res.data);
+          setSubmitted(true);
+          setError(false);
+  
+          if (res.data.success) {
+            setUser(res.data.data);
+  
+            navigate("/");
+          } else {
+            console.log(res.data.message);
+          }
+        })
+        .catch((err) => {
+          setError(true);
+        });
+    }
 
-        if (res.data.success) {
-          setUser(res.data.data);
-
-          navigate("/");
-        } else {
-          console.log(res.data.message);
-        }
-      })
-      .catch((err) => {
-        setError(true);
-      });
   };
 
   // Showing success message

@@ -1,65 +1,69 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     firstName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     lastName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-    friends: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'User' 
-    }],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        require: true,
-        },
+      type: String,
+      require: true,
+    },
     location: {
-        type: String,
+      type: String,
     },
     occupation: {
-        type: String,
+      type: String,
     },
     mobile: {
-        type: String,
+      type: String,
     },
     birthday: {
-        type: Date,
+      type: Date,
     },
     picturePath: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Image',
-        },
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Image",
+      },
     ],
-    profileImage: {
-
-        type:String,
+    image: {
+      type: Schema.Types.ObjectId,
+      ref: "Image",
     },
 
     followers: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-        }, 
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
     ],
 
     viewedProfile: {
-        type: Number,
+      type: Number,
     },
-
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 userSchema.indexes({ email: 1 });
 
-const UserCollection = model('User', userSchema);
+const UserCollection = model("User", userSchema);
 
 export default UserCollection;
