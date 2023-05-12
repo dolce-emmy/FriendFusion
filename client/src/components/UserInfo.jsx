@@ -5,10 +5,11 @@ import { useAppContext } from "../context/AppContext";
     return (
       <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-5">
         <div className="flex gap-4 items-center border-b border-neutral-700 pb-4">
-          <span className="block rounded-full max-w-[60px] h-full overflow-hidden">
+          <span className="block rounded-full max-w-[65px] h-16 overflow-hidden">
             <img
+            className="w-full h-full"
               src={
-                user?.profilePicture?.url || "https://placehold.co/60x60/png"
+                user?.image?.url || "https://placehold.co/60x60/png"
               }
               alt={user?.firstName}
             />

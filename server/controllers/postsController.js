@@ -1,13 +1,24 @@
+import ImageCollection from "../models/imageSchema.js";
 import PostCollection from "../models/postSchema.js";
-
-
 
 // getAllPost//
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostCollection.find().populate("userId picturePath");
+    const posts = await PostCollection.find().populate([
+      {
+        path: "images",
+        model: "Image",
+      },
+      {
+        path: "user",
+        populate: {
+          path: "image",
+          model: "Image",
+        },
+      },
+    ]);
     res.status(200).json({ success: true, data: posts });
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
@@ -16,28 +27,48 @@ export const getAllPosts = async (req, res) => {
 
 export const getSinglePost = async (req, res) => {
   try {
-    const post = await PostCollection.findById(req.params.id).populate(
-      "userId picturePath"
-    );
+    const post = await PostCollection.findById(req.params.id).populate([
+      {
+        path: "images",
+        model: "Image",
+      },
+      {
+        path: "user",
+        populate: {
+          path: "image",
+          model: "Image",
+        },
+      },
+    ]);
     res.status(200).json({ success: true, data: post });
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // for new post//
 export const createPost = async (req, res) => {
-  const { userId, description, images } = req.body;
+  const { user, description, images } = req.body;
   const newPost = new PostCollection({
-    userId,
+    user,
     description,
-    picturePath: images,
+    images,
   });
   try {
     const createdPost = await newPost.save();
-    const data = await PostCollection.findById(createdPost._id).populate(
-      "userId picturePath"
-    );
+    const data = await PostCollection.findById(createdPost._id).populate([
+      {
+        path: "images",
+        model: "Image",
+      },
+      {
+        path: "user",
+        populate: {
+          path: "image",
+          model: "Image",
+        },
+      },
+    ]);
     res.status(201).json({ success: true, data });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -100,15 +131,25 @@ export const likePost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     const user = req.body.userId;
-    const updatedPost = await PostCollection.findById(req.params.id).populate(
-      "userId picturePath"
-    );
+    const updatedPost = await PostCollection.findById(req.params.id).populate([
+      {
+        path: "images",
+        model: "Image",
+      },
+      {
+        path: "user",
+        populate: {
+          path: "image",
+          model: "Image",
+        },
+      },
+    ]);
 
     // here I am checking if the user is the same user who created the post or not
     // if the user is the same user who created the post then I will update the post
     // if the user is not the same user who created the post then I will send a message that the user can only update his own post
 
-    if (updatedPost.userId.toString() === user) {
+    if (updatedPost.user.toString() === user) {
       await updatedPost.updateOne({ $set: req.body });
       res.status(200).json({ success: true, data: updatedPost });
     } else {
@@ -120,22 +161,21 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-  
-
-
 
 // for delete post//
 export const deletePost = async (req, res) => {
   try {
-    const user = req.body.userId
+    const user = req.body.userId;
     const deletePost = await PostCollection.findById(req.params.id);
-    if (deletePost.userId.toString() === user) {
+    if (deletePost.user.toString() === user) {
       await deletePost.deleteOne();
-      res.status(200).json({success: true, data: deletePost });
+      res.status(200).json({ success: true, data: deletePost });
     } else {
-      res.status(403).json({success: false, message: "You can delete only your post" });
+      res
+        .status(403)
+        .json({ success: false, message: "You can delete only your post" });
     }
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
-}
+};
