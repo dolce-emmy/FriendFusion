@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
 import Header from './Header'
+import { useAppContext } from "../context/AppContext";
+import Help from './Help.jsx'
 
 import PostForm from './PostForm';
 import PostList from "./PostList";
@@ -32,6 +34,21 @@ const Home = () => {
     <div>
       <button onClick={handleLogout}>Logout</button>
       {/* Header */}
+
+      <dev>
+        <Header onSearch={handleSearch} 
+        isNightMode={isNightMode} 
+        onToggleNightMode={handleToggleNightMode} />
+        
+      </dev>
+    <UserInfo />
+    {/* Main create post, post component
+    advertisements
+    friends list */}
+    {/* Footer */}
+
+
+
       <div>
         <Header
           onSearch={handleSearch}
@@ -52,6 +69,7 @@ const Home = () => {
         </div>
       </div>
       {/* Footer */}
+
     </div>
   );
 };
