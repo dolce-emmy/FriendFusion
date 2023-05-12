@@ -7,12 +7,11 @@ export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    
     const token = localStorage.getItem("token");
     const isAuthPage =
       location.pathname.includes("/login") ||
@@ -31,11 +30,21 @@ export default function AppContextProvider({ children }) {
           setUser(res.data.data);
         });
       }
+
+      api.get("/posts").then((res) => {
+        // console.log(res.data);
+        setPosts(res.data.data);
+      });
     }
   }, [user]);
-  ;
+
+  const updatePosts = (post) => {
+    setPosts([...posts, post]);
+  };
   return (
-    <AppContext.Provider value={{ user, setUser, post, setPost }}>
+    <AppContext.Provider
+      value={{ user, setUser, posts, setPosts, updatePosts }}
+    >
       {children}
     </AppContext.Provider>
   );
