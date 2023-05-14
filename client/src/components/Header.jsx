@@ -7,10 +7,12 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode, }) => {
     return (
         <header>
             <div className='left'>
-                <h1>FriendFusion</h1>
+                <Link to= '/'>
+                    <h1 class="mr-5 font-medium hover:text-gray-900">FriendFusion</h1>
+                </Link>
                 <form onSubmit={onSearch}>
                     <input type='text' placeholder='Search' />
-                    <button type='submit'>Search</button>
+                    <button type='submit' class="mr-5 font-medium hover:text-gray-900">Search</button>
                 </form>
             </div>
 
@@ -40,3 +42,6 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode, }) => {
 };
 
 export default Header;
+
+
+

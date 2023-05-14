@@ -35,20 +35,6 @@ const Home = () => {
       <button onClick={handleLogout}>Logout</button>
       {/* Header */}
 
-      <dev>
-        <Header onSearch={handleSearch} 
-        isNightMode={isNightMode} 
-        onToggleNightMode={handleToggleNightMode} />
-        
-      </dev>
-    <UserInfo />
-    {/* Main create post, post component
-    advertisements
-    friends list */}
-    {/* Footer */}
-
-
-
       <div>
         <Header
           onSearch={handleSearch}
