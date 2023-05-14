@@ -11,7 +11,7 @@ const PostForm = () => {
 
     console.log(e.target.description.value);
     const data = {
-      userId: user._id,
+      user: user._id,
       description: e.target.description.value,
       images,
     };
@@ -30,6 +30,8 @@ const PostForm = () => {
     api.post("/images", formData).then((res) => {
       // get the image id
       // set to the state
+      
+      // the rest syntax is adding the old images to the new images
       setImages([...images, res.data.data._id]);
     });
   };
@@ -40,7 +42,7 @@ const PostForm = () => {
         <div className="flex items-center px-4 py-3">
           <img
             className="h-14 w-14 rounded-full mr-4"
-            src="https://picsum.photos/id/1027/150/150"
+            src={user?.image?.url || "https://placehold.co/60x60/png"}
           />
           <input
             className="w-full h-16 px-4 outline-none rounded-xl"

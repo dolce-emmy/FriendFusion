@@ -1,26 +1,28 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
 
-const Post = ({ description, picturePath, userId }) => {
+const Post = ({ description, images, user }) => {
+
+  
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
       <div className="flex items-center px-4 py-3">
         <img
           className="h-14 w-14 rounded-full"
-          src="https://picsum.photos/id/1027/150/150"
+          src={user?.image?.url}
         />
         <div className="ml-3 ">
           <span className="text-sm font-semibold antialiased block leading-tight">
-            {userId?.firstName} {userId?.lastName}
+            {user?.firstName} {user?.lastName}
           </span>
           <span className="text-neutral-400 text-xs block">
-            {userId?.location}
+            {user?.location}
           </span>
         </div>
       </div>
       <div className="p-4">
         <p className="mb-3">{description}</p>
-        {picturePath.map((image) => (
+        {images.map((image) => (
           <img
             key={image?._id}
             className="w-full"

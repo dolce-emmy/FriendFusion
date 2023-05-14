@@ -177,7 +177,7 @@
             "example": "Long text of a post",
             "description": "Long text related to a post"
           },
-          "userId": {
+          "user": {
             "type": "string",
             "example": "32894u83247z98IUHEUKDFHwiue",
             "description": "Mongo Id of a registered user"
@@ -221,7 +221,7 @@
           "contentType": {
             "type": "string"
           },
-          "userId": {
+          "user": {
             "type": "string"
           }
         }
