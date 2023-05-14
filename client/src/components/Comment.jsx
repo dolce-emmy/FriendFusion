@@ -9,6 +9,16 @@ const Comment = ({ toggleCommentForm }) => {
     question3: '',
   });
 
+  const [isNightMode, setIsNightMode] = useState(false);
+
+  const handleToggleNightMode = () => {
+      // Handle night mode toggle functionality here
+      setIsNightMode(!isNightMode);
+      const body = document.querySelector('body');
+      body.classList.toggle('night-mode');
+  };
+
+
   const { user } = useAppContext();
 
   const handleChange = (e) => {
@@ -24,7 +34,10 @@ const Comment = ({ toggleCommentForm }) => {
 
   return (
     <>
-    <Header/>
+    <Header
+      isNightMode={isNightMode}
+      onToggleNightMode={handleToggleNightMode}
+    />
     <div className='flex justify-center items-center h-screen mt-[-150px]'>
       <div className='w-96 bg-white shadow-lg rounded-lg'>
         <div className='p-4 border-b'>
