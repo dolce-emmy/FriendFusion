@@ -88,5 +88,17 @@ header {
   color: #007aff;
 }
 
+ /* Default styles */
+/* .relative {
+  position: relative;
+} */
+
+/* Night mode styles */
+/* .night-mode .relative .absolute {
+  background-color: #282c34;
+  color: #fff;
+}  */
+
+
 
 

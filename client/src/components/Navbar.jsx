@@ -27,6 +27,9 @@ const Navbar = () => {
         <NavLink className='navlink' to='comments'>
           Comments
         </NavLink>
+        <NavLink className='navlink' to='alerts'>
+          Alerts
+        </NavLink>
         </nav>
         </header>
         );
