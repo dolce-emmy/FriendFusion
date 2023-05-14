@@ -6,6 +6,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import Help from './components/Help'
+import Comment from './components/Comment'
 //import FormLogin from './components/FormLogin'
 
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" exact element={<Login />} />
         <Route path="/profile" exact element={<Profile />} />
         <Route path='/help' element={<Help />} />
+        <Route path='/comments' element={<Comment />} />
       </Routes>
     </AppContextProvider>
   );
