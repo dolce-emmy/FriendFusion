@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAppContext } from "../context/AppContext";
 
+
 const Header = ({ onSearch, isNightMode, onToggleNightMode, }) => {
     const {user} = useAppContext();
     return (
@@ -30,7 +31,6 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode, }) => {
                 <Link to='/alerts'>
                     <i className='fas fa-bell'></i>
                 </Link>
-
                 <Link to='/help'>
                     <i className='fas fa-question-circle'></i>
                 </Link>

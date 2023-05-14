@@ -7,6 +7,7 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import Help from './components/Help'
 import Comment from './components/Comment'
+import Alert from './components/Alert'
 //import FormLogin from './components/FormLogin'
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" exact element={<Profile />} />
         <Route path='/help' element={<Help />} />
         <Route path='/comments' element={<Comment />} />
+        <Route path='/alerts' element={<Alert />} />
       </Routes>
     </AppContextProvider>
   );
