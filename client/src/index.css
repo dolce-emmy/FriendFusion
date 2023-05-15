@@ -6,14 +6,9 @@
   font-family: 'Rubik', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: #FFFFFF;
-
-  /* color: blue; */
-
   background-color: #0A0A0A;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,6 +17,23 @@
 }
 
 
-input {
+input, textarea, select {
   @apply bg-neutral-700
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 50px rgb(64 64 64 / var(--tw-bg-opacity)) inset; /* Change the color to your own background color */
+  -webkit-text-fill-color: #FFFFFF;
+  caret-color: #FFFFFF;
 }
