@@ -3,13 +3,13 @@ import { useAppContext } from "../context/AppContext";
 import api from "../api";
 
 const Post = ({_id, description, images, likes, user}) => {
-  const { handleLikesForPost } = useAppContext();
+  const { user: currentUser, handleLikesForPost } = useAppContext();
 
   const handleLike = (e) => {
     e.preventDefault();
 
     api
-      .post(`/posts/${_id}/like`,{userId : user._id})
+      .post(`/posts/${_id}/like`,{userId: currentUser._id })
       .then((res) => {
         if (res.data.success) {
          handleLikesForPost(_id, res.data.data);
@@ -96,7 +96,7 @@ const PostList = () => {
   const { posts } = useAppContext();
   return (
     <div className="w-full flex flex-col gap-6">
-      {posts?.reverse().map((post) => (
+      {posts?.map((post) => (
         <Post key={post._id} {...post} />
       ))}
     </div>
