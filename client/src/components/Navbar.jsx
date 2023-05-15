@@ -21,6 +21,15 @@ const Navbar = () => {
         <NavLink className='navlink' to='/'>
         Home
         </NavLink>
+        <NavLink className='navlink' to='help'>
+          Help
+        </NavLink>
+        <NavLink className='navlink' to='comments'>
+          Comments
+        </NavLink>
+        <NavLink className='navlink' to='alerts'>
+          Alerts
+        </NavLink>
         </nav>
         </header>
         );
