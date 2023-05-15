@@ -41,9 +41,27 @@ export default function AppContextProvider({ children }) {
   const updatePosts = (post) => {
     setPosts([...posts, post]);
   };
+
+  const handleLikesForPost = (id, post) => {
+    // find the post in the posts array
+    // update the likes for the post in the posts array
+    const updatedPosts = posts.map((p) => 
+      p._id === id ? { ...p, likes: post.likes } : p
+    );
+
+    setPosts(updatedPosts);
+  };
+
   return (
     <AppContext.Provider
-      value={{ user, setUser, posts, setPosts, updatePosts }}
+      value={{
+        user,
+        setUser,
+        posts,
+        setPosts,
+        updatePosts,
+        handleLikesForPost,
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -1,8 +1,24 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
+import api from "../api";
 
-const Post = ({ description, images, user }) => {
+const Post = ({_id, description, images, likes, user}) => {
+  const { handleLikesForPost } = useAppContext();
 
+  const handleLike = (e) => {
+    e.preventDefault();
+
+    api
+      .post(`/posts/${_id}/like`,{userId : user._id})
+      .then((res) => {
+        if (res.data.success) {
+         handleLikesForPost(_id, res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
@@ -33,7 +49,7 @@ const Post = ({ description, images, user }) => {
       </div>
       <div className="flex items-center justify-between mx-4 mt-3 mb-2">
         <div className="flex gap-5">
-          <div className="flex gap-1 text-sm items-center">
+          <button onClick={handleLike} className="flex gap-1 text-sm items-center">
             <span>
               <svg
                 fill="none"
@@ -49,8 +65,8 @@ const Post = ({ description, images, user }) => {
                 />
               </svg>
             </span>
-            <span>12 likes</span>
-          </div>
+            <span>{likes.length} likes</span>              
+          </button>
 
           <div className="flex gap-1 text-sm items-center">
             <span>
@@ -78,7 +94,6 @@ const Post = ({ description, images, user }) => {
 
 const PostList = () => {
   const { posts } = useAppContext();
-  console.log({ posts });
   return (
     <div className="w-full flex flex-col gap-6">
       {posts?.reverse().map((post) => (
@@ -89,3 +104,4 @@ const PostList = () => {
 };
 
 export default PostList;
+
