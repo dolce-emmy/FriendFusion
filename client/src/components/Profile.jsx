@@ -1,7 +1,7 @@
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, setUser } = useAppContext();
@@ -194,7 +194,10 @@ const Profile = () => {
 
         <button className="btn">Submit</button>
       </form>
+      
+      <Link to="/">go back to homepage</Link>
     </div>
+    
   );
 };
 
