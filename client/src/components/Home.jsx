@@ -1,19 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
-import Header from './Header'
-import { useAppContext } from "../context/AppContext";
-import Help from './Help.jsx'
+import Header from "./Header";
 import PostForm from './PostForm';
 import PostList from "./PostList";
 
 const Home = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
-
   const handleSearch = (event) => {
     // Handle search functionality here
   };
@@ -31,17 +23,13 @@ const Home = () => {
 
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
       {/* Header */}
-
-      <div>
-        <Header
-          onSearch={handleSearch}
-          isNightMode={isNightMode}
-          onToggleNightMode={handleToggleNightMode}
-        />
-      </div>
-      <div className="w-full flex flex-col md:flex-row items-start gap-6">
+      <Header
+        onSearch={handleSearch}
+        isNightMode={isNightMode}
+        onToggleNightMode={handleToggleNightMode}
+      />
+      <div className="w-5/6 mx-auto flex flex-col md:flex-row items-start gap-6 mt-10">
         <div className="w-full md:w-4/12 lg:w-3/12 lg:max-w-xs">
           <UserInfo />
         </div>
@@ -54,7 +42,6 @@ const Home = () => {
         </div>
       </div>
       {/* Footer */}
-
     </div>
   );
 };

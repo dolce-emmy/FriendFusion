@@ -10,7 +10,7 @@
   color-scheme: light dark;
   color: #FFFFFF;
 
-  color: blue;
+  /* color: blue; */
 
   background-color: #0A0A0A;
 
@@ -19,4 +19,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+
+input, input:highlight {
+  @apply bg-neutral-700
 }
