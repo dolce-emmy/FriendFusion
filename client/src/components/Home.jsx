@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import UserInfo from './UserInfo'
 import Header from './Header'
-
 import PostForm from './PostForm';
 import PostList from "./PostList";
 

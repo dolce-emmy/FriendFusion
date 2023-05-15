@@ -26,8 +26,8 @@ const Post = ({ description, images, user }) => {
           <img
             key={image?._id}
             className="w-full"
-            src={image.url}
-            alt={image.name}
+            src={image?.url}
+            alt={image?.name}
           />
         ))}
       </div>
@@ -68,7 +68,7 @@ const Post = ({ description, images, user }) => {
                 />
               </svg>
             </span>
-            <span>12 likes</span>
+            <span>12 comments</span>
           </div>
         </div>
       </div>
