@@ -1,5 +1,5 @@
 import React from "react";
-import myImage from "./public/img.jpg";
+
 function advertisement() {
   const [myImage, setMyImage] = useState("img.jpg");
   const [adsText, setAdsText] = useState("Best offer!");
@@ -22,6 +22,4 @@ function advertisement() {
   );
 }
 
-
-        
-        
+export default advertisement;

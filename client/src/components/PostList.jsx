@@ -81,7 +81,7 @@ const PostList = () => {
   console.log({ posts });
   return (
     <div className="w-full flex flex-col gap-6">
-      {posts?.map((post) => (
+      {posts?.reverse().map((post) => (
         <Post key={post._id} {...post} />
       ))}
     </div>
