@@ -22,6 +22,6 @@
 }
 
 
-input, input:highlight {
+input {
   @apply bg-neutral-700
 }
