@@ -4,11 +4,19 @@ import {Routes, Route} from 'react-router-dom'
 import Home from './components/Home'
 import Register from './components/Register'
 import Login from './components/Login'
+
+import Advertisement from './components/Advertisement'
+
+const Title = () => {
+  return  <h1>FriendFusion</h1>
+}
+
 import Profile from './components/Profile'
 import Help from './components/Help'
 import Comment from './components/Comment'
 import Alert from './components/Alert'
 //import FormLogin from './components/FormLogin'
+
 
 
 function App() {
