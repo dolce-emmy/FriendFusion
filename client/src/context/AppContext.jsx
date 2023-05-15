@@ -1,25 +1,50 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import PropTypes from "prop-types";
 import api from "../api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
-  const [users, setUsers] = useState(null);
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    api
-      .get("/users")
-      .then((res) => {
-        console.log(res.data.data)
-        setUsers(res.data.data);
+    const token = localStorage.getItem("token");
+    const isAuthPage =
+      location.pathname.includes("/login") ||
+      location.pathname.includes("/register");
+
+    if (!token) {
+      if (!isAuthPage) {
+        navigate("/login");
+      }
+    } else {
+      const userObj = JSON.parse(localStorage.getItem("user"));
+      if (userObj && !user) {
+        api.get(`/users/${userObj._id}`).then((res) => {
+          //console.log("userObj:", userObj._id)
+          //console.log(res.data.data);
+          setUser(res.data.data);
+        });
+      }
+
+      api.get("/posts").then((res) => {
+        // console.log(res.data);
+        setPosts(res.data.data);
       });
-  }, []);
+    }
+  }, [user]);
 
-  console.log(children);
-
+  const updatePosts = (post) => {
+    setPosts([...posts, post]);
+  };
   return (
-    <AppContext.Provider value={{ users, setUsers }}>
+    <AppContext.Provider
+      value={{ user, setUser, posts, setPosts, updatePosts }}
+    >
       {children}
     </AppContext.Provider>
   );
@@ -29,18 +54,13 @@ export default function AppContextProvider({ children }) {
 //   children: PropTypes.node.isRequired,
 // };
 
-
 // export const useAppContext = () => {
 // const {users} = useContext(AppContext);
 
 // return users;
 // }
 
-export const useAppContext = () => 
-
- useContext(AppContext);
-
-
+export const useAppContext = () => useContext(AppContext);
 
 // import PropTypes from "prop-types";
 

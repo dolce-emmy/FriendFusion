@@ -34,7 +34,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use(cors({origin:"http://localhost:5174"}));
+app.use(cors({origin:"http://localhost:5174" ,exposedHeaders: ['token']}));
 app.use(fileUpload({
     useTempFiles: true
 }));
