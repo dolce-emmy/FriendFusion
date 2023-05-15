@@ -1,4 +1,3 @@
-import ImageCollection from "../models/imageSchema.js";
 import PostCollection from "../models/postSchema.js";
 
 // getAllPost//
@@ -97,7 +96,7 @@ export const likePost = async (req, res) => {
     }
     // here I am saving the post after updating the likes array so that the changes are reflected in the database
 
-    post.save();
+    await post.save();
     res.status(200).json({ success: true, data: post });
   } catch (error) {
     res.status(500).json({ message: error.message });
