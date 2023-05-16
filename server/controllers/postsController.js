@@ -27,10 +27,17 @@ export const getAllPostsByUserId = async (req, res) => {
     try {
         const { id } = req.params;
         const posts = await PostCollection.find({ user: id }).populate([
-            {
-                path: 'images',
-                model: 'Image',
+          {
+            path: "images",
+            model: "Image",
+          },
+          {
+            path: "user",
+            populate: {
+              path: "image",
+              model: "Image",
             },
+          },
         ]);
         res.status(200).json({ success: true, data: posts });
     } catch (error) {

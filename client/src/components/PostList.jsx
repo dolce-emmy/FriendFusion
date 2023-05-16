@@ -183,9 +183,7 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
   );
 };
 
-const PostList = () => {
-  const { posts } = useAppContext();
-  console.log(posts)
+const PostList = ({ posts }) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {posts?.map((post) => (
