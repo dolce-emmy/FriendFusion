@@ -250,8 +250,8 @@
             "type": "string",
             "example": "12345"
           },
-          "picturePath": {
-            "type": "array",
+          "image": {
+            "type": "string",
             "example": "/path/to/file/location/image.png",
             "description": "file path or the location of picture of the post"
           }

@@ -37,12 +37,6 @@ const userSchema = new Schema(
     birthday: {
       type: Date,
     },
-    picturePath: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Image",
-      },
-    ],
     image: {
       type: Schema.Types.ObjectId,
       ref: "Image",

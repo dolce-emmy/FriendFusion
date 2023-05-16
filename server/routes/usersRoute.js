@@ -48,7 +48,7 @@ router.delete('/:id', auth, deleteUser);
 // get refreshPage
 router.post('/refreshPage', auth, refreshPage);
 
-// get searchUsers
-router.get('/searchUsers/:searchTerm', auth, searchUsers);
+// post searchUsers
+router.post('/search', auth, searchUsers);
 
 export default router;
