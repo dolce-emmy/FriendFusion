@@ -15,11 +15,11 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
     <header className="flex justify-between items-center bg-neutral-800 shadow-md p-5 h-20">
       <div className="left">
         <Link to="/">
-          <h1 class="mr-5 font-medium hover:text-gray-900">FriendFusion</h1>
+          <h1 className="mr-5 font-medium hover:text-gray-900">FriendFusion</h1>
         </Link>
         <form onSubmit={onSearch}>
           <input type="text" placeholder="Search" />
-          <button type="submit" class="mr-5 font-medium hover:text-gray-900">
+          <button type="submit" className="mr-5 font-medium hover:text-gray-900">
             Search
           </button>
         </form>
@@ -50,7 +50,7 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            className="w-6 h-6"
           >
             <path
               strokeLinecap="round"

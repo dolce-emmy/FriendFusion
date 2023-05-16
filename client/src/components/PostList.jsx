@@ -1,32 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import api from "../api";
 
-const Post = ({_id, description, images, likes, user}) => {
-  const { user: currentUser, handleLikesForPost } = useAppContext();
+const Post = ({ _id, description, images, likes, comments, user }) => {
+  const {
+    user: currentUser,
+    handleLikesForPost,
+    handleCommentsForPost,
+  } = useAppContext();
+  const [showComments, setShowComments] = useState(false);
+  const [populatedComments, setPopulatedComments] = useState([]);
 
   const handleLike = (e) => {
     e.preventDefault();
 
     api
-      .post(`/posts/${_id}/like`,{userId: currentUser._id })
+      .post(`/posts/${_id}/like`, { userId: currentUser._id })
       .then((res) => {
         if (res.data.success) {
-         handleLikesForPost(_id, res.data.data);
+          // here we are adding id to the handleLikesForPost function so that we can update the likes in the state of the post with the id
+          // we are passing the updated likes from the backend to the handleLikesForPost function so that we can update the likes in the state of the post with the id
+
+          handleLikesForPost(_id, res.data.data);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const content = data.get("content");
+
+    api
+      .post(
+        `/comments/${_id}`,
+        { content },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          handleCommentsForPost(_id, res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+    if(!showComments && populatedComments.length === 0) {
+      getComments();
+    }
+  }
+
+  const getComments = () => {
+    api
+      .post(
+        "/comments",
+        { ids: comments },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          setPopulatedComments(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
       <div className="flex items-center px-4 py-3">
-        <img
-          className="h-14 w-14 rounded-full"
-          src={user?.image?.url}
-        />
+        <img className="h-14 w-14 rounded-full" src={user?.image?.url} />
         <div className="ml-3 ">
           <span className="text-sm font-semibold antialiased block leading-tight">
             {user?.firstName} {user?.lastName}
@@ -49,7 +100,10 @@ const Post = ({_id, description, images, likes, user}) => {
       </div>
       <div className="flex items-center justify-between mx-4 mt-3 mb-2">
         <div className="flex gap-5">
-          <button onClick={handleLike} className="flex gap-1 text-sm items-center">
+          <button
+            onClick={handleLike}
+            className="flex gap-1 text-sm items-center"
+          >
             <span>
               <svg
                 fill="none"
@@ -65,10 +119,9 @@ const Post = ({_id, description, images, likes, user}) => {
                 />
               </svg>
             </span>
-            <span>{likes.length} likes</span>              
+            <span>{likes.length} likes</span>
           </button>
-
-          <div className="flex gap-1 text-sm items-center">
+          <button onClick={toggleComments} className="flex gap-1 text-sm items-center">
             <span>
               <svg
                 fill="none"
@@ -84,8 +137,46 @@ const Post = ({_id, description, images, likes, user}) => {
                 />
               </svg>
             </span>
-            <span>12 comments</span>
-          </div>
+            <span>{comments.length} comments</span>
+          </button>
+        </div>
+      </div>
+      <div className= {showComments ? "block" :  "hidden"}>
+        <form className="flex justify-center " onSubmit={handleComment}>
+          <input
+            className="w-9/12 mr-2 px-5 py-2 rounded-full bg-neutral-700 text-neutral-100"
+            type="text"
+            name="content"
+            placeholder="Write a comment"
+            value={comments?.content}
+            onChange={(e) => handleCommentsForPost(e.target.value)}
+          />
+          <button 
+          className="bg-neutral-700 text-neutral-100 px-4 py-2 rounded-full"  
+          type="submit">Send</button>
+        </form>
+        <div 
+        className="flex flex-col gap-2 px-4 py-2 overflow-y-auto max-h-60"
+        >
+          {populatedComments?.map((comment) => (
+            <div key={comment._id}>
+              
+              <img 
+              className="h-14 w-14 rounded-full"
+              src={currentUser?.image?.url}
+              
+              alt="" />
+              <p
+              className="text-sm font-semibold antialiased block leading-tight"
+              
+              >{currentUser?.firstName} {currentUser.lastName}</p>
+              
+              <p>{comment.content}</p>
+              <p>{comment.createdAt}</p>
+              
+
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -94,6 +185,7 @@ const Post = ({_id, description, images, likes, user}) => {
 
 const PostList = () => {
   const { posts } = useAppContext();
+  console.log(posts)
   return (
     <div className="w-full flex flex-col gap-6">
       {posts?.map((post) => (
@@ -104,4 +196,3 @@ const PostList = () => {
 };
 
 export default PostList;
-
