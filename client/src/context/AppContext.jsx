@@ -39,16 +39,28 @@ export default function AppContextProvider({ children }) {
   }, [user]);
 
   const updatePosts = (post) => {
+    // here we are adding the new post to the posts array in the state of the context provider so that we can update the post page with the new post
+    // the post in the argument is the new post that we are adding to the posts array
     setPosts([...posts, post]);
   };
 
   const handleLikesForPost = (id, post) => {
     // find the post in the posts array
     // update the likes for the post in the posts array
-    const updatedPosts = posts.map((p) => 
-      p._id === id ? { ...p, likes: post.likes } : p
+    const updatedPosts = posts.map((p) =>
+      p._id === id ? { ...p, likes: post?.likes } : p
     );
 
+    setPosts(updatedPosts);
+  };
+
+  // to update the comments for a post in the posts array we need to find the post in the posts array and update the comments for that post
+  const handleCommentsForPost = (id, comment) => {
+    //   // find the post in the posts array
+    //   // update the comments for the post in the posts array
+    const updatedPosts = posts.map((p) =>
+      p._id === id ? { ...p, comments: [...p.comments, comment._id] } : p
+    );
     setPosts(updatedPosts);
   };
 
@@ -61,6 +73,7 @@ export default function AppContextProvider({ children }) {
         setPosts,
         updatePosts,
         handleLikesForPost,
+        handleCommentsForPost,
       }}
     >
       {children}
