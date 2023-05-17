@@ -9,7 +9,6 @@ const PostForm = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    console.log(e.target.description.value);
     const data = {
       user: user._id,
       description: e.target.description.value,
@@ -30,7 +29,7 @@ const PostForm = () => {
     api.post("/images", formData).then((res) => {
       // get the image id
       // set to the state
-      
+
       // the rest syntax is adding the old images to the new images
       setImages([...images, res.data.data._id]);
     });
@@ -50,6 +49,7 @@ const PostForm = () => {
             id="description"
             name="description"
             autoComplete="off"
+            placeholder="Write something..."
           />
         </div>
         <div className="px-4 py-3 flex items-center justify-between w-full max-w-full">

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import api from "../api";
+import UserBasicInfo from "./UserBasicInfo";
+import PostComments from "./PostComments";
 
-const Post = ({ _id, description, images, likes, comments, user }) => {
-  const {
-    user: currentUser,
-    handleLikesForPost,
-    handleCommentsForPost,
-  } = useAppContext();
+const Post = ({
+  _id,
+  description,
+  images,
+  likes,
+  comments,
+  user,
+  createdAt,
+  updateLikesForPosts,
+}) => {
+  const { user: currentUser } = useAppContext();
   const [showComments, setShowComments] = useState(false);
   const [populatedComments, setPopulatedComments] = useState([]);
 
@@ -21,28 +28,7 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
           // here we are adding id to the handleLikesForPost function so that we can update the likes in the state of the post with the id
           // we are passing the updated likes from the backend to the handleLikesForPost function so that we can update the likes in the state of the post with the id
 
-          handleLikesForPost(_id, res.data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleComment = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const content = data.get("content");
-
-    api
-      .post(
-        `/comments/${_id}`,
-        { content },
-        { headers: { "Content-Type": "application/json" } }
-      )
-      .then((res) => {
-        if (res.data.success) {
-          handleCommentsForPost(_id, res.data.data);
+          updateLikesForPosts(_id, res.data.data);
         }
       })
       .catch((err) => {
@@ -52,16 +38,16 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
 
   const toggleComments = () => {
     setShowComments(!showComments);
-    if(!showComments && populatedComments.length === 0) {
-      getComments();
+    if (!showComments && populatedComments.length === 0) {
+      getComments(comments);
     }
-  }
+  };
 
-  const getComments = () => {
+  const getComments = (ids) => {
     api
       .post(
         "/comments",
-        { ids: comments },
+        { ids },
         { headers: { "Content-Type": "application/json" } }
       )
       .then((res) => {
@@ -72,21 +58,17 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
-      <div className="flex items-center px-4 py-3">
-        <img className="h-14 w-14 rounded-full" src={user?.image?.url} />
-        <div className="ml-3 ">
-          <span className="text-sm font-semibold antialiased block leading-tight">
-            {user?.firstName} {user?.lastName}
-          </span>
-          <span className="text-neutral-400 text-xs block">
-            {user?.location}
-          </span>
-        </div>
-      </div>
+      <UserBasicInfo
+        user={user}
+        className="p-4"
+        extraInfo={user?.location}
+        extraInfoClassName="text-sm text-neutral-400"
+        timeStamp={createdAt}
+      />
       <div className="p-4">
         <p className="mb-3">{description}</p>
         {images.map((image) => (
@@ -105,23 +87,36 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
             className="flex gap-1 text-sm items-center"
           >
             <span>
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                />
-              </svg>
+              {!likes.includes(currentUser?._id) ? (
+                <svg
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6 text-red-400"
+                >
+                  <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                </svg>
+              )}
             </span>
-            <span>{likes.length} likes</span>
+            <span>{likes.length} Likes</span>
           </button>
-          <button onClick={toggleComments} className="flex gap-1 text-sm items-center">
+          <button
+            onClick={toggleComments}
+            className="flex gap-1 text-sm items-center"
+          >
             <span>
               <svg
                 fill="none"
@@ -137,57 +132,31 @@ const Post = ({ _id, description, images, likes, comments, user }) => {
                 />
               </svg>
             </span>
-            <span>{comments.length} comments</span>
+            <span>{comments.length} Comments</span>
           </button>
         </div>
       </div>
-      <div className= {showComments ? "block" :  "hidden"}>
-        <form className="flex justify-center " onSubmit={handleComment}>
-          <input
-            className="w-9/12 mr-2 px-5 py-2 rounded-full bg-neutral-700 text-neutral-100"
-            type="text"
-            name="content"
-            placeholder="Write a comment"
-            value={comments?.content}
-            onChange={(e) => handleCommentsForPost(e.target.value)}
-          />
-          <button 
-          className="bg-neutral-700 text-neutral-100 px-4 py-2 rounded-full"  
-          type="submit">Send</button>
-        </form>
-        <div 
-        className="flex flex-col gap-2 px-4 py-2 overflow-y-auto max-h-60"
-        >
-          {populatedComments?.map((comment) => (
-            <div key={comment._id}>
-              
-              <img 
-              className="h-14 w-14 rounded-full"
-              src={currentUser?.image?.url}
-              
-              alt="" />
-              <p
-              className="text-sm font-semibold antialiased block leading-tight"
-              
-              >{currentUser?.firstName} {currentUser.lastName}</p>
-              
-              <p>{comment.content}</p>
-              <p>{comment.createdAt}</p>
-              
-
-            </div>
-          ))}
-        </div>
+      <div className={showComments ? "block mt-6" : "hidden"}>
+        <PostComments
+          _id={_id}
+          comments={comments}
+          populatedComments={populatedComments}
+          getComments={getComments}
+        />
       </div>
     </div>
   );
 };
 
-const PostList = ({ posts }) => {
+const PostList = ({ posts, updateLikesForPosts }) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {posts?.map((post) => (
-        <Post key={post._id} {...post} />
+        <Post
+          key={post._id}
+          {...post}
+          updateLikesForPosts={updateLikesForPosts}
+        />
       ))}
     </div>
   );

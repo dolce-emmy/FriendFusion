@@ -1,51 +1,58 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useAppContext } from "../context/AppContext";
+import UserBasicInfo from "./UserBasicInfo";
+import api from "../api";
+import InputEmoji from "react-input-emoji";
 
-const PostComments = () => {
-    //  we want to add the comments to the post page
-    // we need to get the comments from the backend
+const PostComments = ({ _id, comments, populatedComments, getComments }) => {
+  const { handleCommentsForPost } = useAppContext();
+  const [comment, setComment] = useState("");
 
-    // we need to add the comments to the state of the post page
-    // we need to update the comments in the state of the post page
-   
-    const handleComment = (e) => {
+  const handleComment = (content) => {
+    const data = new FormData();
+    data.append("content", content);
 
-        e.preventDefault();
-
-       const data = new FormData(e.target);
-         const content = data.get("content");
-        console.log(content);
-
-
-
-        api
-        .post(`/comments/${_id}/`, {user: currentUser._id, content})
-        .then((res) => {
-            if (res.data.success) {
-                console.log(res.data.data);
-                handleCommentsForPost(_id, res.data.data);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
+    api
+      .post(`/comments/${_id}`, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          const cmt = res.data.data;
+          handleCommentsForPost(_id, cmt);
+          getComments([...comments, cmt._id]);
+          setComment("");
         }
-        );
-    };
-
-
-
-
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div>PostComments
-        <form onSubmit={handleComment}>
-            <input type="text" name="content" placeholder="content" />
-            <button type="submit">Comment</button>
-        </form>
+    <>
+      <div className="mr-2 pl-2">
+        <InputEmoji
+          value={comment}
+          onChange={setComment}
+          cleanOnEnter
+          onEnter={handleComment}
+          placeholder="Write a comment"
+        />
+      </div>
+      <div className="flex flex-col gap-4 px-4 mt-5 mb-3">
+        {populatedComments?.map((comment) => (
+          <div key={comment._id}>
+            <UserBasicInfo
+              user={comment.user}
+              extraInfo={comment.content}
+              timeStamp={comment.createdAt}
+            />
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
 
-
-
-    </div>
-  )
-}
-
-export default PostComments
+export default PostComments;

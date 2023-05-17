@@ -15,7 +15,16 @@ export const getAllComments = async (req, res) => {
 export const getAllCommentsByIds = async (req, res) => {
   try {
     const { ids } = req.body;
-    const comments = await CommentCollection.find({_id: {$in: ids}});
+    const comments = await CommentCollection.find({
+      _id: { $in: ids },
+    }).populate({
+      path: "user",
+      model: "User",
+      populate: {
+        path: "image",
+        model: "Image",
+      },
+    });
 
     res.status(200).json({ success: true, data: comments });
   } catch (err) {
