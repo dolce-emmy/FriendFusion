@@ -37,3 +37,9 @@ select:-webkit-autofill:active{
   -webkit-text-fill-color: #FFFFFF;
   caret-color: #FFFFFF;
 }
+
+.react-input-emoji--container {
+  @apply !bg-neutral-700;
+  @apply !text-neutral-100;
+  @apply !border-neutral-700;
+}

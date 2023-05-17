@@ -57,7 +57,20 @@ export const refreshPage = async (req, res) => {
 export const getSingleUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserCollection.findById(id).populate("friends image");
+    const user = await UserCollection.findById(id).populate([
+      {
+        path: "image",
+        model: "Image",
+      },
+      {
+        path: "friends",
+        model: "User",
+        populate: {
+          path: "image",
+          model: "Image",
+        },
+      },
+    ]);
     if (user) {
       res.status(200).json({ success: true, data: user });
     } else {
@@ -72,7 +85,15 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { image, firstName, lastName, occupation, location, birthday, mobile } = req.body;
+    const {
+      image,
+      firstName,
+      lastName,
+      occupation,
+      location,
+      birthday,
+      mobile,
+    } = req.body;
 
     const updateUser = await UserCollection.findByIdAndUpdate(
       id,
@@ -117,11 +138,27 @@ export const addFriend = async (req, res) => {
             .json({ success: false, message: "Friend already added" });
         } else {
           user.friends.push(friendId);
-          await user.save();
+          const updatedUser = await user.save();
+          const populatedUser = await UserCollection.findById(
+            updatedUser._id
+          ).populate([
+            {
+              path: "image",
+              model: "Image",
+            },
+            {
+              path: "friends",
+              model: "User",
+              populate: {
+                path: "image",
+                model: "Image",
+              },
+            },
+          ]);
           res.status(201).json({
             success: true,
 
-            data: user,
+            data: populatedUser,
           });
         }
       }
@@ -146,11 +183,27 @@ export const removeFriend = async (req, res) => {
         user.friends = user.friends.filter(
           (friend) => friend.toString() !== friendId.toString()
         );
-        await user.save();
+        const updatedUser = await user.save();
+        const populatedUser = await UserCollection.findById(
+          updatedUser._id
+        ).populate([
+          {
+            path: "image",
+            model: "Image",
+          },
+          {
+            path: "friends",
+            model: "User",
+            populate: {
+              path: "image",
+              model: "Image",
+            },
+          },
+        ]);
         res.status(200).json({
           success: true,
 
-          data: user,
+          data: populatedUser,
         });
       }
     }

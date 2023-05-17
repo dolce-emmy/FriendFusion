@@ -16,11 +16,20 @@ const PublicProfile = () => {
     });
 
     api.get(`/posts/user/${id}`).then((res) => {
-      setUserPosts(res.data.data);
+      const posts = res.data.data ?? [];
+      setUserPosts(posts.reverse());
     });
   }, [id]);
 
-  console.log(userPosts);
+  const updateLikesForPosts = (id, post) => {
+    // find the post in the posts array
+    // update the likes for the post in the posts array
+    const updatedPosts = userPosts.map((p) =>
+      p._id === id ? { ...p, likes: post?.likes } : p
+    );
+    setUserPosts(updatedPosts);
+  };
+
   return (
     <>
       <Header />
@@ -30,7 +39,10 @@ const PublicProfile = () => {
         </div>
 
         <div className="w-full md:w-8/12 lg:w-6/12 lg:max-w-xl">
-          <PostList posts={userPosts} />
+          <PostList
+            posts={userPosts}
+            updateLikesForPosts={updateLikesForPosts}
+          />
         </div>
         <div className="w-full md:hidden lg:block lg:w-3/12 lg:max-w-xs">
           {/* TODO: advertisements, friends list */}
