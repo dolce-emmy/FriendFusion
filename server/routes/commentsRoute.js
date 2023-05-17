@@ -26,7 +26,7 @@ router.post("/:postId", auth, createComment);
 router.patch("/:id", updateCommentById);
 
 //DELETE to delete a single comment
-router.delete("/:id", deleteCommentById);
+router.post("/:id/post/:postId", deleteCommentById);
 
 //POST to reply to comment
 router.post("/:id/reply", auth, replyCommentById);
