@@ -1,14 +1,51 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import api from "../api";
 
-const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
+const Header = () => {
   const { user } = useAppContext();
+  const navigate = useNavigate();
+  const [isNightMode, setIsNightMode] = useState(false);
+  const [showSearchedUsers, setShowSearchedUsers] = useState(false);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    // Handle search functionality here
+    const query = event.target.search.value;
+
+    const formData = new FormData();
+    formData.append("query", query);
+
+    // Filter the user list based on the search query
+    api
+      .post("/users/search", formData, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setSearchedUsers(res.data.data);
+        setShowSearchedUsers(true);
+      });
+  };
+
+  const handleToggleNightMode = () => {
+    // Handle night mode toggle functionality here
+    setIsNightMode(!isNightMode);
+    const body = document.querySelector("body");
+    body.classList.toggle("night-mode");
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
+  };
+
+  const handleNavigateProfilePublicPage = (userId) => {
+    navigate(`/profile/public/${userId}`);
+    setShowSearchedUsers(false);
   };
 
   return (
@@ -17,21 +54,57 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
         <Link to="/">
           <h1 className="mr-5 font-medium hover:text-gray-900">FriendFusion</h1>
         </Link>
-        <form onSubmit={onSearch}>
-          <input type="text" placeholder="Search" />
-          <button type="submit" className="mr-5 font-medium hover:text-gray-900">
-            Search
-          </button>
-        </form>
+        <div className="relative">
+          <form onSubmit={handleSearch}>
+            <input type="text" name="search" placeholder="Search" />
+            <button
+              type="submit"
+              className="mr-5 font-medium hover:text-gray-900"
+            >
+              Search
+            </button>
+          </form>
+          <div
+            className={`${
+              showSearchedUsers ? "block" : "hidden"
+            } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20`}
+          >
+            {searchedUsers?.map((searchedUser) => (
+              <button
+                key={searchedUser._id}
+                onClick={() =>
+                  handleNavigateProfilePublicPage(searchedUser._id)
+                }
+                className="flex gap-4 items-center border-b border-neutral-700 p-3 hover:bg-neutral-600 hover:text-white"
+              >
+                <span className="block rounded-full max-w-[65px] h-16 overflow-hidden">
+                  <img
+                    className="w-full h-full"
+                    src={
+                      searchedUser?.image?.url ||
+                      "https://placehold.co/60x60/png"
+                    }
+                    alt={searchedUser?.firstName}
+                  />
+                </span>
+                <div className="flex flex-col items-start">
+                  {searchedUser?.firstName && (
+                    <span className="font-bold text-xl">
+                      <span className="mr-1">{searchedUser?.firstName}</span>
+                      <span>{searchedUser?.lastName}</span>
+                    </span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="right">
-        {/* <button onClick={onToggleNightMode}>
-                {isNightMode ? 'Day Mode' : 'Night Mode'}
-            </button> */}
         <i
           className={isNightMode ? "fas fa-moon" : "fas fa-sun"}
-          onClick={onToggleNightMode}
+          onClick={handleToggleNightMode}
         ></i>
         <Link to="/comments">
           <i className="fas fa-comments"></i>
@@ -42,7 +115,6 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
         <Link to="/help">
           <i className="fas fa-question-circle"></i>
         </Link>
-        {/* {userName && <span>Welcome, {userName}!</span>} */}
         <span>Welcome {user?.firstName}</span>
         <button onClick={handleLogout}>
           <svg
@@ -65,6 +137,3 @@ const Header = ({ onSearch, isNightMode, onToggleNightMode }) => {
 };
 
 export default Header;
-
-
-

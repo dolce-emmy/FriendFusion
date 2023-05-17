@@ -174,15 +174,15 @@ export const getUserFriends = async (req, res) => {
 };
 
 export const searchUsers = async (req, res) => {
+  const { query: searchTerm } = req.body;
   try {
-    const { searchTerm } = req.params;
     const users = await UserCollection.find({
       $or: [
         { firstName: { $regex: searchTerm, $options: "i" } },
         { lastName: { $regex: searchTerm, $options: "i" } },
         { email: { $regex: searchTerm, $options: "i" } },
       ],
-    });
+    }).populate("image");
     res.status(200).json({ success: true, data: users });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
