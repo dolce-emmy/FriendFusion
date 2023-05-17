@@ -2,6 +2,7 @@ import api from "../api";
 import { useAppContext } from "../context/AppContext";
 import { useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
+import { PasswordField } from "./PasswordField";
 
 function Login() {
   const navigate = useNavigate();
@@ -70,18 +71,7 @@ function Login() {
                 />
               </div>
               <div className="mb-4">
-                <label
-                  className="block text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                <input
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 text-black"
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="********"
+                <PasswordField
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />

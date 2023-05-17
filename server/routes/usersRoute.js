@@ -34,7 +34,7 @@ router.get('/getUserFriends/:id', auth, getUserFriends);
 router.post('/addFriend/:id', auth, addFriend);
 
 //
-router.delete('/removeFriend/:id', auth, removeFriend);
+router.post("/removeFriend/:id", auth, removeFriend);
 
 // get SingleUser
 router.get('/:id', auth, getSingleUser);

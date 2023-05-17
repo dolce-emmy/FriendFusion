@@ -1,5 +1,4 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import PropTypes from "prop-types";
 import api from "../api";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -33,7 +32,7 @@ export default function AppContextProvider({ children }) {
 
       api.get("/posts").then((res) => {
         // console.log(res.data);
-        setPosts(res.data.data);
+        setPosts((res.data.data ?? []).reverse());
       });
     }
   }, [user]);
@@ -41,7 +40,7 @@ export default function AppContextProvider({ children }) {
   const updatePosts = (post) => {
     // here we are adding the new post to the posts array in the state of the context provider so that we can update the post page with the new post
     // the post in the argument is the new post that we are adding to the posts array
-    setPosts([...posts, post]);
+    setPosts([post, ...posts]);
   };
 
   const handleLikesForPost = (id, post) => {
@@ -64,6 +63,10 @@ export default function AppContextProvider({ children }) {
     setPosts(updatedPosts);
   };
 
+  const handleUpdateUser = (user) => {
+    setUser(user);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -74,6 +77,7 @@ export default function AppContextProvider({ children }) {
         updatePosts,
         handleLikesForPost,
         handleCommentsForPost,
+        handleUpdateUser,
       }}
     >
       {children}

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import api from "../api";
+import UserBasicInfo from "./UserBasicInfo";
+import {
+  MoonIcon,
+  SunIcon,
+  ChatIcon,
+  BellIcon,
+  QuestionMarkCircleIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/outline";
 
 const Header = () => {
   const { user } = useAppContext();
-  const navigate = useNavigate();
   const [isNightMode, setIsNightMode] = useState(false);
   const [showSearchedUsers, setShowSearchedUsers] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
@@ -24,7 +32,6 @@ const Header = () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
-        console.log(res.data.data);
         setSearchedUsers(res.data.data);
         setShowSearchedUsers(true);
       });
@@ -41,11 +48,6 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
-  };
-
-  const handleNavigateProfilePublicPage = (userId) => {
-    navigate(`/profile/public/${userId}`);
-    setShowSearchedUsers(false);
   };
 
   return (
@@ -70,66 +72,39 @@ const Header = () => {
             } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20`}
           >
             {searchedUsers?.map((searchedUser) => (
-              <button
+              <div
                 key={searchedUser._id}
-                onClick={() =>
-                  handleNavigateProfilePublicPage(searchedUser._id)
-                }
-                className="flex gap-4 items-center border-b border-neutral-700 p-3 hover:bg-neutral-600 hover:text-white"
+                className=" hover:bg-neutral-600 hover:text-white"
               >
-                <span className="block rounded-full max-w-[65px] h-16 overflow-hidden">
-                  <img
-                    className="w-full h-full"
-                    src={
-                      searchedUser?.image?.url ||
-                      "https://placehold.co/60x60/png"
-                    }
-                    alt={searchedUser?.firstName}
-                  />
-                </span>
-                <div className="flex flex-col items-start">
-                  {searchedUser?.firstName && (
-                    <span className="font-bold text-xl">
-                      <span className="mr-1">{searchedUser?.firstName}</span>
-                      <span>{searchedUser?.lastName}</span>
-                    </span>
-                  )}
-                </div>
-              </button>
+                <UserBasicInfo
+                  handleOnClick={() => setShowSearchedUsers(false)}
+                  user={searchedUser}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="right">
-        <i
-          className={isNightMode ? "fas fa-moon" : "fas fa-sun"}
-          onClick={handleToggleNightMode}
-        ></i>
+      <div className="right flex gap-2">
+        {isNightMode ? (
+          <MoonIcon className="h-6 w-6" onClick={handleToggleNightMode} />
+        ) : (
+          <SunIcon className="h-6 w-6" onClick={handleToggleNightMode} />
+        )}
+
         <Link to="/comments">
-          <i className="fas fa-comments"></i>
+          <ChatIcon className="h-6 w-6" />
         </Link>
         <Link to="/alerts">
-          <i className="fas fa-bell"></i>
+          <BellIcon className="h-6 w-6" />
         </Link>
         <Link to="/help">
-          <i className="fas fa-question-circle"></i>
+          <QuestionMarkCircleIcon className="h-6 w-6" />
         </Link>
         <span>Welcome {user?.firstName}</span>
         <button onClick={handleLogout}>
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-            />
-          </svg>
+          <ArrowRightIcon className="h-6 w-6" />
         </button>
       </div>
     </header>
