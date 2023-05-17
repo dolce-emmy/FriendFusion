@@ -1,68 +1,68 @@
-import React from 'react';
-import { useAppContext } from '../context/AppContext';
-import api from '../api';
-import HandleRemoveFriendIcon from '../icons/HandleRemoveFriendIcon';
-import HandleAddFriendIcon from '../icons/HandleAddFriendIcon';
+import React from "react";
+import { useAppContext } from "../context/AppContext";
+import api from "../api";
+import HandleRemoveFriendIcon from "./icons/HandleRemoveFriendIcon";
+import HandleAddFriendIcon from "./icons/HandleAddFriendIcon";
 
 const ToggleFriendButton = ({ user }) => {
-    const { user: currentUser, handleUpdateUser } = useAppContext();
+  const { user: currentUser, handleUpdateUser } = useAppContext();
 
-    const handleAddFriend = (friendId) => {
-        const data = new FormData();
-        data.append('friendId', friendId);
+  const handleAddFriend = (friendId) => {
+    const data = new FormData();
+    data.append("friendId", friendId);
 
-        api.post(`/users/addFriend/${currentUser._id}`, data, {
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then((res) => {
-                if (res.data.success) {
-                    handleUpdateUser(res.data.data);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    api
+      .post(`/users/addFriend/${currentUser._id}`, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          handleUpdateUser(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    const handleRemoveFriend = (friendId) => {
-        const data = new FormData();
-        data.append('friendId', friendId);
+  const handleRemoveFriend = (friendId) => {
+    const data = new FormData();
+    data.append("friendId", friendId);
 
-        api.post(`/users/removeFriend/${currentUser._id}`, data, {
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then((res) => {
-                if (res.data.success) {
-                    handleUpdateUser(res.data.data);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-    return (
-        user?._id !== currentUser?._id && (
-            <>
-                {!currentUser?.friends?.some(
-                    (friend) => friend._id === user?._id
-                ) ? (
-                    <button
-                        onClick={() => handleAddFriend(user?._id)}
-                        className='ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0'
-                    >
-                        <HandleAddFriendIcon />
-                    </button>
-                ) : (
-                    <button
-                        onClick={() => handleRemoveFriend(user?._id)}
-                        className='ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0'
-                    >
-                        <HandleRemoveFriendIcon />
-                    </button>
-                )}
-            </>
-        )
-    );
+    api
+      .post(`/users/removeFriend/${currentUser._id}`, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          handleUpdateUser(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    user?._id !== currentUser?._id && (
+      <>
+        {!currentUser?.friends?.some((friend) => friend._id === user?._id) ? (
+          <button
+            onClick={() => handleAddFriend(user?._id)}
+            className="ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0"
+          >
+            <HandleAddFriendIcon />
+          </button>
+        ) : (
+          <button
+            onClick={() => handleRemoveFriend(user?._id)}
+            className="ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0"
+          >
+            <HandleRemoveFriendIcon />
+          </button>
+        )}
+      </>
+    )
+  );
 };
 
 export default ToggleFriendButton;
