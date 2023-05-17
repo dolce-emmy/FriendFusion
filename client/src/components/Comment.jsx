@@ -33,10 +33,7 @@ const Comment = ({ toggleCommentForm }) => {
 
     return (
         <>
-            <Header
-                isNightMode={isNightMode}
-                onToggleNightMode={handleToggleNightMode}
-            />
+            <Header />
             <div className='flex justify-center items-center h-screen mt-[-80px]'>
                 <div className='w-96 bg-white shadow-lg rounded-lg'>
                     <div className='p-4 border-b'>
