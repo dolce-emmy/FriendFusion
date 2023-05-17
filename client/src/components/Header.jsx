@@ -1,114 +1,126 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppContext } from "../context/AppContext";
-import api from "../api";
-import UserBasicInfo from "./UserBasicInfo";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
+import api from '../api';
+import UserBasicInfo from './UserBasicInfo';
 import {
-  MoonIcon,
-  SunIcon,
-  ChatIcon,
-  BellIcon,
-  QuestionMarkCircleIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/outline";
+    MoonIcon,
+    SunIcon,
+    ChatIcon,
+    BellIcon,
+    QuestionMarkCircleIcon,
+    ArrowRightIcon,
+} from '@heroicons/react/outline';
+import CommentIcon from '../icons/CommentIcon';
+import AlertIcon from '../icons/AlertIcon';
+import HelpIcon from '../icons/HelpIcon';
+import LogoutIcon from '../icons/LogoutIcon';
 
 const Header = () => {
-  const { user } = useAppContext();
-  const [isNightMode, setIsNightMode] = useState(false);
-  const [showSearchedUsers, setShowSearchedUsers] = useState(false);
-  const [searchedUsers, setSearchedUsers] = useState([]);
+    const { user } = useAppContext();
+    const [isNightMode, setIsNightMode] = useState(false);
+    const [showSearchedUsers, setShowSearchedUsers] = useState(false);
+    const [searchedUsers, setSearchedUsers] = useState([]);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    // Handle search functionality here
-    const query = event.target.search.value;
+    const handleSearch = (event) => {
+        event.preventDefault();
+        // Handle search functionality here
+        const query = event.target.search.value;
 
-    const formData = new FormData();
-    formData.append("query", query);
+        const formData = new FormData();
+        formData.append('query', query);
 
-    // Filter the user list based on the search query
-    api
-      .post("/users/search", formData, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        setSearchedUsers(res.data.data);
-        setShowSearchedUsers(true);
-      });
-  };
+        // Filter the user list based on the search query
+        api.post('/users/search', formData, {
+            headers: { 'Content-Type': 'application/json' },
+        }).then((res) => {
+            setSearchedUsers(res.data.data);
+            setShowSearchedUsers(true);
+        });
+    };
 
-  const handleToggleNightMode = () => {
-    // Handle night mode toggle functionality here
-    setIsNightMode(!isNightMode);
-    const body = document.querySelector("body");
-    body.classList.toggle("night-mode");
-  };
+    const handleToggleNightMode = () => {
+        // Handle night mode toggle functionality here
+        setIsNightMode(!isNightMode);
+        const body = document.querySelector('body');
+        body.classList.toggle('night-mode');
+    };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.reload();
+    };
 
-  return (
-    <header className="flex justify-between items-center bg-neutral-800 shadow-md p-5 h-20">
-      <div className="left">
-        <Link to="/">
-          <h1 className="mr-5 font-medium hover:text-gray-900">FriendFusion</h1>
-        </Link>
-        <div className="relative">
-          <form onSubmit={handleSearch}>
-            <input type="text" name="search" placeholder="Search" />
-            <button
-              type="submit"
-              className="mr-5 font-medium hover:text-gray-900"
-            >
-              Search
-            </button>
-          </form>
-          <div
-            className={`${
-              showSearchedUsers ? "block" : "hidden"
-            } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20`}
-          >
-            {searchedUsers?.map((searchedUser) => (
-              <div
-                key={searchedUser._id}
-                className=" hover:bg-neutral-600 hover:text-white"
-              >
-                <UserBasicInfo
-                  handleOnClick={() => setShowSearchedUsers(false)}
-                  user={searchedUser}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    return (
+        <header className='flex justify-between items-center bg-neutral-800 shadow-md p-5 h-20'>
+            <div className='left'>
+                <Link to='/'>
+                    <h1 className='mr-5 font-medium hover:text-gray-900'>
+                        FriendFusion
+                    </h1>
+                </Link>
+                <div className='relative'>
+                    <form onSubmit={handleSearch}>
+                        <input type='text' name='search' placeholder='Search' />
+                        <button
+                            type='submit'
+                            className='mr-5 font-medium hover:text-gray-900'
+                        >
+                            Search
+                        </button>
+                    </form>
+                    <div
+                        className={`${
+                            showSearchedUsers ? 'block' : 'hidden'
+                        } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20`}
+                    >
+                        {searchedUsers?.map((searchedUser) => (
+                            <div
+                                key={searchedUser._id}
+                                className=' hover:bg-neutral-600 hover:text-white'
+                            >
+                                <UserBasicInfo
+                                    handleOnClick={() =>
+                                        setShowSearchedUsers(false)
+                                    }
+                                    user={searchedUser}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
 
-      <div className="right flex gap-2">
-        {isNightMode ? (
-          <MoonIcon className="h-6 w-6" onClick={handleToggleNightMode} />
-        ) : (
-          <SunIcon className="h-6 w-6" onClick={handleToggleNightMode} />
-        )}
+            <div className='right flex gap-2'>
+                {isNightMode ? (
+                    <MoonIcon
+                        className='h-6 w-6'
+                        onClick={handleToggleNightMode}
+                    />
+                ) : (
+                    <SunIcon
+                        className='h-6 w-6'
+                        onClick={handleToggleNightMode}
+                    />
+                )}
 
-        <Link to="/comments">
-          <ChatIcon className="h-6 w-6" />
-        </Link>
-        <Link to="/alerts">
-          <BellIcon className="h-6 w-6" />
-        </Link>
-        <Link to="/help">
-          <QuestionMarkCircleIcon className="h-6 w-6" />
-        </Link>
-        <span>Welcome {user?.firstName}</span>
-        <button onClick={handleLogout}>
-          <ArrowRightIcon className="h-6 w-6" />
-        </button>
-      </div>
-    </header>
-  );
+                <Link to='/comments'>
+                    <CommentIcon />
+                </Link>
+                <Link to='/alerts'>
+                    <AlertIcon />
+                </Link>
+                <Link to='/help'>
+                    <HelpIcon />
+                </Link>
+                <span>Welcome {user?.firstName}</span>
+                <button onClick={handleLogout}>
+                    <LogoutIcon />
+                </button>
+            </div>
+        </header>
+    );
 };
 
 export default Header;
