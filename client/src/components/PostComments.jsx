@@ -4,6 +4,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import api from "../api";
 import InputEmoji from "react-input-emoji";
 
+
 const PostComment = ({ postId, comment, onDeleteComment }) => {
   const { _id, content, user, createdAt } = comment;
   const { user: currentUser, handleDeleteCommentsForPost } = useAppContext();
@@ -71,6 +72,8 @@ const PostComments = (post) => {
       });
   };
 
+
+
   return (
     <>
       <div className="mr-2 pl-2">
@@ -94,6 +97,14 @@ const PostComments = (post) => {
           />
         ))}
       </div>
+
+      
+      
+      
+ 
+
+
+     
     </>
   );
 };
