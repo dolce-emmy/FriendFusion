@@ -1,4 +1,5 @@
 import PostCollection from '../models/postSchema.js';
+import CommentCollection from "../models/commentSchema.js";
 
 // getAllPost//
 export const getAllPosts = async (req, res) => {
@@ -192,16 +193,19 @@ export const updatePost = async (req, res) => {
 // for delete post//
 export const deletePost = async (req, res) => {
     try {
-        const user = req.body.userId;
-        const deletePost = await PostCollection.findById(req.params.id);
-        if (deletePost.user.toString() === user) {
-            await deletePost.deleteOne();
-            res.status(200).json({ success: true, data: deletePost });
+        const { id, userId } = req.params;
+        const deletePost = await PostCollection.findById(id);
+        if (deletePost.user.toString() === userId) {
+          deletePost.comments.map(async (comment) => {
+            await CommentCollection.findByIdAndDelete(comment);
+          });
+          await deletePost.deleteOne();
+          res.status(200).json({ success: true, data: deletePost });
         } else {
-            res.status(403).json({
-                success: false,
-                message: 'You can delete only your post',
-            });
+          res.status(403).json({
+            success: false,
+            message: "You can delete only your post",
+          });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
