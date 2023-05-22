@@ -2,6 +2,10 @@ import api from "../api";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import InputEmoji from "react-input-emoji";
+import ImageIcon from "./icons/ImageIcon";
+import GifIcon from "./icons/GifIcon";
+import AudioIcon from "./icons/AudioIcon";
+import DocumentIcon from "./icons/DocumentIcon";
 
 const PostForm = () => {
   const { user, updatePosts } = useAppContext();
@@ -25,17 +29,20 @@ const PostForm = () => {
   };
 
   const handleImage = (e) => {
-    //call api to upload image
+    //call api to upload images
     const formData = new FormData();
-    const file = e.target.files[0];
-    formData.append("file", file, file.name);
+    if (e.target.files?.length !== 0) {
+      Array.from(e.target.files).forEach((file) => {
+        formData.append("file", file, file.name);
+      });
+    }
 
-    api.post("/images", formData).then((res) => {
+    api.post("/images/multiple", formData).then((res) => {
       // get the image id
       // set to the state
 
       // the rest syntax is adding the old images to the new images
-      setImages([...images, res.data.data._id]);
+      setImages(res.data.data.map((image) => image._id));
     });
   };
 
@@ -52,11 +59,44 @@ const PostForm = () => {
           placeholder="What's Happening?"
         />
       </div>
-      <div className="px-4 py-3 flex items-center justify-between w-full max-w-full">
-        <span>
-          <label htmlFor="image">Image</label>
-          <input type="file" id="image" name="image" onChange={handleImage} />
-        </span>
+      <div className="px-4 py-3 gap-2 flex items-center justify-between w-full max-w-full">
+        <div className="flex gap-4 items-center justify-between">
+          <button className="flex gap-1 cursor-pointer px-2">
+            <ImageIcon />
+            <label className="block" htmlFor="image">
+              Image
+            </label>
+            <input
+              multiple
+              type="file"
+              id="image"
+              name="image"
+              onChange={handleImage}
+              className="hidden"
+              accept="image/*"
+            />
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <GifIcon />
+            <span>Video</span>
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <DocumentIcon />
+            <span>Attachment</span>
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <AudioIcon />
+            <span>Audio</span>
+          </button>
+        </div>
+        <div className="">
+          <button
+            onClick={onSubmitHandler}
+            className="cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+          >
+            Post
+          </button>
+        </div>
 
         {/* <span>
             <label htmlFor="video">Video</label>
@@ -67,13 +107,6 @@ const PostForm = () => {
             <label htmlFor="audio">Audio</label>
             <input type="file" id="audio" name="audio" />
           </span> */}
-
-        <button
-          onClick={onSubmitHandler}
-          className="cursor-pointer bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
-        >
-          Post
-        </button>
       </div>
     </div>
   );
