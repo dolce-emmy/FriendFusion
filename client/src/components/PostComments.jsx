@@ -29,10 +29,10 @@ const PostComment = ({ postId, comment, onDeleteComment }) => {
       <span>{content}</span>
       {user?._id === currentUser._id && (
         <span
-          className="block text-sm text-neutral-500 cursor-pointer"
+          className="block text-sm text-neutral-500 cursor-pointer hover:underline"
           onClick={() => handleDeleteComment(_id)}
         >
-          Remove
+          remove
         </span>
       )}
     </>
