@@ -3,9 +3,10 @@ import { useAppContext } from "../context/AppContext";
 import api from "../api";
 import UserBasicInfo from "./UserBasicInfo";
 import PostComments from "./PostComments";
-import LikeIcon from "./icons/LikeIcon";
+import HeartIcon from "./icons/HeartIcon";
 import RedHeartIcon from "./icons/RedHeartIcon";
-import ToggleComments from "./icons/ToggleComments";
+import CommentsIcon from "./icons/CommentsIcon";
+import DeleteIcon from "./icons/DeleteIcon";
 
 const Post = ({
   _id,
@@ -17,13 +18,12 @@ const Post = ({
   createdAt,
   updateLikesForPosts,
 }) => {
-  const { user: currentUser } = useAppContext();
+  const { user: currentUser, handleDeletePost } = useAppContext();
   const [showComments, setShowComments] = useState(false);
   const [populatedComments, setPopulatedComments] = useState([]);
 
   const handleLike = (e) => {
     e.preventDefault();
-
     api
       .post(`/posts/${_id}/like`, { userId: currentUser._id })
       .then((res) => {
@@ -63,6 +63,7 @@ const Post = ({
       });
   };
 
+
   const handleAddReplyForComment = (id, reply) => {
     const updatedReplies = populatedComments.map((comment) => {
       if (comment._id === id) {
@@ -71,6 +72,21 @@ const Post = ({
       return comment;
     });
     setPopulatedComments(updatedReplies);
+  };
+
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    api
+      .delete(`/posts/${_id}/user/${currentUser._id}`)
+      .then((res) => {
+        if (res.data.success) {
+          handleDeletePost(_id);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
 
@@ -94,7 +110,7 @@ const Post = ({
           />
         ))}
       </div>
-      <div className="flex items-center justify-between mx-4 mt-3 mb-2">
+      <div className="mx-4 mt-3 mb-2">
         <div className="flex gap-5">
           <button
             onClick={handleLike}
@@ -102,7 +118,7 @@ const Post = ({
           >
             <span>
               {!likes.includes(currentUser?._id) ? (
-                <LikeIcon />
+                <HeartIcon />
               ) : (
                 <RedHeartIcon />
               )}
@@ -114,10 +130,21 @@ const Post = ({
             className="flex gap-1 text-sm items-center"
           >
             <span>
-              <ToggleComments />
+              <CommentsIcon />
             </span>
             <span>{comments.length} Comments</span>
           </button>
+          {user?._id === currentUser?._id && (
+            <button
+              onClick={handleDelete}
+              className="flex gap-1 text-sm items-center text-red-500 ml-auto"
+            >
+              <span>
+                <DeleteIcon />
+              </span>
+              {/* <span>Delete</span> */}
+            </button>
+          )}
         </div>
       </div>
       <div className={showComments ? "block mt-6" : "hidden"}>

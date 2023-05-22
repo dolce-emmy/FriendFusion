@@ -33,7 +33,7 @@ router.post('/:id/like', likePost);
 router.patch('/:id', updatePost);
 
 // for delete post//
-router.delete('/:id', deletePost);
+router.delete("/:id/user/:userId", deletePost);
 
 export default router;
 

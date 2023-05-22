@@ -16,7 +16,7 @@ const Home = () => {
         <div className="w-full md:w-4/12 lg:w-3/12 lg:max-w-xs">
           <UserInfo user={user} />
         </div>
-        <div className="w-full md:w-8/12 lg:w-6/12 lg:max-w-xl flex-grow">
+        <div className="w-full md:w-8/12 lg:w-6/12 flex-grow shrink-0">
           <PostForm />
           <PostList posts={posts} updateLikesForPosts={handleLikesForPost} />
         </div>

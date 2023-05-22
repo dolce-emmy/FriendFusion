@@ -1,64 +1,104 @@
 import api from "../api";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import InputEmoji from "react-input-emoji";
+import ImageIcon from "./icons/ImageIcon";
+import GifIcon from "./icons/GifIcon";
+import AudioIcon from "./icons/AudioIcon";
+import DocumentIcon from "./icons/DocumentIcon";
 
 const PostForm = () => {
   const { user, updatePosts } = useAppContext();
   const [images, setImages] = useState([]);
+  const [description, setDescription] = useState("");
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     const data = {
       user: user._id,
-      description: e.target.description.value,
+      description,
       images,
     };
 
     api.post("/posts", data).then((res) => {
       updatePosts(res.data.data);
+      setDescription("");
+      setImages([]);
     });
   };
 
   const handleImage = (e) => {
-    //call api to upload image
+    //call api to upload images
     const formData = new FormData();
-    const file = e.target.files[0];
-    formData.append("file", file, file.name);
+    if (e.target.files?.length !== 0) {
+      Array.from(e.target.files).forEach((file) => {
+        formData.append("file", file, file.name);
+      });
+    }
 
-    api.post("/images", formData).then((res) => {
+    api.post("/images/multiple", formData).then((res) => {
       // get the image id
       // set to the state
 
       // the rest syntax is adding the old images to the new images
-      setImages([...images, res.data.data._id]);
+      setImages(res.data.data.map((image) => image._id));
     });
   };
 
   return (
     <div className="w-full px-1 py-3 mb-8 bg-neutral-800 rounded-2xl flex flex-col">
-      <form onSubmit={onSubmitHandler}>
-        <div className="flex items-center px-4 py-3">
-          <img
-            className="h-14 w-14 rounded-full mr-4"
-            src={user?.image?.url || "https://placehold.co/60x60/png"}
-          />
-          <input
-            className="w-full h-16 px-4 outline-none rounded-xl"
-            type="text"
-            id="description"
-            name="description"
-            autoComplete="off"
-            placeholder="Write something..."
-          />
+      <div className="flex items-center px-4 py-3 w-full gap-1 post-form">
+        <img
+          className="h-14 w-14 rounded-full"
+          src={user?.image?.url || "https://placehold.co/60x60/png"}
+        />
+        <InputEmoji
+          value={description}
+          onChange={setDescription}
+          placeholder="What's Happening?"
+        />
+      </div>
+      <div className="px-4 py-3 gap-2 flex items-center justify-between w-full max-w-full">
+        <div className="flex gap-4 items-center justify-between">
+          <button className="flex gap-1 cursor-pointer px-2">
+            <ImageIcon />
+            <label className="block" htmlFor="image">
+              Image
+            </label>
+            <input
+              multiple
+              type="file"
+              id="image"
+              name="image"
+              onChange={handleImage}
+              className="hidden"
+              accept="image/*"
+            />
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <GifIcon />
+            <span>Video</span>
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <DocumentIcon />
+            <span>Attachment</span>
+          </button>
+          <button className="flex gap-1 cursor-pointer px-2">
+            <AudioIcon />
+            <span>Audio</span>
+          </button>
         </div>
-        <div className="px-4 py-3 flex items-center justify-between w-full max-w-full">
-          <span>
-            <label htmlFor="image">Image</label>
-            <input type="file" id="image" name="image" onChange={handleImage} />
-          </span>
+        <div className="">
+          <button
+            onClick={onSubmitHandler}
+            className="cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+          >
+            Post
+          </button>
+        </div>
 
-          {/* <span>
+        {/* <span>
             <label htmlFor="video">Video</label>
             <input type="file" id="video" name="video" />
           </span>
@@ -67,14 +107,7 @@ const PostForm = () => {
             <label htmlFor="audio">Audio</label>
             <input type="file" id="audio" name="audio" />
           </span> */}
-
-          <input
-            type="submit"
-            value="Post"
-            className="cursor-pointer bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
-          />
-        </div>
-      </form>
+      </div>
     </div>
   );
 };
