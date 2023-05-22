@@ -89,6 +89,10 @@ export default function AppContextProvider({ children }) {
     setUser(user);
   };
 
+
+
+
+
   return (
     <AppContext.Provider
       value={{
@@ -102,6 +106,7 @@ export default function AppContextProvider({ children }) {
         handleDeleteCommentsForPost,
         handleUpdateUser,
         handleDeletePost,
+       
       }}
     >
       {children}

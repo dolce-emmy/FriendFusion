@@ -63,6 +63,17 @@ const Post = ({
       });
   };
 
+  const handleAddReplyForComment = (id, reply) => {
+    const updatedReplies = populatedComments.map((comment) => {
+      if (comment._id === id) {
+        return { ...comment, replies: [...comment.replies, reply.id] };
+      }
+      return comment;
+    });
+    setPopulatedComments(updatedReplies);
+  };
+
+
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
       <UserBasicInfo

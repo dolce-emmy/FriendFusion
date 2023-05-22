@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, setUser } = useAppContext();
-  console.log (user)
+  console.log(user);
 
   const navigate = useNavigate();
   // const [formData, setFormData] = useState({
@@ -49,10 +49,10 @@ const Profile = () => {
           console.log(res.data);
           setSubmitted(true);
           setError(false);
-  
+
           if (res.data.success) {
             setUser(res.data.data);
-  
+
             navigate("/");
           } else {
             console.log(res.data.message);
@@ -62,7 +62,6 @@ const Profile = () => {
           setError(true);
         });
     }
-
   };
 
   // Showing success message
@@ -94,35 +93,50 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label className="label">First Name</label>
+    <div className="w-full h-full max-w-sm mx-auto rounded-md shadow-md bg-neutral-800 p-8">
+      <div>
+        <h1 className="text-3xl font-bold text-center">Edit Your Profile</h1>
+      </div>
+      <br />
+
+      <div
+        className="flex justify-center items-center"
+      >
+        <img
+          alt="..."
+          src={user?.image.url}
+          className="shadow-xl rounded-full h-20 w-20 align-middle border-none  -m-16 my-0.5  -ml-30 lg:-ml-16 max-w-150-px"
+        />
+      </div>
+      <br />
+      <form className="mb-4" onSubmit={handleSubmit}>
+        <label className="block text-sm font-bold mb-2">First Name</label>
         <input
           name="firstName"
           defaultValue={user?.firstName}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.firstName}
           type="text"
         />
         <br />
         <br />
-        <label className="label">Last Name</label>
+        <label className="label block text-sm font-bold mb-2">Last Name</label>
         <input
           name="lastName"
           defaultValue={user?.lastName}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.lastName}
           type="text"
         />
         <br />
         <br />
-        <label className="label">Email</label>
+        <label className="label block text-sm font-bold mb-2">Email</label>
         <input
           name="email"
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           defaultValue={user?.email}
           //value={user?.email}
           type="email"
@@ -131,36 +145,36 @@ const Profile = () => {
 
         <br />
 
-        <label className="label">Occupation</label>
+        <label className="label block text-sm font-bold mb-2">Occupation</label>
         <input
           name="occupation"
           defaultValue={user?.occupation}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.occupation}
           type="text"
         />
 
         <br />
         <br />
-        <label className="label">mobile</label>
+        <label className="label block text-sm font-bold mb-2">mobile</label>
         <input
           name="mobile"
           defaultValue={user?.mobile}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.mobile}
           type="tel"
         />
         <br />
         <br />
 
-        <label className="label">Location</label>
+        <label className="label block text-sm font-bold mb-2 ">Location</label>
         <input
           name="location"
           defaultValue={user?.location}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.location}
           type="text"
         />
@@ -168,23 +182,25 @@ const Profile = () => {
         <br />
         <br />
 
-        <label className="label">Birthday</label>
+        <label className="label block text-sm font-bold mb-2">Birthday</label>
         <input
           name="birthday"
           defaultValue={user?.birthday}
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.birthday}
           type="date"
         />
         <br />
         <br />
 
-        <label className="label">Profile Picture</label>
+        <label className="label block text-sm font-bold mb-2">
+          Profile Picture
+        </label>
         <input
           name="file"
           // onChange={handleInputChange}
-          className="input"
+          className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
           //value={user?.picturePath}
           type="file"
         />
@@ -192,12 +208,15 @@ const Profile = () => {
         <br />
         <br />
 
-        <button className="btn">Submit</button>
+        <button className="btn block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
+          Submit
+        </button>
       </form>
+      <button className="btn block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
+      <Link to="/"> Homepage</Link>
+      </button>
       
-      <Link to="/">go back to homepage</Link>
     </div>
-    
   );
 };
 
