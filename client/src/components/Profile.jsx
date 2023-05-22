@@ -2,6 +2,7 @@ import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
 import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
+import ArrowHomePageIcon from "./icons/ArrowHomePageIcon";
 
 const Profile = () => {
   const { user, setUser } = useAppContext();
@@ -105,7 +106,7 @@ const Profile = () => {
         <img
           alt="..."
           src={user?.image.url}
-          className="shadow-xl rounded-full h-20 w-20 align-middle border-none  -m-16 my-0.5  -ml-30 lg:-ml-16 max-w-150-px"
+          className="shadow-xl rounded-full h-20 w-20 align-middle border-none  -m-16 my-0.5  -ml-30 lg:-ml-16 max-w-250-px"
         />
       </div>
       <br />
@@ -213,7 +214,11 @@ const Profile = () => {
         </button>
       </form>
       <button className="btn block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
-      <Link to="/"> Homepage</Link>
+      <Link to="/" className=" flex content-between justify-center">
+
+        HomePage <ArrowHomePageIcon/>
+        
+      </Link>
       </button>
       
     </div>
