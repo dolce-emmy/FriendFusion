@@ -30,7 +30,7 @@ export const getAllCommentsByIds = async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }
-}
+};
 
 // get single comment by Id
 export const getSingleCommentById = async (req, res) => {
@@ -50,9 +50,7 @@ export const createComment = async (req, res) => {
     const { postId } = req.params;
     const { content } = req.body;
     const { _id } = req.user;
-    
 
-    
     const createdComment = await CommentCollection.create({
       content,
       user: _id,
@@ -85,8 +83,17 @@ export const updateCommentById = async (req, res) => {
 // delete comment by Id
 export const deleteCommentById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id, postId } = req.params;
     const removedComment = await CommentCollection.findByIdAndRemove(id);
+
+    const post = await PostCollection.findById(postId);
+    if (post) {
+      post.comments = post.comments.filter(
+        (comment) => comment.toString() !== id
+      );
+      await post.save();
+    }
+
     res.status(200).json({ success: true, data: removedComment });
   } catch (err) {
     res.status(404).json({ success: false, message: err.message });

@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import api from "../api";
 import UserBasicInfo from "./UserBasicInfo";
-import {
-  MoonIcon,
-  SunIcon,
-  ChatIcon,
-  BellIcon,
-  QuestionMarkCircleIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/outline";
+import CommentIcon from "./icons/CommentIcon";
+import AlertIcon from "./icons/AlertIcon";
+import HelpIcon from "./icons/HelpIcon";
+import LogoutIcon from "./icons/LogoutIcon";
+import MoonIcon from "./icons/MoonIcon";
+import SunIcon from "./icons/SunIcon";
 
 const Header = () => {
   const { user } = useAppContext();
@@ -88,23 +86,23 @@ const Header = () => {
 
       <div className="right flex gap-2">
         {isNightMode ? (
-          <MoonIcon className="h-6 w-6" onClick={handleToggleNightMode} />
+          <MoonIcon onClick={handleToggleNightMode} />
         ) : (
-          <SunIcon className="h-6 w-6" onClick={handleToggleNightMode} />
+          <SunIcon onClick={handleToggleNightMode} />
         )}
 
         <Link to="/comments">
-          <ChatIcon className="h-6 w-6" />
+          <CommentIcon />
         </Link>
         <Link to="/alerts">
-          <BellIcon className="h-6 w-6" />
+          <AlertIcon />
         </Link>
         <Link to="/help">
-          <QuestionMarkCircleIcon className="h-6 w-6" />
+          <HelpIcon />
         </Link>
         <span>Welcome {user?.firstName}</span>
         <button onClick={handleLogout}>
-          <ArrowRightIcon className="h-6 w-6" />
+          <LogoutIcon />
         </button>
       </div>
     </header>
