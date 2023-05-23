@@ -63,16 +63,29 @@ const Post = ({
       });
   };
 
-  const handleAddReplyForComment = (id, reply) => {
-    const updatedReplies = populatedComments.map((comment) => {
+  const handleAddReplyForComment = (id, replies) => {
+    const updatedCommentsWithReplies = populatedComments.map((comment) => {
       if (comment._id === id) {
-        return { ...comment, replies: [...comment.replies, reply.id] };
+        return { ...comment, replies };
       }
       return comment;
     });
-    setPopulatedComments(updatedReplies);
+    setPopulatedComments(updatedCommentsWithReplies);
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    api
+      .delete(`/posts/${_id}/user/${currentUser._id}`)
+      .then((res) => {
+        if (res.data.success) {
+          handleDeletePost(_id);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
@@ -126,6 +139,7 @@ const Post = ({
           comments={comments}
           populatedComments={populatedComments}
           getComments={getComments}
+          handleAddReplyForComment={handleAddReplyForComment}
         />
       </div>
     </div>

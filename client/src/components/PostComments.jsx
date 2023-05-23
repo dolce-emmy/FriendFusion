@@ -3,11 +3,19 @@ import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
 import api from "../api";
 import InputEmoji from "react-input-emoji";
+import CommentReplies from "./CommentReplies";
+import CommentIcon from "./icons/CommentIcon";
 
-
-const PostComment = ({ postId, comment, onDeleteComment }) => {
+const PostComment = ({
+  postId,
+  comment,
+  onDeleteComment,
+  handleAddReplyForComment,
+}) => {
   const { _id, content, user, createdAt } = comment;
   const { user: currentUser, handleDeleteCommentsForPost } = useAppContext();
+  const [showReplies, setShowReplies] = useState(false);
+  // const [populatedReplies, setPopulatedReplies] = useState([]);
 
   // after that we need to delete the comments from the backend
   // and then we need to update the comments in the state of the post page
@@ -25,29 +33,80 @@ const PostComment = ({ postId, comment, onDeleteComment }) => {
       });
   };
 
+  const getReplies = (ids) => {
+    api
+      .post(
+        "/comments",
+        { ids },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          handleAddReplyForComment(_id, res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const toggleReplies = () => {
+    setShowReplies(!showReplies);
+    if (!showReplies) {
+      getReplies(comment.replies);
+    }
+  };
+
   const extraInfo = (
     <>
       <span>{content}</span>
-      {user?._id === currentUser._id && (
+      <span className="flex justify-between block mt-1">
+        {user?._id === currentUser._id && (
+          <span
+            className="block text-sm text-neutral-500 cursor-pointer hover:underline"
+            onClick={() => handleDeleteComment(_id)}
+          >
+            remove
+          </span>
+        )}
         <span
-          className="block text-sm text-neutral-500 cursor-pointer"
-          onClick={() => handleDeleteComment(_id)}
+          onClick={toggleReplies}
+          className="flex gap-1 text-sm items-center cursor-pointer ml-auto"
         >
-          Remove
+          <span>
+            <CommentsIcon />
+          </span>
+          <span>{comment.replies.length} Replies</span>
         </span>
-      )}
+      </span>
     </>
   );
 
   return (
     <div key={_id}>
       <UserBasicInfo user={user} extraInfo={extraInfo} timeStamp={createdAt} />
+
+      <div className="px-8 mt-4">
+        {showReplies && (
+          <CommentReplies
+            key={_id}
+            comment={comment}
+            onAddReplyForComment={handleAddReplyForComment}
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-const PostComments = (post) => {
-  const { _id, comments, populatedComments, getComments } = post;
+const PostComments = (props) => {
+  const {
+    _id,
+    comments,
+    populatedComments,
+    getComments,
+    handleAddReplyForComment,
+  } = props;
   const { handleAddCommentsForPost } = useAppContext();
   const [comment, setComment] = useState("");
 
@@ -72,8 +131,6 @@ const PostComments = (post) => {
       });
   };
 
-
-
   return (
     <>
       <div className="mr-2 pl-2">
@@ -94,17 +151,10 @@ const PostComments = (post) => {
             onDeleteComment={() =>
               getComments(comments?.filter((c) => c._id !== comment._id))
             }
+            handleAddReplyForComment={handleAddReplyForComment}
           />
         ))}
       </div>
-
-      
-      
-      
- 
-
-
-     
     </>
   );
 };

@@ -8,6 +8,7 @@ import {
   updateCommentById,
   deleteCommentById,
   replyCommentById,
+  deleteReplyById,
 } from "../controllers/commentsController.js";
 import { auth } from "../middlewares/auth.js";
 
@@ -27,6 +28,9 @@ router.patch("/:id", updateCommentById);
 
 //DELETE to delete a single comment
 router.post("/:id/post/:postId", deleteCommentById);
+
+//DELETE to delete a single reply for a comment
+router.post("/:id/reply/:replyId", deleteReplyById);
 
 //POST to reply to comment
 router.post("/:id/reply", auth, replyCommentById);
