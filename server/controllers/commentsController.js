@@ -84,6 +84,8 @@ export const updateCommentById = async (req, res) => {
 export const deleteCommentById = async (req, res) => {
   try {
     const { id, postId } = req.params;
+    // find the comment and find all the replies and delete them
+    // then delete this comment
     const removedComment = await CommentCollection.findByIdAndRemove(id);
 
     const post = await PostCollection.findById(postId);
@@ -113,7 +115,18 @@ export const replyCommentById = async (req, res) => {
     });
 
     if (createdComment) {
-      const comment = await CommentCollection.findById(id);
+      const comment = await CommentCollection.findById(id).populate({
+        path: "replies",
+        model: "Comment",
+        populate: {
+          path: "user",
+          model: "User",
+          populate: {
+            path: "image",
+            model: "Image",
+          },
+        },
+      });
       if (comment.replies) {
         comment.replies.push(createdComment);
       } else {
@@ -126,3 +139,6 @@ export const replyCommentById = async (req, res) => {
     res.status(404).json({ success: false, message: err.message });
   }
 };
+
+// delete reply by Id
+export const deleteReplyById = async (req, res) => {};
