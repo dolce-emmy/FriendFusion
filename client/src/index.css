@@ -43,3 +43,18 @@ select:-webkit-autofill:active{
   @apply !text-neutral-100;
   @apply !border-neutral-700;
 }
+
+.react-input-emoji--button {
+  @apply !absolute;
+  @apply !right-0;
+  @apply z-10;
+}
+
+.react-input-emoji--wrapper {
+  @apply !mr-10
+}
+
+.post-form .react-emoji-picker--wrapper {
+  top: 50px !important;
+  bottom: auto !important;
+}
