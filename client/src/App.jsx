@@ -14,6 +14,7 @@ import Help from './components/Help';
 import Comment from './components/Comment';
 import Alert from './components/Alert';
 import PublicProfile from './components/PublicProfile';
+import NotFound from './components/NotFound';
 //import FormLogin from './components/FormLogin'
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                 <Route path='/help' element={<Help />} />
                 <Route path='/comments' element={<Comment />} />
                 <Route path='/alerts' element={<Alert />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
         </AppContextProvider>
     );
