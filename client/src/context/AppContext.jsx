@@ -14,7 +14,8 @@ export default function AppContextProvider({ children }) {
     const token = localStorage.getItem("token");
     const isAuthPage =
       location.pathname.includes("/login") ||
-      location.pathname.includes("/register");
+      location.pathname.includes("/register") ||
+      location.pathname.includes("/forgot-password");
 
     if (!token) {
       if (!isAuthPage) {
