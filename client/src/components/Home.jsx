@@ -3,6 +3,7 @@ import UserInfo from "./UserInfo";
 import Header from "./Header";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
+import Youtube from "./Youtube";
 import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
 
@@ -28,8 +29,17 @@ const Home = () => {
               <UserBasicInfo key={user._id} user={user} showToggleFriend />
             ))}
           </div>
+
+          <div>
+          <Youtube />
         </div>
+
+        
+        </div>
+
+       
       </div>
+      
       {/* Footer */}
     </div>
   );
