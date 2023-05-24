@@ -31,15 +31,15 @@ export const loginUser = async (req, res) => {
                 res.header('token', token).json({ success: true, data: user });
             } else {
                 res.status(403).json({
-                    success: false,
-                    data: 'Invalid password',
+                  success: false,
+                  message: "Invalid password",
                 });
             }
         } else {
             res.status(403).json({ success: false, data: 'Invalid email' });
         }
     } catch (error) {
-        res.status(500).json({ success: false, data: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
