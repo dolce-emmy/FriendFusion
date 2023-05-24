@@ -37,7 +37,7 @@ const Youtube = () => {
                 }
                 return newIndex;
             });
-        }, 3000);
+        }, 5000);
         // here we are clearing the interval so that we don't have multiple intervals running at the same time and causing issues
         return () => clearInterval(interval);
     }, [index]);
@@ -51,7 +51,7 @@ const Youtube = () => {
       <div className="
         flex flex-col items-center justify-center w-full h-full gap-4 p-4 bg-neutral-800 rounded-2xl shadow-lg text-neutral-100 text-center mt-5    
       ">
-      <h1><i className="fa-brands fa-youtube"></i> YouTube</h1>
+      <h1><i className="text-red-500 fa-brands fa-youtube"></i> YouTube</h1>
       
       {/*here we are saying that if the length of the video array is greater than 0, then we want to display the video at the index of the index state variable   */}
       {video.length > 0 && (

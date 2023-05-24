@@ -4,6 +4,7 @@ import Header from "./Header";
 import PostForm from "./PostForm";
 import PostList from "./PostList";
 import Youtube from "./Youtube";
+import Advertisement from "./Advertisement";
 import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
 
@@ -23,23 +24,24 @@ const Home = () => {
         </div>
         <div className="w-full md:hidden lg:block lg:w-3/12 lg:max-w-xs">
           {/* TODO: advertisements, friends list */}
-          <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-5">
+
+          <div>
+            <Youtube />
+          </div>
+
+          <div>
+            <Advertisement />
+          </div>
+
+          <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-5 mt-4">
             <h1 className="text-xl font-semibold mb-4">Friends List</h1>
             {user?.friends?.map((user) => (
               <UserBasicInfo key={user._id} user={user} showToggleFriend />
             ))}
           </div>
-
-          <div>
-          <Youtube />
         </div>
-
-        
-        </div>
-
-       
       </div>
-      
+
       {/* Footer */}
     </div>
   );
