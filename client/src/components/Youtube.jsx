@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const API_KEY = import.meta.env.VITE_MY_KEY;
+const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
 const Youtube = () => {
   const [video, setVideo] = useState([]);
@@ -9,7 +9,7 @@ const Youtube = () => {
   useEffect(() => {
     axios
       .get(
-        `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&key=AIzaSyCV5kft_2osmuIEpt9h3p1IIyKi25H0yVo`
+        `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&key=${API_KEY}`
       )
       .then((res) => {
         console.log(res.data);
@@ -37,7 +37,7 @@ const Youtube = () => {
                 }
                 return newIndex;
             });
-        }, 5000);
+        }, 3000);
         // here we are clearing the interval so that we don't have multiple intervals running at the same time and causing issues
         return () => clearInterval(interval);
     }, [index]);
