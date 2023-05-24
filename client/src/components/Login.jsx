@@ -3,14 +3,14 @@ import { useAppContext } from "../context/AppContext";
 import { useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
+import bgImage from "../bg.png";
+import LoginIcon from "./icons/LoginIcon";
 
 function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const { setUser } = useAppContext();
 
@@ -37,97 +37,90 @@ function Login() {
           localStorage.setItem("user", JSON.stringify(res.data.data));
           setUser(res.data.data);
           navigate("/");
-
         } else {
-          prompt(res.data.message);
+          setMessage(res.data.message);
         }
+      })
+      .catch((err) => {
+        setMessage(err.response.data.message);
       });
   };
 
-  const handleForgotPasswordSubmit = (event) => {
-    event.preventDefault();
-  };
-
   return (
-    <div className="">
-      {!showForgotPassword ? (
-        <>
-          <h1 className="text-3xl font-bold text-center mb-6">Hello, you!</h1>
-          {message && <div>{message}</div>}
-          <div className="w-full h-full max-w-sm mx-auto rounded-md shadow-md bg-neutral-800 p-8">
-            <form onSubmit={handleLoginSubmit}>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="email">
-                  Email
-                </label>
+    <div className="w-screen h-screen">
+      <div className="bg-neutral-800 text-neutral-100 w-full h-full overflow-hidden">
+        <div className="md:flex w-full">
+          <div
+            className="hidden md:block w-1/2 bg-indigo-600 p-10 absolute left-0 inset-y-0"
+            style={{ backgroundImage: `url(${bgImage})` }}
+          >
+            <LoginIcon />
+          </div>
+          <div className="w-full md:w-1/2 py-10 mx-auto flex flex-col gap-4 justify-center items-center absolute right-0 inset-y-0">
+            <div className="px-8 lg:px-2">
+              <h1 className="text-3xl font-bold text-center">Hello, you</h1>
+              <div className="messages my-3">
+                {message && (
+                  <div
+                    className="flex justify-center bg-yellow-100 rounded-lg p-4 mb-4 max-w-md text-sm text-yellow-700 mx-auto"
+                    role="alert"
+                  >
+                    <span className="mr-2">
+                      <i className="fas fa-light fa-triangle-exclamation"></i>
+                    </span>
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
+              </div>
+              <form onSubmit={handleLoginSubmit}>
+                <div className="flex gap-4 mb-4">
+                  <div>
+                    <label
+                      className="block text-sm font-bold mb-2"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="john.doe@example.com"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <PasswordField
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                    />
+                  </div>
+                </div>
                 <input
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 text-black"
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="john.doe@example.com"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+                  className="cursor-pointer block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
+                  type="submit"
+                  value="Login"
                 />
-              </div>
-              <div className="mb-4">
-                <PasswordField
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </div>
-              <input
-                className="block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
-                type="submit"
-                value="Sign in"
-              />
-              <button
-                className="text-sm my-2 text-neutral-300 hover:text-neutral-100"
-                onClick={() => setShowForgotPassword(true)}
+              </form>
+              <NavLink
+                className="text-sm mt-2 text-neutral-300 hover:text-neutral-100"
+                to="/forgot-password"
               >
                 Forgot Password?
-              </button>
-            </form>
-            <div className="p-4 border-b border-neutral-700 h-1 w-full" />
-            <NavLink
-              className="block text-center w-full bg-green-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 mt-6"
-              to="/register"
-            >
-              Register
-            </NavLink>
-          </div>
-        </>
-      ) : (
-        <div className="forget-container max-w-sm mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-6">
-            Forgot Password
-          </h1>
-          <p className="text-center my-3">
-            Please enter your email to recover the password
-          </p>
-          <div className="w-full h-full max-w-sm mx-auto rounded-md shadow-md bg-neutral-800 p-8">
-            <form onSubmit={handleForgotPasswordSubmit}>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="john.doe@example.com"
-                />
-              </div>
-              <input
-                className="block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
-                type="submit"
-                value="Reset Password"
-              />
-            </form>
+              </NavLink>
+              <div className="p-4 border-b border-neutral-700 h-1 w-full" />
+              <NavLink
+                className="block text-center w-full bg-green-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 mt-6"
+                to="/register"
+              >
+                Register
+              </NavLink>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
