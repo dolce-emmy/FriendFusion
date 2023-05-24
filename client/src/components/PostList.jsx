@@ -7,6 +7,7 @@ import HeartIcon from "./icons/HeartIcon";
 import RedHeartIcon from "./icons/RedHeartIcon";
 import CommentsIcon from "./icons/CommentsIcon";
 import DeleteIcon from "./icons/DeleteIcon";
+import PreviewImages from "./PreviewImages";
 
 const Post = ({
   _id,
@@ -97,15 +98,8 @@ const Post = ({
         timeStamp={createdAt}
       />
       <div className="p-4">
-        <p className="mb-3">{description}</p>
-        {images.map((image) => (
-          <img
-            key={image?._id}
-            className="w-full"
-            src={image?.url}
-            alt={image?.name}
-          />
-        ))}
+        {description && <p className="mb-3">{description}</p>}
+        <PreviewImages images={images} />
       </div>
       <div className="mx-4 mt-3 mb-2">
         <div className="flex gap-5">
