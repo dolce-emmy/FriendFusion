@@ -100,12 +100,10 @@ const Profile = () => {
       </div>
       <br />
 
-      <div
-        className="flex justify-center items-center"
-      >
+      <div className="flex justify-center items-center">
         <img
           alt="..."
-          src={user?.image.url}
+          src={user?.image?.url}
           className="shadow-xl rounded-full h-20 w-20 align-middle border-none  -m-16 my-0.5  -ml-30 lg:-ml-16 max-w-250-px"
         />
       </div>
@@ -214,13 +212,10 @@ const Profile = () => {
         </button>
       </form>
       <button className="btn block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
-      <Link to="/" className=" flex content-between justify-center">
-
-        HomePage <ArrowHomePageIcon/>
-        
-      </Link>
+        <Link to="/" className=" flex content-between justify-center">
+          HomePage <ArrowHomePageIcon />
+        </Link>
       </button>
-      
     </div>
   );
 };
