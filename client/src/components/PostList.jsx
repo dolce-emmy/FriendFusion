@@ -8,6 +8,7 @@ import RedHeartIcon from "./icons/RedHeartIcon";
 import CommentsIcon from "./icons/CommentsIcon";
 import DeleteIcon from "./icons/DeleteIcon";
 import PreviewImages from "./PreviewImages";
+import Linkify from "linkify-react";
 
 const Post = ({
   _id,
@@ -98,7 +99,12 @@ const Post = ({
         timeStamp={createdAt}
       />
       <div className="p-4">
-        {description && <p className="mb-3">{description}</p>}
+        {description && (
+          <p className="mb-3 post-description">
+            <Linkify>{description}</Linkify>
+          </p>
+        )}
+
         <PreviewImages images={images} />
       </div>
       <div className="mx-4 mt-3 mb-2">
