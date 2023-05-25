@@ -54,40 +54,37 @@ export const createImage = async (req, res) => {
 };
 
 // upload multiple image 
-
 export const createMultipleImages = async (req, res) => {
-    try {
-        console.log(req.files);
-      const { file } = req.files;
-      const createdImages = [];
-  
-      // Loop through all the files
-      for (const item of file) {
-        const fileName = new Date().getTime() + '-' + item.name;
-        const contentType = item.mimetype //'image/png'
-        const extension = contentType.split('/')[1] // 'png'
-        const fileNameWithoutExtension = fileName.replace('.'+extension ,'');
-  
-        const result = await cloudinary.v2.uploader.upload(
-          item.tempFilePath,
-          { public_id: fileNameWithoutExtension }
-        );
-            console.log(result);
-        const createdImage = await ImageCollection.create({
-          name:fileName,
-          size: result.bytes,
-          url: result.secure_url,
-          contentType: result.format,
-          // userId: req.user._id,
-        });
-  
-        createdImages.push(createdImage);
-      }
-  
-      res.status(201).json({ success: true, data: createdImages });
-    } catch (error) {
-        console.log(error.message);
-      res.status(500).json({ success: false, message: "Something went wrong" });
+  try {
+    const { file } = req.files;
+    const createdImages = [];
+    const files = !Array.isArray(file) ? [file] : file;
+
+    // Loop through all the files
+    for (const item of files) {
+      const fileName = new Date().getTime() + "-" + item.name;
+      const contentType = item.mimetype; //'image/png'
+      const extension = contentType.split("/")[1]; // 'png'
+      const fileNameWithoutExtension = fileName.replace("." + extension, "");
+
+      const result = await cloudinary.v2.uploader.upload(item.tempFilePath, {
+        public_id: fileNameWithoutExtension,
+      });
+
+      const createdImage = await ImageCollection.create({
+        name: fileName,
+        size: result.bytes,
+        url: result.secure_url,
+        contentType: result.format,
+        // userId: req.user._id,
+      });
+      createdImages.push(createdImage);
     }
-  };
+
+    res.status(201).json({ success: true, data: createdImages });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
   
