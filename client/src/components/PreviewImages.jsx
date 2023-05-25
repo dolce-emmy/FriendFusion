@@ -18,7 +18,7 @@ const PreviewImages = ({ images }) => {
       <div className="flex flex-col gap-2 cursor-pointer">
         <div className="flex gap-2">
           <div
-            className="overflow-hidden rounded-xl max-h-96"
+            className="overflow-hidden rounded-xl max-h-96 w-full"
             onClick={() => setIndex(0)}
           >
             <img
@@ -29,7 +29,7 @@ const PreviewImages = ({ images }) => {
           </div>
           {image2 && (
             <div
-              className="overflow-hidden rounded-xl max-h-96"
+              className="overflow-hidden rounded-xl max-h-96 w-full"
               onClick={() => setIndex(1)}
             >
               <img
@@ -44,7 +44,7 @@ const PreviewImages = ({ images }) => {
           <div className="flex gap-2">
             {image3 && (
               <div
-                className="overflow-hidden rounded-xl max-h-96"
+                className="overflow-hidden rounded-xl max-h-96 w-full"
                 onClick={() => setIndex(2)}
               >
                 <img
@@ -56,7 +56,7 @@ const PreviewImages = ({ images }) => {
             )}
             {image4 && (
               <div
-                className="overflow-hidden rounded-xl max-h-96"
+                className="overflow-hidden rounded-xl max-h-96 w-full"
                 onClick={() => setIndex(3)}
               >
                 <img
@@ -68,7 +68,7 @@ const PreviewImages = ({ images }) => {
             )}
             {image5 && (
               <div
-                className="overflow-hidden rounded-xl max-h-96 relative"
+                className="overflow-hidden rounded-xl max-h-96 w-full relative"
                 onClick={() => setIndex(4)}
               >
                 {image6 && count > 5 && (
