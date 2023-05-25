@@ -58,3 +58,7 @@ select:-webkit-autofill:active{
   top: 50px !important;
   bottom: auto !important;
 }
+
+.post-description a {
+  @apply !text-blue-500;
+}
