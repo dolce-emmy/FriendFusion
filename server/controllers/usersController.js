@@ -36,7 +36,7 @@ export const loginUser = async (req, res) => {
                 });
             }
         } else {
-            res.status(403).json({ success: false, data: 'Invalid email' });
+            res.status(403).json({ success: false, message: "Invalid email" });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
