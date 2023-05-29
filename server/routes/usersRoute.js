@@ -57,6 +57,6 @@ router.post("/search", auth, searchUsers);
 router.post("/forgot-password", forgotPassword);
 
 // Route for handling password reset request
-router.post("/reset-password", auth, resetPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;

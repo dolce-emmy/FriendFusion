@@ -32,7 +32,7 @@ export const sendPasswordResetEmail = (email, token) => {
         to: email,
         subject: "Password Reset",
         text: `Please click the following link to reset your password: ${token}`,
-        html: `<p>Please click the following link to reset your password: <a href="${token}">${token}</a></p>`,
+        html: `<p>Please click the following link to reset your password: <a href="http://localhost:5173/reset-password?token=${token}">${token}</a></p>`,
     };
 
     // Send the email

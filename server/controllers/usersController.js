@@ -292,7 +292,7 @@ export const forgotPassword = async (req, res) => {
 
 // Controller for handling password reset request
 export const resetPassword = async (req, res) => {
-    const { token, newPassword } = req.body;
+    const { token, password } = req.body;
 
     try {
         // Find the user with the provided reset token
@@ -305,8 +305,11 @@ export const resetPassword = async (req, res) => {
             return res.status(400).json({ error: "Invalid or expired token" });
         }
 
+        // Hash the new password
+        const hashedPassword = bcrypt.hashSync(password, 10);
+
         // Update the user's password and clear the reset token fields
-        user.password = newPassword;
+        user.password = hashedPassword;
         user.resetToken = undefined;
         user.resetTokenExpiry = undefined;
         await user.save();
