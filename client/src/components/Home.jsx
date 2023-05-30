@@ -23,26 +23,18 @@ const Home = () => {
           <PostList posts={posts} updateLikesForPosts={handleLikesForPost} />
         </div>
         <div className="w-full md:hidden lg:block lg:w-3/12">
-          {/* TODO: advertisements, friends list */}
-
-          <div>
+          <div className="flex flex-col gap-6">
             <Youtube />
-          </div>
-
-          <div>
             <Advertisement />
+            <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-6">
+              <h3 className="text-xl text-center font-semibold mb-4">
+                Friends List
+              </h3>
+              {user?.friends?.map((user) => (
+                <UserBasicInfo key={user._id} user={user} showToggleFriend />
+              ))}
+            </div>
           </div>
-
-          <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-5 mt-4">
-            <h1 className="text-xl font-semibold mb-4">Friends List</h1>
-            {user?.friends?.map((user) => (
-              <UserBasicInfo key={user._id} user={user} showToggleFriend />
-            ))}
-          </div>
-
-
-
-
         </div>
       </div>
 

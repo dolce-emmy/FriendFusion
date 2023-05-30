@@ -9,6 +9,7 @@ import CommentsIcon from "./icons/CommentsIcon";
 import DeleteIcon from "./icons/DeleteIcon";
 import PreviewImages from "./PreviewImages";
 import Linkify from "linkify-react";
+import MoreOptions from "./MoreOptions";
 
 const Post = ({
   _id,
@@ -90,7 +91,10 @@ const Post = ({
   };
 
   return (
-    <div className="px-1 py-3 bg-neutral-800 rounded-2xl">
+    <div className="px-1 py-3 bg-neutral-800 rounded-2xl relative">
+      {user?._id === currentUser?._id && (
+        <MoreOptions handleDelete={handleDelete} />
+      )}
       <UserBasicInfo
         user={user}
         className="p-4"
@@ -131,17 +135,6 @@ const Post = ({
             </span>
             <span>{comments.length} Comments</span>
           </button>
-          {user?._id === currentUser?._id && (
-            <button
-              onClick={handleDelete}
-              className="flex gap-1 text-sm items-center text-red-500 ml-auto"
-            >
-              <span>
-                <DeleteIcon />
-              </span>
-              {/* <span>Delete</span> */}
-            </button>
-          )}
         </div>
       </div>
       <div className={showComments ? "block mt-6" : "hidden"}>

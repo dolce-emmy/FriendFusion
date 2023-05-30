@@ -8,7 +8,6 @@ const LoginIcon = () => {
       width="793"
       height="551.73152"
       viewBox="0 0 793 551.73152"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
       className="w-full h-full"
     >
       <ellipse cx="158" cy="539.73152" rx="158" ry="12" fill="#e6e6e6" />

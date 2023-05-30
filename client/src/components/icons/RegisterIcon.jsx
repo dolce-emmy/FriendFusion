@@ -8,7 +8,6 @@ const RegisterIcon = () => {
       width="732.64277"
       height="638.92105"
       viewBox="0 0 732.64277 638.92105"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
       className="w-full h-full"
     >
       <path

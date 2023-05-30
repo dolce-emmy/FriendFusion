@@ -8,7 +8,6 @@ const ForgotPasswordIcon = () => {
       width="951.23547"
       height="632.16225"
       viewBox="0 0 951.23547 632.16225"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
       className="w-full h-full"
     >
       <path
