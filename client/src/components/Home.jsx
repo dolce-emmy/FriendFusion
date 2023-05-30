@@ -7,6 +7,7 @@ import Youtube from "./Youtube";
 import Advertisement from "./Advertisement";
 import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
+import ChatGpt from "./ChatGpt";
 
 const Home = () => {
   const { user, posts, handleLikesForPost } = useAppContext();
@@ -16,7 +17,10 @@ const Home = () => {
       <Header />
       <div className="px-10 w-full max-w-screen-2xl mx-auto flex flex-col md:flex-row items-start gap-6 mt-10">
         <div className="w-full md:w-4/12 lg:w-3/12">
-          <UserInfo user={user} />
+          <div className="flex flex-col gap-6">
+            <UserInfo user={user} />
+            <ChatGpt />
+          </div>
         </div>
         <div className="w-full md:w-8/12 lg:w-6/12 flex-grow shrink-0">
           <PostForm />
