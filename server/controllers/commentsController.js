@@ -141,4 +141,29 @@ export const replyCommentById = async (req, res) => {
 };
 
 // delete reply by Id
-export const deleteReplyById = async (req, res) => {};
+export const deleteReplyById = async (req, res) => {
+
+  // find the comment and find the replies by Id and delete it
+  // then delete this reply
+  try {
+     
+    const { id, replyId } = req.params;
+
+    const comment = await CommentCollection.findById(id);
+    if (comment) {
+      comment.replies = comment.replies.filter(
+        (reply) => reply.toString() !== replyId
+      );
+      await comment.save();
+    }
+
+    const removedReply = await CommentCollection.findByIdAndRemove(replyId);
+
+    res.status(200).json({ success: true, data: removedReply });
+
+
+
+  } catch (err) {
+    res.status(404).json({ success: false, message: err.message });
+  }
+};

@@ -76,6 +76,34 @@ const Post = ({
     setPopulatedComments(updatedCommentsWithReplies);
   };
 
+  const handleDeleteReplyForComment = (id, reply) => {
+    const updatedCommentsWithReplies = populatedComments.map((comment) => {
+      if (comment._id === id) {
+        return {
+          ...comment,
+          replies: comment.replies.filter((_id) => reply._id),
+        };
+      }
+      return comment;
+    });
+    setPopulatedComments(updatedCommentsWithReplies);
+  };
+
+  // we want to delete the reply from the state of the comments page
+  // we need to delete the reply from the backend
+
+  // const handleDeleteReply = (id) => {
+  //   api.post(`/comments/${id}/reply/${replyId}`).then((res) => {
+  //     if (res.data.success) {
+  //       handleAddReplyForComment(_id, res.data.data);
+
+  //       onDeleteReply();
+
+  //       // here we are passing the id of the comment and the updated replies to the handleAddReplyForComment function
+  //     }
+  //   });
+  // };
+
   const handleDelete = (e) => {
     e.preventDefault();
     api
@@ -144,6 +172,7 @@ const Post = ({
           populatedComments={populatedComments}
           getComments={getComments}
           handleAddReplyForComment={handleAddReplyForComment}
+          handleDeleteReplyForComment={handleDeleteReplyForComment}
         />
       </div>
     </div>
