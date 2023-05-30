@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import "../App.scss";
 
 import {
   MainContainer,
@@ -21,9 +20,9 @@ const ChatGpt = () => {
 
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I am your Assistant Alex! Ask me anything?",
+      message: "I am your friend! Ask me anything?",
       sender: "ChatGPT",
-      direction: "outgoing",
+      direction: "incoming",
       avatar: "https://i.imgur.com/7k12EPD.png",
       date: new Date(),
     },
@@ -133,10 +132,13 @@ const ChatGpt = () => {
   //     ]);
 
   return (
-    <MainContainer className="bg-neutral-800 rounded-2xl shadow-lg  border-neutral-700">
+    <MainContainer className="flex flex-col bg-neutral-800 rounded-2xl border-neutral-800">
+      <h3 className=" text-center text-white text-xl font-semibold p-5">
+        Hello, I am Alex
+      </h3>
       <ChatContainer className="bg-neutral-800 rounded-2xl">
         <MessageList
-          className="bg-neutral-800 rounded-2xl  h-80 w-80 p-2 m-2 border-2 border-neutral-700 rounded-lg shadow-lg"
+          className="bg-neutral-800 h-80 w-80 rounded-lg px-3 pt-2 border-t border-neutral-700"
           scrollBehavior="smooth"
           typingIndicator={
             typing ? <TypingIndicator content="Alex is typing..." /> : null
@@ -153,7 +155,10 @@ const ChatGpt = () => {
             return (
               <Message
                 key={i}
-                model={{ message: message.message, sentTime: message.date }}
+                model={{
+                  message: message.message,
+                  sentTime: message.date?.toString(),
+                }}
                 sender={message.sender}
                 direction={message.direction}
                 avatar={message.avatar}
@@ -162,6 +167,7 @@ const ChatGpt = () => {
           })}
         </MessageList>
         <MessageInput
+          attachButton={false}
           placeholder="Type message here"
           onSend={(message) => handleSend(message)}
         />
