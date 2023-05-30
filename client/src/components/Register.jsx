@@ -67,37 +67,35 @@ const Register = () => {
             <RegisterIcon />
           </div>
           <div className="w-full md:w-1/2 py-10 mx-auto flex flex-col gap-4 justify-center items-center absolute right-0 inset-y-0">
-            <h1 className="text-3xl font-bold text-center">
+            <h1 className="text-3xl font-bold text-center mb-10">
               Create your account
             </h1>
-            <div className="messages my-3">
-              {submitted && (
-                <div
-                  className="flex justify-center bg-green-100 rounded-lg p-4 mb-4 max-w-md text-sm text-green-700 mx-auto"
-                  role="alert"
-                >
-                  <span className="mr-2">
-                    <i className="fas fa-light fa-triangle-exclamation"></i>
-                  </span>
-                  <span className="font-medium">
-                    User <b>{formData.firstName}</b> successfully registered!!
-                  </span>
-                </div>
-              )}
-              {error && (
-                <div
-                  className="flex justify-center bg-yellow-100 rounded-lg p-4 mb-4 max-w-md text-sm text-yellow-700 mx-auto"
-                  role="alert"
-                >
-                  <span className="mr-2">
-                    <i className="fas fa-light fa-triangle-exclamation"></i>
-                  </span>
-                  <span className="font-medium">
-                    Please enter valid information
-                  </span>
-                </div>
-              )}
-            </div>
+            {submitted && (
+              <div
+                className="my-3 flex justify-center bg-green-100 rounded-lg p-4 mb-4 max-w-md text-sm text-green-700 mx-auto"
+                role="alert"
+              >
+                <span className="mr-2">
+                  <i className="fas fa-light fa-triangle-exclamation"></i>
+                </span>
+                <span className="font-medium">
+                  User <b>{formData.firstName}</b> successfully registered!!
+                </span>
+              </div>
+            )}
+            {error && (
+              <div
+                className="flex justify-center bg-yellow-100 rounded-lg p-4 mb-4 max-w-md text-sm text-yellow-700 mx-auto"
+                role="alert"
+              >
+                <span className="mr-2">
+                  <i className="fas fa-light fa-triangle-exclamation"></i>
+                </span>
+                <span className="font-medium">
+                  Please enter valid information
+                </span>
+              </div>
+            )}
             <div className="px-8 lg:px-2">
               <form>
                 <div className="flex gap-4 mb-4">

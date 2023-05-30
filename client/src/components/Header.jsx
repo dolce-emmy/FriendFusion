@@ -64,10 +64,18 @@ const Header = () => {
               Search
             </button>
           </form>
+          {showSearchedUsers && (
+            <div
+              onClick={() => setShowSearchedUsers(false)}
+              className="fixed inset-0 h-full w-full z-10"
+            ></div>
+          )}
           <div
             className={`${
-              showSearchedUsers ? "block" : "hidden"
-            } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20`}
+              showSearchedUsers
+                ? "opacity-1 visible translate-y-0 scale-100"
+                : "opacity-0 invisible"
+            } absolute right-0 mt-2 py-2 w-full text-white bg-neutral-700 rounded-md shadow-xl z-20 transition-all duration-300 transform origin-top-right -translate-y-2 scale-95`}
           >
             {searchedUsers?.map((searchedUser) => (
               <div

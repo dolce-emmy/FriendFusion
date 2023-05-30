@@ -58,20 +58,20 @@ function Login() {
           </div>
           <div className="w-full md:w-1/2 py-10 mx-auto flex flex-col gap-4 justify-center items-center absolute right-0 inset-y-0">
             <div className="px-8 lg:px-2">
-              <h1 className="text-3xl font-bold text-center">Hello, you</h1>
-              <div className="messages my-3">
-                {message && (
-                  <div
-                    className="flex justify-center bg-yellow-100 rounded-lg p-4 mb-4 max-w-md text-sm text-yellow-700 mx-auto"
-                    role="alert"
-                  >
-                    <span className="mr-2">
-                      <i className="fas fa-light fa-triangle-exclamation"></i>
-                    </span>
-                    <span className="font-medium">{message}</span>
-                  </div>
-                )}
-              </div>
+              <h1 className="text-3xl font-bold text-center mb-10">
+                Hello, you
+              </h1>
+              {message && (
+                <div
+                  className="my-3 flex justify-center bg-yellow-100 rounded-lg p-4 mb-4 max-w-md text-sm text-yellow-700 mx-auto"
+                  role="alert"
+                >
+                  <span className="mr-2">
+                    <i className="fas fa-light fa-triangle-exclamation"></i>
+                  </span>
+                  <span className="font-medium">{message}</span>
+                </div>
+              )}
               <form onSubmit={handleLoginSubmit}>
                 <div className="flex gap-4 mb-4">
                   <div>
@@ -105,7 +105,7 @@ function Login() {
                 />
               </form>
               <NavLink
-                className="text-sm mt-2 text-neutral-300 hover:text-neutral-100"
+                className="text-xs text-neutral-300 hover:text-neutral-100"
                 to="/forgot-password"
               >
                 Forgot Password?
