@@ -49,13 +49,20 @@ const Youtube = () => {
       {video.length > 0 && (
         <div className="p-4 flex flex-col gap-2">
           <h4>{video[index].snippet.title}</h4>
-          <a target="_blank" href={`https://youtu.be/${video[index].id}`}>
+          <iframe
+            className="h-60"
+            src={`https://www.youtube.com/embed/${video[index].id}`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+
+          {/* <a target="_blank" href={`https://youtu.be/${video[index].id}`}>
             <img
               className="w-full h-36 object-cover object-center"
               src={video[index].snippet.thumbnails.default.url}
               alt="thumbnail"
             />
-          </a>
+          </a> */}
         </div>
       )}
 
