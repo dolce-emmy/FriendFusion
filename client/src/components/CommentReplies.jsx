@@ -5,10 +5,28 @@ import api from "../api";
 import InputEmoji from "react-input-emoji";
 import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
-import CommentsIcon from "./icons/CommentsIcon";
 
-const CommentReply = ({ _id, user, content, createdAt }) => {
+const CommentReply = ({
+  _id,
+  commentId,
+  user,
+  content,
+  createdAt,
+  onDeleteReplyForComment,
+}) => {
   const { user: currentUser } = useAppContext();
+
+  // we want to delete the reply from the backend
+  // we need to update the reply in the state of the comments page
+  // we need to delete the reply from the state of the comments page
+
+  const handleDeleteReply = (id) => {
+    api.post(`/comments/${commentId}/reply/${id}`).then((res) => {
+      if (res.data.success) {
+        onDeleteReplyForComment(_id, res.data.data);
+      }
+    });
+  };
 
   const extraInfo = (
     <>
@@ -18,6 +36,7 @@ const CommentReply = ({ _id, user, content, createdAt }) => {
           <span
             className="block text-sm text-neutral-500 cursor-pointer hover:underline"
             //onClick={() => handleDeleteReplz(_id)}
+            onClick={() => handleDeleteReply(_id)}
           >
             remove
           </span>
@@ -33,7 +52,11 @@ const CommentReply = ({ _id, user, content, createdAt }) => {
   );
 };
 
-const CommentReplies = ({ comment, onAddReplyForComment }) => {
+const CommentReplies = ({
+  comment,
+  onAddReplyForComment,
+  onDeleteReplyForComment,
+}) => {
   const { _id, replies } = comment;
   const [reply, setReply] = useState("");
 
@@ -59,6 +82,18 @@ const CommentReplies = ({ comment, onAddReplyForComment }) => {
 
   console.log({ replies });
 
+  // we want to delete the reply from the state of the comments page
+  // we need to delete the reply from the backend
+  // we need to update the reply in the state of the comments page
+
+  // const handleDeleteReply = (id) => {
+  //   api.post(`/comments/${id}/reply/${replies._Id}`).then((res) => {
+  //     if (res.data.success) {
+  //       onAddReplyForComment(_id, res.data.data);
+  //     }
+  //   });
+  // }
+
   return (
     <>
       <div className="my-2">
@@ -72,7 +107,12 @@ const CommentReplies = ({ comment, onAddReplyForComment }) => {
       </div>
 
       {replies?.map((reply) => (
-        <CommentReply key={reply._id} {...reply} />
+        <CommentReply
+          key={reply._id}
+          commentId={_id}
+          {...reply}
+          onDeleteReplyForComment={onDeleteReplyForComment}
+        />
       ))}
     </>
   );

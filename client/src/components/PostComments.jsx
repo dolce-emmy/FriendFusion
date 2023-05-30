@@ -11,26 +11,28 @@ const PostComment = ({
   comment,
   onDeleteComment,
   handleAddReplyForComment,
+  handleDeleteReplyForComment,
 }) => {
   const { _id, content, user, createdAt } = comment;
   const { user: currentUser, handleDeleteCommentsForPost } = useAppContext();
   const [showReplies, setShowReplies] = useState(false);
   // const [populatedReplies, setPopulatedReplies] = useState([]);
 
-    // after that we need to delete the comments from the backend
-    // and then we need to update the comments in the state of the post page
-    const handleDeleteComment = (id) => {
-        api.post(`/comments/${id}/post/${postId}`)
-            .then((res) => {
-                if (res.data.success) {
-                    handleDeleteCommentsForPost(postId, res.data.data);
-                    onDeleteComment();
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+  // after that we need to delete the comments from the backend
+  // and then we need to update the comments in the state of the post page
+  const handleDeleteComment = (id) => {
+    api
+      .post(`/comments/${id}/post/${postId}`)
+      .then((res) => {
+        if (res.data.success) {
+          handleDeleteCommentsForPost(postId, res.data.data);
+          onDeleteComment();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getReplies = (ids) => {
     api
@@ -91,6 +93,7 @@ const PostComment = ({
             key={_id}
             comment={comment}
             onAddReplyForComment={handleAddReplyForComment}
+            onDeleteReplyForComment={handleDeleteReplyForComment}
           />
         )}
       </div>
@@ -105,29 +108,31 @@ const PostComments = (props) => {
     populatedComments,
     getComments,
     handleAddReplyForComment,
+    handleDeleteReplyForComment,
   } = props;
   const { handleAddCommentsForPost } = useAppContext();
   const [comment, setComment] = useState("");
 
-    const handleComment = (content) => {
-        const data = new FormData();
-        data.append('content', content);
+  const handleComment = (content) => {
+    const data = new FormData();
+    data.append("content", content);
 
-        api.post(`/comments/${_id}`, data, {
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then((res) => {
-                if (res.data.success) {
-                    const cmt = res.data.data;
-                    handleAddCommentsForPost(_id, cmt);
-                    getComments([...comments, cmt._id]);
-                    setComment('');
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    api
+      .post(`/comments/${_id}`, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          const cmt = res.data.data;
+          handleAddCommentsForPost(_id, cmt);
+          getComments([...comments, cmt._id]);
+          setComment("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -150,6 +155,7 @@ const PostComments = (props) => {
               getComments(comments?.filter((c) => c._id !== comment._id))
             }
             handleAddReplyForComment={handleAddReplyForComment}
+            handleDeleteReplyForComment={handleDeleteReplyForComment}
           />
         ))}
       </div>
