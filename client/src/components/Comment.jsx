@@ -4,20 +4,10 @@ import Header from './Header.jsx';
 
 const Comment = ({ toggleCommentForm }) => {
     const [formData, setFormData] = useState({
-        question1: '',
-        question2: '',
-        question3: '',
+      question1: "",
+      question2: "",
+      question3: "",
     });
-
-    const [isNightMode, setIsNightMode] = useState(false);
-
-    const handleToggleNightMode = () => {
-        // Handle night mode toggle functionality here
-        setIsNightMode(!isNightMode);
-        const body = document.querySelector('body');
-        body.classList.toggle('night-mode');
-    };
-
     const { user } = useAppContext();
 
     const handleChange = (e) => {

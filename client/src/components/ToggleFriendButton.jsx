@@ -3,8 +3,10 @@ import { useAppContext } from "../context/AppContext";
 import api from "../api";
 import HandleRemoveFriendIcon from "./icons/HandleRemoveFriendIcon";
 import HandleAddFriendIcon from "./icons/HandleAddFriendIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
 const ToggleFriendButton = ({ user }) => {
+  const { isDarkMode } = useThemeContext();
   const { user: currentUser, handleUpdateUser } = useAppContext();
 
   const handleAddFriend = (friendId) => {
@@ -48,14 +50,18 @@ const ToggleFriendButton = ({ user }) => {
         {!currentUser?.friends?.some((friend) => friend._id === user?._id) ? (
           <button
             onClick={() => handleAddFriend(user?._id)}
-            className="ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0"
+            className={`${
+              isDarkMode ? "dark-hover" : "light-hover"
+            } ml-auto rounded-full w-10 h-10 flex items-center justify-center shrink-0`}
           >
             <HandleAddFriendIcon />
           </button>
         ) : (
           <button
             onClick={() => handleRemoveFriend(user?._id)}
-            className="ml-auto rounded-full bg-neutral-700 hover:bg-neutral-600 w-10 h-10 flex items-center justify-center shrink-0"
+            className={`${
+              isDarkMode ? "dark-hover" : "light-hover"
+            } ml-auto rounded-full w-10 h-10 flex items-center justify-center shrink-0`}
           >
             <HandleRemoveFriendIcon />
           </button>

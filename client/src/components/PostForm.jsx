@@ -6,8 +6,10 @@ import ImageIcon from "./icons/ImageIcon";
 import GifIcon from "./icons/GifIcon";
 import AudioIcon from "./icons/AudioIcon";
 import DocumentIcon from "./icons/DocumentIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
 const PostForm = () => {
+  const { isDarkMode } = useThemeContext();
   const { user, updatePosts } = useAppContext();
   const [images, setImages] = useState([]);
   const [description, setDescription] = useState("");
@@ -47,7 +49,11 @@ const PostForm = () => {
   };
 
   return (
-    <div className="w-full px-1 py-3 mb-8 bg-neutral-800 rounded-2xl flex flex-col">
+    <div
+      className={`${
+        isDarkMode ? "dark" : "light"
+      } w-full px-1 py-3 mb-8 rounded-2xl flex flex-col shadow-md`}
+    >
       <div className="flex items-center px-4 py-3 w-full gap-1 post-form">
         <img
           className="h-14 w-14 rounded-full"

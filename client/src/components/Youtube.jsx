@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 import VideoIcon from "./icons/VideoIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
 const Youtube = () => {
+  const { isDarkMode } = useThemeContext();
   const [video, setVideo] = useState([]);
   const [index, setIndex] = useState(0);
 
@@ -40,7 +42,11 @@ const Youtube = () => {
   }, [index]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-4 px-4 py-6 bg-neutral-800 rounded-2xl shadow-lg text-neutral-100 text-center">
+    <div
+      className={`${
+        isDarkMode ? "dark" : "light"
+      } flex flex-col items-center justify-center w-full h-full gap-4 px-4 py-6 rounded-2xl shadow-md text-center`}
+    >
       <h3 className="flex gap-2 items-center text-xl font-semibold">
         <VideoIcon /> Trending Videos
       </h3>

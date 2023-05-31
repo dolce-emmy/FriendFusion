@@ -5,8 +5,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
 import bgImage from "../bg.png";
 import LoginIcon from "./icons/LoginIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
 function Login() {
+  const { isDarkMode } = useThemeContext();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -48,7 +50,11 @@ function Login() {
 
   return (
     <div className="w-screen h-screen">
-      <div className="bg-neutral-800 text-neutral-100 w-full h-full overflow-hidden">
+      <div
+        className={`${
+          isDarkMode ? "dark" : "light"
+        } w-full h-full overflow-hidden`}
+      >
         <div className="md:flex w-full">
           <div
             className="hidden md:block w-1/2 bg-indigo-600 p-10 absolute left-0 inset-y-0"
@@ -98,19 +104,24 @@ function Login() {
                     />
                   </div>
                 </div>
-                <input
+                <button
                   className="cursor-pointer block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
                   type="submit"
-                  value="Login"
-                />
+                >
+                  Login
+                </button>
               </form>
               <NavLink
-                className="text-xs text-neutral-300 hover:text-neutral-100"
+                className="text-xs text-neutral-500 hover:text-neutral-400"
                 to="/forgot-password"
               >
                 Forgot Password?
               </NavLink>
-              <div className="p-4 border-b border-neutral-700 h-1 w-full" />
+              <div
+                className={`${
+                  isDarkMode ? "dark-border" : "light-border"
+                } p-4 border-b h-1 w-full`}
+              />
               <NavLink
                 className="block text-center w-full bg-green-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 mt-6"
                 to="/register"

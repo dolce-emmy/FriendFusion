@@ -4,8 +4,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
 import bgImage from "../bg.png";
 import RegisterIcon from "./icons/RegisterIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
 const Register = () => {
+  const { isDarkMode } = useThemeContext();
   const navigate = useNavigate();
   // State for registration form
   const [formData, setFormData] = useState({
@@ -58,7 +60,11 @@ const Register = () => {
 
   return (
     <div className="w-screen h-screen">
-      <div className="bg-neutral-800 text-neutral-100 w-full h-full overflow-hidden">
+      <div
+        className={`${
+          isDarkMode ? "dark" : "light"
+        } w-full h-full overflow-hidden`}
+      >
         <div className="md:flex w-full">
           <div
             className="hidden md:block w-1/2 bg-indigo-600 p-10 absolute left-0 inset-y-0"
@@ -159,14 +165,19 @@ const Register = () => {
                     />
                   </div>
                 </div>
-                <input
+                <button
                   className="cursor-pointer block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
-                  value="Register"
                   type="submit"
                   onClick={handleSubmit}
-                />
+                >
+                  Register
+                </button>
               </form>
-              <div className="p-4 border-b border-neutral-700 h-1 w-full" />
+              <div
+                className={`${
+                  isDarkMode ? "dark-border" : "light-border"
+                } p-4 border-b h-1 w-full`}
+              />
               <NavLink
                 className="block text-center w-full bg-green-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 mt-6"
                 to="/login"

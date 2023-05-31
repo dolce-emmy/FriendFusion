@@ -1,44 +1,66 @@
 #root {
-  /* max-width: 1280px; */
   margin: 0 auto;
-  /* padding: 2rem; */
 }
 
-.night-mode {
-  background-color: #111;
-  color: #fff;
-}
-
-.cs-message-input {
+.dark {
   @apply !bg-neutral-800;
-  @apply !text-white;
-  @apply !border-neutral-700;
+  @apply !text-neutral-100;
+}
+
+.dark-border {
+  @apply !border-neutral-600;
+}
+
+.dark-hover {
+  @apply !bg-neutral-600;
+  @apply hover:!bg-neutral-700;
+}
+
+.light {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+}
+
+.light-border {
+  @apply !border-neutral-200;
+}
+
+.light-hover {
+  @apply !bg-neutral-200;
+  @apply hover:!bg-neutral-300;
+
+}
+
+/* .cs-message-input {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+  @apply !border-neutral-200;
 }
 
 .cs-message__content, .cs-message-input__content-editor-wrapper, .cs-message-input__content-editor, .cs-typing-indicator {
-  @apply !bg-neutral-700;
-  @apply !text-white;
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
 }
 
 .cs-message-input__content-editor[data-placeholder]:empty:before {
-  @apply !text-neutral-400;
+  @apply !text-neutral-700;
 }
 
 .cs-button--send, .cs-typing-indicator__text {
-  @apply !text-white;
+  @apply !text-neutral-900;
 }
 .cs-typing-indicator__dot {
-  @apply !bg-white;
-}
+  @apply !bg-neutral-100;
+} */
 
 .cs-message-separator {
   @apply !hidden;
 }
 
 .ps__thumb-y {
-  @apply !bg-neutral-700;
+  @apply !bg-neutral-100;
 }
 
 .ps__rail-y.ps--clicking {
-  @apply !bg-neutral-800;
+  @apply !bg-neutral-100;
 }
