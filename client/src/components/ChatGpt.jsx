@@ -12,10 +12,12 @@ import {
   MessageSeparator,
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
+import { useThemeContext } from "../context/ThemeContext";
 
 const OPEN_API_SECRET_KEY = import.meta.env.VITE_OPEN_API_SECRET_KEY;
 
 const ChatGpt = () => {
+  const { isDarkMode } = useThemeContext();
   const [typing, setTyping] = useState(false);
 
   const [messages, setMessages] = useState([
@@ -109,36 +111,20 @@ const ChatGpt = () => {
       });
   }
 
-  //   const handleSend = async (newMessage) => {
-  //     const response = await fetch("/api/chatbot", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ message: newMessage }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     setMessages((prevState) => [
-  //       ...prevState,
-  //       {
-  //         message: data.message,
-  //         sender: "ChatGPT",
-  //         direction: "outgoing",
-  //         avatar: "https://i.imgur.com/7k12EPD.png",
-  //         date: new Date(2021, 0, 1, 9, 0),
-  //       },
-  //     ]);
-
   return (
-    <MainContainer className="flex flex-col bg-neutral-800 rounded-2xl border-neutral-800">
-      <h3 className=" text-center text-white text-xl font-semibold p-5">
+    <MainContainer
+      className={`${
+        isDarkMode ? "dark" : "light"
+      } flex flex-col rounded-2xl shadow-md border-none`}
+    >
+      <h3 className=" text-center text-xl font-semibold p-5">
         Hello, I am Alex
       </h3>
-      <ChatContainer className="bg-neutral-800 rounded-2xl">
+      <ChatContainer className="rounded-2xl">
         <MessageList
-          className="bg-neutral-800 h-80 w-80 rounded-lg px-3 pt-2 border-t border-neutral-700"
+          className={`${
+            isDarkMode ? "dark dark-border" : "light light-border"
+          } h-80 w-80 px-3 pt-2 border-t`}
           scrollBehavior="smooth"
           typingIndicator={
             typing ? <TypingIndicator content="Alex is typing..." /> : null
@@ -147,7 +133,7 @@ const ChatGpt = () => {
           {/* <Avatar src="https://i.imgur.com/7k12EPD.png" name="ChatGPT" /> */}
 
           <MessageSeparator
-            className="bg-neutral-800 text-neutral-100 "
+            className={isDarkMode ? "dark" : "light"}
             content="Today"
           />
 
@@ -167,6 +153,7 @@ const ChatGpt = () => {
           })}
         </MessageList>
         <MessageInput
+          className={isDarkMode ? "dark dark-border" : "light light-border"}
           attachButton={false}
           placeholder="Type message here"
           onSend={(message) => handleSend(message)}

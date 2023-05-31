@@ -7,8 +7,6 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: #FFFFFF;
-  background-color: #0A0A0A;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,32 +14,77 @@
   -webkit-text-size-adjust: 100%;
 }
 
-
-input, textarea, select {
-  @apply bg-neutral-700
+html.dark {
+  @apply !bg-neutral-900;
+  @apply !text-neutral-100;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-textarea:-webkit-autofill:active,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus,
-select:-webkit-autofill:active{
+html.light {
+  @apply !bg-neutral-200;
+  @apply !text-neutral-900;
+}
+
+
+.light input, .light textarea, .light select {
+  @apply bg-neutral-100;
+  @apply border;
+}
+
+
+.dark input, .dark textarea, .dark select {
+  @apply !bg-neutral-600;
+  @apply border;
+}
+
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active,
+.dark textarea:-webkit-autofill,
+.dark textarea:-webkit-autofill:hover,
+.dark textarea:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill:active,
+.dark select:-webkit-autofill,
+.dark select:-webkit-autofill:hover,
+.dark select:-webkit-autofill:focus,
+.dark select:-webkit-autofill:active{
   -webkit-box-shadow:0 0 0 50px rgb(64 64 64 / var(--tw-bg-opacity)) inset; /* Change the color to your own background color */
   -webkit-text-fill-color: #FFFFFF;
   caret-color: #FFFFFF;
 }
 
+.light input:-webkit-autofill,
+.light input:-webkit-autofill:hover,
+.light input:-webkit-autofill:focus,
+.light input:-webkit-autofill:active,
+.light textarea:-webkit-autofill,
+.light textarea:-webkit-autofill:hover,
+.light textarea:-webkit-autofill:focus,
+.light textarea:-webkit-autofill:active,
+.light select:-webkit-autofill,
+.light select:-webkit-autofill:hover,
+.light select:-webkit-autofill:focus,
+.light select:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 50px #eee inset; /* Change the color to your own background color */
+  -webkit-text-fill-color: #000000;
+  caret-color: #000000;
+}
+
 .react-input-emoji--container {
-  @apply !bg-neutral-700;
+  @apply !shadow-md;
+}
+
+.dark .react-input-emoji--container {
+  @apply !bg-neutral-800;
   @apply !text-neutral-100;
   @apply !border-neutral-700;
+}
+
+.light .react-input-emoji--container {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+  @apply !border-neutral-200;
 }
 
 .react-input-emoji--button {

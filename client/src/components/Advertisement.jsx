@@ -1,8 +1,9 @@
-import { set } from "date-fns";
 import { useState, useEffect } from "react";
 import { v4 as uuid4v } from "uuid";
+import { useThemeContext } from "../context/ThemeContext";
 
 function Advertisement() {
+  const { isDarkMode } = useThemeContext();
   const [AdImg, setAdImage] = useState([
     {
       id: uuid4v(),
@@ -73,19 +74,20 @@ function Advertisement() {
   }, [index]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-4 py-3 bg-neutral-800 rounded-2xl shadow-lg text-neutral-100 text-center">
-      
+    <div
+      className={`${
+        isDarkMode ? "dark" : "light"
+      } flex flex-col items-center justify-center w-full h-full gap-4 py-3 rounded-2xl shadow-md text-center`}
+    >
       <div className="p-4">
-      <h2> ads Sponsored </h2>
+        <h2> ads Sponsored </h2>
         {AdImg.length > 0 && (
           <div className="p-4 flex flex-col gap-2">
             <h4>{AdImg[index].title}</h4>
             <img
-            className="w-full object-fit object-center"
-              
+              className="w-full object-fit object-center"
               src={AdImg[index].imgUrl}
               alt="thumbnail"
-             
             />
 
             <p>

@@ -4,8 +4,10 @@ import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import Header from "./Header";
+import { useThemeContext } from "../context/ThemeContext";
 
 const Profile = () => {
+  const { isDarkMode } = useThemeContext();
   const { user, setUser } = useAppContext();
   console.log(user);
 
@@ -102,10 +104,16 @@ const Profile = () => {
   return (
     <>
       <Header />
-      <div className="w-full h-full max-w-4xl mx-auto rounded-md shadow-md bg-neutral-800 p-8 mt-10 relative">
+      <div
+        className={`${
+          isDarkMode ? "dark" : "light"
+        } w-full h-full max-w-4xl mx-auto rounded-md shadow-md p-8 mt-10 relative`}
+      >
         <Link
           to="/"
-          className="absolute left-3 top-3 bg-neutral-700 hover:bg-neutral-600 p-2 rounded-full"
+          className={`${
+            isDarkMode ? "dark-hover" : "light-hover"
+          } absolute left-3 top-3 p-2 rounded-full`}
         >
           <ArrowLeftIcon />
         </Link>

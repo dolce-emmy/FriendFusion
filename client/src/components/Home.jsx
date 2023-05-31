@@ -8,8 +8,10 @@ import Advertisement from "./Advertisement";
 import { useAppContext } from "../context/AppContext";
 import UserBasicInfo from "./UserBasicInfo";
 import ChatGpt from "./ChatGpt";
+import { useThemeContext } from "../context/ThemeContext";
 
 const Home = () => {
+  const { isDarkMode } = useThemeContext();
   const { user, posts, handleLikesForPost } = useAppContext();
   return (
     <div>
@@ -30,7 +32,11 @@ const Home = () => {
           <div className="flex flex-col gap-6">
             <Youtube />
             <Advertisement />
-            <div className="w-full flex flex-col gap-4 bg-neutral-800 rounded-2xl p-6">
+            <div
+              className={`${
+                isDarkMode ? "dark" : "light"
+              } w-full flex flex-col gap-4 rounded-2xl p-6 shadow-md`}
+            >
               <h3 className="text-xl text-center font-semibold mb-4">
                 Friends List
               </h3>

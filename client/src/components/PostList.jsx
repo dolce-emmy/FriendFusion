@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { useThemeContext } from "../context/ThemeContext";
 import api from "../api";
 import UserBasicInfo from "./UserBasicInfo";
 import PostComments from "./PostComments";
 import HeartIcon from "./icons/HeartIcon";
 import RedHeartIcon from "./icons/RedHeartIcon";
 import CommentsIcon from "./icons/CommentsIcon";
-import DeleteIcon from "./icons/DeleteIcon";
 import PreviewImages from "./PreviewImages";
 import Linkify from "linkify-react";
 import MoreOptions from "./MoreOptions";
@@ -21,6 +21,7 @@ const Post = ({
   createdAt,
   updateLikesForPosts,
 }) => {
+  const { isDarkMode } = useThemeContext();
   const { user: currentUser, handleDeletePost } = useAppContext();
   const [showComments, setShowComments] = useState(false);
   const [populatedComments, setPopulatedComments] = useState([]);
@@ -89,21 +90,6 @@ const Post = ({
     setPopulatedComments(updatedCommentsWithReplies);
   };
 
-  // we want to delete the reply from the state of the comments page
-  // we need to delete the reply from the backend
-
-  // const handleDeleteReply = (id) => {
-  //   api.post(`/comments/${id}/reply/${replyId}`).then((res) => {
-  //     if (res.data.success) {
-  //       handleAddReplyForComment(_id, res.data.data);
-
-  //       onDeleteReply();
-
-  //       // here we are passing the id of the comment and the updated replies to the handleAddReplyForComment function
-  //     }
-  //   });
-  // };
-
   const handleDelete = (e) => {
     e.preventDefault();
     api
@@ -119,7 +105,11 @@ const Post = ({
   };
 
   return (
-    <div className="px-1 py-3 bg-neutral-800 rounded-2xl relative">
+    <div
+      className={`${
+        isDarkMode ? "dark" : "light"
+      } px-1 py-3 rounded-2xl relative shadow-md`}
+    >
       {user?._id === currentUser?._id && (
         <MoreOptions handleDelete={handleDelete} />
       )}
