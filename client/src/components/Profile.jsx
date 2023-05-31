@@ -5,10 +5,12 @@ import { useNavigate, Link } from "react-router-dom";
 import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import Header from "./Header";
 import { useThemeContext } from "../context/ThemeContext";
+import SpinnerIcon from "./icons/SpinnerIcon";
 
 const Profile = () => {
   const { isDarkMode } = useThemeContext();
   const { user, setUser } = useAppContext();
+  const [loading, setLoading] = useState(false);
   console.log(user);
 
   const navigate = useNavigate();
@@ -38,8 +40,10 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const updateUser = (data) => {
+      
       api
         .patch(`/users/${user._id}`, data)
         .then((res) => {
@@ -54,9 +58,13 @@ const Profile = () => {
           } else {
             console.log(res.data.message);
           }
+
+          setLoading(false);
+         
         })
         .catch((err) => {
           setError(true);
+          setLoading(false);
         });
     };
 
@@ -122,7 +130,9 @@ const Profile = () => {
           Edit Your Profile
         </h1>
         <section>
-          <form className="mb-4" onSubmit={handleSubmit}>
+          <form className="mb-4" onSubmit={handleSubmit}
+            disabled={loading}
+          >
             <div className="flex flex-col items-center gap-4 mb-8">
               <img
                 alt={user?.firstName}
@@ -223,8 +233,11 @@ const Profile = () => {
             </div>
 
             <div className="flex justify-end mt-6">
-              <button className="bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
-                Save
+              <button className="bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
+              
+              >
+
+                {loading? <SpinnerIcon/> : "Save"}
               </button>
             </div>
           </form>
