@@ -180,6 +180,7 @@ const Profile = () => {
                 </label>
                 <input
                   name="occupation"
+                  placeholder="enter your occupation"
                   defaultValue={user?.occupation}
                   className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
                   type="text"
@@ -201,7 +202,8 @@ const Profile = () => {
                   Location
                 </label>
                 <input
-                  name="location"
+                  name="enter your location"
+                  placeholder="location"
                   defaultValue={user?.location}
                   className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
                   type="text"
