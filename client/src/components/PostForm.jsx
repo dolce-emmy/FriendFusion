@@ -6,6 +6,7 @@ import ImageIcon from "./icons/ImageIcon";
 import GifIcon from "./icons/GifIcon";
 import AudioIcon from "./icons/AudioIcon";
 import DocumentIcon from "./icons/DocumentIcon";
+import SpinnerIcon from "./icons/SpinnerIcon";
 import { useThemeContext } from "../context/ThemeContext";
 
 const PostForm = () => {
@@ -13,6 +14,7 @@ const PostForm = () => {
   const { user, updatePosts } = useAppContext();
   const [images, setImages] = useState([]);
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,21 +33,29 @@ const PostForm = () => {
   };
 
   const handleImage = (e) => {
+    setLoading(true);
     //call api to upload images
     const formData = new FormData();
+    //here we are saying that if the target files length is not equal to 0
     if (e.target.files?.length !== 0) {
       Array.from(e.target.files).forEach((file) => {
         formData.append("file", file, file.name);
       });
     }
 
-    api.post("/images/multiple", formData).then((res) => {
-      // get the image id
-      // set to the state
+    api
+      .post("/images/multiple", formData)
+      .then((res) => {
+        // get the image id
+        // set to the state
 
-      // the rest syntax is adding the old images to the new images
-      setImages(res.data.data.map((image) => image._id));
-    });
+        // the rest syntax is adding the old images to the new images
+        setImages(res.data.data.map((image) => image._id));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -99,10 +109,11 @@ const PostForm = () => {
         </div>
         <div className="">
           <button
+            disabled={loading}
             onClick={onSubmitHandler}
-            className="cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+            className="flex cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
           >
-            Post
+            {loading ? <SpinnerIcon /> : "Post"}
           </button>
         </div>
 

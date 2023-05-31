@@ -43,7 +43,6 @@ function Advertisement() {
     },
   ]);
 
-  const [adsText, setAdsText] = useState("Best offer!");
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
