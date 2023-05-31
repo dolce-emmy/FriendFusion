@@ -50,7 +50,6 @@ const Header = () => {
         <div className="flex items-center">
           <h1>
             <Link to="/" className="flex items-center gap-2">
-              {/* <img src="./logo.svg" className="w-20 h-20" /> */}
               <LogoIcon />
               <span className="text-xl font-semibold">Friend Fusion</span>
             </Link>

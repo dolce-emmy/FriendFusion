@@ -8,8 +8,8 @@ const LogoIcon = () => {
       preserveAspectRatio="xMidYMid meet"
       version="1.0"
       viewBox="141.93 136.76 90.87 101.45"
-      width={60}
-      height={60}
+      width={40}
+      height={40}
     >
       <defs>
         <clipPath id="572be8ada9">
