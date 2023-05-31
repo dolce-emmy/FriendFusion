@@ -13,19 +13,21 @@ import {
   Avatar,
 } from "@chatscope/chat-ui-kit-react";
 import { useThemeContext } from "../context/ThemeContext";
+import { useAppContext } from "../context/AppContext";
 
 const OPEN_API_SECRET_KEY = import.meta.env.VITE_OPEN_API_SECRET_KEY;
 
 const ChatGpt = () => {
+  const { user } = useAppContext();
   const { isDarkMode } = useThemeContext();
   const [typing, setTyping] = useState(false);
 
   const [messages, setMessages] = useState([
     {
       message: "I am your friend! Ask me anything?",
-      sender: "ChatGPT",
-      direction: "incoming",
-      avatar: "https://i.imgur.com/7k12EPD.png",
+      sender: "Alex",
+      direction: "outgoing",
+      avatar: "./alex.svg",
       date: new Date(),
     },
   ]);
@@ -33,7 +35,10 @@ const ChatGpt = () => {
   const handleSend = async (message) => {
     const newMessage = {
       message: message,
-      sender: "user",
+      sender: user?.firstName,
+      direction: "incoming",
+      avatar: user?.image?.url || "https://placehold.co/60x60/png",
+      date: new Date(),
     };
 
     const newMessages = [...messages, newMessage]; // add the old messages plus the new message
@@ -56,7 +61,7 @@ const ChatGpt = () => {
 
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
-      if (messageObject.sender === "ChatGPT") {
+      if (messageObject.sender === "Alex") {
         role = "assistant";
       } else {
         role = "user";
@@ -100,9 +105,9 @@ const ChatGpt = () => {
             ...prevState,
             {
               message: data.choices[0].message?.content,
-              sender: "ChatGPT",
+              sender: "Alex",
               direction: "outgoing",
-              avatar: "https://i.imgur.com/7k12EPD.png",
+              avatar: "./alex.svg",
               date: new Date(),
             },
           ]);
@@ -117,40 +122,42 @@ const ChatGpt = () => {
         isDarkMode ? "dark" : "light"
       } flex flex-col rounded-2xl shadow-md border-none`}
     >
-      <h3 className=" text-center text-xl font-semibold p-5">
+      <h3 className=" text-center text-xl font-semibold py-3">
         Hello, I am Alex
       </h3>
       <ChatContainer className="rounded-2xl">
         <MessageList
           className={`${
             isDarkMode ? "dark dark-border" : "light light-border"
-          } h-80 w-80 px-3 pt-2 border-t`}
+          } h-80 px-3 pt-2 border-t`}
           scrollBehavior="smooth"
           typingIndicator={
-            typing ? <TypingIndicator content="Alex is typing..." /> : null
+            typing ? (
+              <TypingIndicator
+                className={isDarkMode ? "dark" : "light"}
+                content="Alex is typing..."
+              />
+            ) : null
           }
         >
-          {/* <Avatar src="https://i.imgur.com/7k12EPD.png" name="ChatGPT" /> */}
-
           <MessageSeparator
             className={isDarkMode ? "dark" : "light"}
             content="Today"
           />
 
-          {messages.map((message, i) => {
-            return (
-              <Message
-                key={i}
-                model={{
-                  message: message.message,
-                  sentTime: message.date?.toString(),
-                }}
-                sender={message.sender}
-                direction={message.direction}
-                avatar={message.avatar}
-              />
-            );
-          })}
+          {messages.map((message, i) => (
+            <Message
+              key={i}
+              model={{
+                message: message.message,
+                sender: message.sender,
+                sentTime: message.date?.toString(),
+                direction: message.direction,
+              }}
+            >
+              <Avatar src={message.avatar} name={message.sender} />
+            </Message>
+          ))}
         </MessageList>
         <MessageInput
           className={isDarkMode ? "dark dark-border" : "light light-border"}
