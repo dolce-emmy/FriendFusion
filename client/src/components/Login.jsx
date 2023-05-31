@@ -6,6 +6,7 @@ import { PasswordField } from "./PasswordField";
 import bgImage from "../bg.png";
 import LoginIcon from "./icons/LoginIcon";
 import { useThemeContext } from "../context/ThemeContext";
+import SpinnerIcon from "./icons/SpinnerIcon";
 
 function Login() {
   const { isDarkMode } = useThemeContext();
@@ -13,11 +14,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { setUser } = useAppContext();
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     api
       .post(
@@ -42,9 +45,11 @@ function Login() {
         } else {
           setMessage(res.data.message);
         }
+        setLoading(false);
       })
       .catch((err) => {
         setMessage(err.response.data.message);
+        setLoading(false);
       });
   };
 
@@ -78,7 +83,10 @@ function Login() {
                   <span className="font-medium">{message}</span>
                 </div>
               )}
-              <form onSubmit={handleLoginSubmit}>
+              <form onSubmit={handleLoginSubmit}
+              disabled={loading}
+              
+              >
                 <div className="flex gap-4 mb-4">
                   <div>
                     <label
@@ -108,7 +116,7 @@ function Login() {
                   className="cursor-pointer block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
                   type="submit"
                 >
-                  Login
+                  {loading ? <SpinnerIcon /> : "Login"}
                 </button>
               </form>
               <NavLink
