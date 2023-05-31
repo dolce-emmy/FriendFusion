@@ -31,27 +31,44 @@
 
 }
 
-/* .cs-message-input {
+
+.dark .cs-message-input {
+  @apply !bg-neutral-800;
+  @apply !text-neutral-100;
+  @apply !border-neutral-700;
+}
+.dark .cs-message__content, .dark .cs-message-input__content-editor-wrapper, .dark .cs-message-input__content-editor, .dark .cs-typing-indicator {
+  @apply !bg-neutral-700;
+  @apply !text-neutral-100;
+}
+.dark .cs-message-input__content-editor[data-placeholder]:empty:before {
+  @apply !text-neutral-500;
+}
+.dark .cs-button--send, .dark .cs-typing-indicator__text {
+  @apply !text-neutral-100;
+}
+.dark .cs-typing-indicator__dot {
+  @apply !bg-neutral-100;
+}
+
+.light .cs-message-input {
   @apply !bg-neutral-100;
   @apply !text-neutral-900;
   @apply !border-neutral-200;
 }
-
-.cs-message__content, .cs-message-input__content-editor-wrapper, .cs-message-input__content-editor, .cs-typing-indicator {
-  @apply !bg-neutral-100;
+.light .cs-message__content, .light .cs-message-input__content-editor-wrapper, .light .cs-message-input__content-editor, .light .cs-typing-indicator {
+  @apply !bg-neutral-200;
   @apply !text-neutral-900;
 }
-
-.cs-message-input__content-editor[data-placeholder]:empty:before {
-  @apply !text-neutral-700;
+.light .cs-message-input__content-editor[data-placeholder]:empty:before {
+  @apply !text-neutral-500;
 }
-
-.cs-button--send, .cs-typing-indicator__text {
+.light .cs-button--send, .light .cs-typing-indicator__text {
   @apply !text-neutral-900;
 }
-.cs-typing-indicator__dot {
-  @apply !bg-neutral-100;
-} */
+.light .cs-typing-indicator__dot {
+  @apply !bg-neutral-900;
+}
 
 .cs-message-separator {
   @apply !hidden;
