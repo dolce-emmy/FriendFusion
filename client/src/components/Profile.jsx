@@ -30,8 +30,8 @@ const Profile = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
-  // Handling the input change
-  // const handleInputChange = (e) => {
+  // Handling the change
+  //{
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
   //   setSubmitted(false);
   // };
@@ -43,7 +43,6 @@ const Profile = () => {
     setLoading(true);
 
     const updateUser = (data) => {
-      
       api
         .patch(`/users/${user._id}`, data)
         .then((res) => {
@@ -60,7 +59,6 @@ const Profile = () => {
           }
 
           setLoading(false);
-         
         })
         .catch((err) => {
           setError(true);
@@ -130,9 +128,7 @@ const Profile = () => {
           Edit Your Profile
         </h1>
         <section>
-          <form className="mb-4" onSubmit={handleSubmit}
-            disabled={loading}
-          >
+          <form className="mb-4" onSubmit={handleSubmit} disabled={loading}>
             <div className="flex flex-col items-center gap-4 mb-8">
               <img
                 alt={user?.firstName}
@@ -158,7 +154,7 @@ const Profile = () => {
                 <input
                   name="firstName"
                   defaultValue={user?.firstName}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="text"
                 />
               </div>
@@ -169,7 +165,7 @@ const Profile = () => {
                 <input
                   name="lastName"
                   defaultValue={user?.lastName}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="text"
                 />
               </div>
@@ -179,7 +175,7 @@ const Profile = () => {
                 </label>
                 <input
                   name="email"
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   defaultValue={user?.email}
                   type="email"
                 />
@@ -192,7 +188,7 @@ const Profile = () => {
                   name="occupation"
                   placeholder="enter your occupation"
                   defaultValue={user?.occupation}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="text"
                 />
               </div>
@@ -203,7 +199,7 @@ const Profile = () => {
                 <input
                   name="mobile"
                   defaultValue={user?.mobile}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="tel"
                 />
               </div>
@@ -215,7 +211,7 @@ const Profile = () => {
                   name="enter your location"
                   placeholder="location"
                   defaultValue={user?.location}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="text"
                 />
               </div>
@@ -226,18 +222,15 @@ const Profile = () => {
                 <input
                   name="birthday"
                   defaultValue={user?.birthday}
-                  className="input w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="w-full"
                   type="date"
                 />
               </div>
             </div>
 
             <div className="flex justify-end mt-6">
-              <button className="bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
-              
-              >
-
-                {loading? <SpinnerIcon/> : "Save"}
+              <button className="bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
+                {loading ? <SpinnerIcon /> : "Save"}
               </button>
             </div>
           </form>

@@ -16,7 +16,7 @@ export const PasswordField = ({ value, onChange }) => {
         Password
       </label>
       <input
-        className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+        className="w-full"
         type={showPassword ? "text" : "password"}
         id="password"
         name="password"

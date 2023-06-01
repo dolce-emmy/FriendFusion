@@ -1,8 +1,44 @@
 import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import DeleteIcon from "./icons/DeleteIcon";
+import { useThemeContext } from "../context/ThemeContext";
 
-const PreviewImages = ({ images }) => {
+const ImageWrapper = ({ image, smallSize, onDelete, children, ...rest }) => {
+  const { isDarkMode } = useThemeContext();
+  return image ? (
+    <div
+      className={`${
+        smallSize ? "max-h-44 max-w-xs" : "max-h-96"
+      } overflow-hidden rounded-xl w-full relative`}
+      {...rest}
+    >
+      {onDelete && (
+        <button
+          className={`${
+            isDarkMode ? "dark-hover" : "light-hover"
+          } absolute right-2 top-2 block p-2 rounded-full cursor-pointer`}
+          onClick={() => onDelete(image)}
+        >
+          <DeleteIcon />
+        </button>
+      )}
+      {children}
+      <img
+        className="h-full w-full object-cover object-center"
+        src={image?.url}
+        alt={image?.name}
+      />
+    </div>
+  ) : null;
+};
+
+const PreviewImages = ({
+  images,
+  onDeleteImage,
+  smallSize,
+  disableLightBox,
+}) => {
   const count = images?.length;
   const [index, setIndex] = useState(-1);
 
@@ -17,72 +53,45 @@ const PreviewImages = ({ images }) => {
     count > 0 && image1 ? (
       <div className="flex flex-col gap-2 cursor-pointer">
         <div className="flex gap-2">
-          <div
-            className="overflow-hidden rounded-xl max-h-96 w-full"
+          <ImageWrapper
+            image={image1}
+            onDelete={onDeleteImage}
+            smallSize={smallSize}
             onClick={() => setIndex(0)}
-          >
-            <img
-              className="h-full w-full object-cover object-center"
-              src={image1?.url}
-              alt={image1?.name}
-            />
-          </div>
-          {image2 && (
-            <div
-              className="overflow-hidden rounded-xl max-h-96 w-full"
-              onClick={() => setIndex(1)}
-            >
-              <img
-                className="h-full w-full object-cover object-center"
-                src={image2?.url}
-                alt={image2?.name}
-              />
-            </div>
-          )}
+          />
+          <ImageWrapper
+            image={image2}
+            onDelete={onDeleteImage}
+            smallSize={smallSize}
+            onClick={() => setIndex(1)}
+          />
         </div>
         {image3 && (
           <div className="flex gap-2">
-            {image3 && (
-              <div
-                className="overflow-hidden rounded-xl max-h-96 w-full"
-                onClick={() => setIndex(2)}
-              >
-                <img
-                  className="h-full w-full object-cover object-center"
-                  src={image3?.url}
-                  alt={image3?.name}
-                />
-              </div>
-            )}
-            {image4 && (
-              <div
-                className="overflow-hidden rounded-xl max-h-96 w-full"
-                onClick={() => setIndex(3)}
-              >
-                <img
-                  className="h-full w-full object-cover object-center"
-                  src={image4?.url}
-                  alt={image4?.name}
-                />
-              </div>
-            )}
-            {image5 && (
-              <div
-                className="overflow-hidden rounded-xl max-h-96 w-full relative"
-                onClick={() => setIndex(4)}
-              >
-                {image6 && count > 5 && (
-                  <div className="text-white text-xl absolute inset-0  bg-slate-900/80 flex justify-center items-center">
-                    + {count - 5}
-                  </div>
-                )}
-                <img
-                  className="h-full w-full object-cover object-center"
-                  src={image5?.url}
-                  alt={image5?.name}
-                />
-              </div>
-            )}
+            <ImageWrapper
+              image={image3}
+              onDelete={onDeleteImage}
+              smallSize={smallSize}
+              onClick={() => setIndex(2)}
+            />
+            <ImageWrapper
+              image={image4}
+              onDelete={onDeleteImage}
+              smallSize={smallSize}
+              onClick={() => setIndex(3)}
+            />
+            <ImageWrapper
+              image={image5}
+              onDelete={onDeleteImage}
+              smallSize={smallSize}
+              onClick={() => setIndex(4)}
+            >
+              {image6 && count > 5 && (
+                <div className="text-white text-xl absolute inset-0  bg-slate-900/80 flex justify-center items-center">
+                  + {count - 5}
+                </div>
+              )}
+            </ImageWrapper>
           </div>
         )}
       </div>
@@ -91,18 +100,20 @@ const PreviewImages = ({ images }) => {
   return (
     <>
       {renderImages()}
-      <Lightbox
-        open={index >= 0}
-        index={index}
-        slides={images.map(({ url, name }) => ({
-          src: url,
-          alt: name,
-        }))}
-        close={() => setIndex(-1)}
-        carousel={{
-          finite: true,
-        }}
-      />
+      {!disableLightBox ? (
+        <Lightbox
+          open={index >= 0}
+          index={index}
+          slides={images.map(({ url, name }) => ({
+            src: url,
+            alt: name,
+          }))}
+          close={() => setIndex(-1)}
+          carousel={{
+            finite: true,
+          }}
+        />
+      ) : null}
     </>
   );
 };
