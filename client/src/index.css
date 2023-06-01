@@ -15,27 +15,22 @@
 }
 
 html.dark {
-  @apply !bg-neutral-900;
-  @apply !text-neutral-100;
+  @apply !bg-neutral-900 !text-neutral-100;
 }
 
 html.light {
-  @apply !bg-neutral-200;
-  @apply !text-neutral-900;
+  @apply !bg-neutral-200 !text-neutral-900;
 }
-
 
 .light input, .light textarea, .light select {
-  @apply bg-neutral-100;
-  @apply border;
+  @apply bg-neutral-100 border border-neutral-200;
+  @apply px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 shadow-md;
 }
-
 
 .dark input, .dark textarea, .dark select {
-  @apply !bg-neutral-600;
-  @apply border;
+  @apply !bg-neutral-600 border border-neutral-600;
+  @apply px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 shadow-md;
 }
-
 
 .dark input:-webkit-autofill,
 .dark input:-webkit-autofill:hover,
@@ -49,7 +44,8 @@ html.light {
 .dark select:-webkit-autofill:hover,
 .dark select:-webkit-autofill:focus,
 .dark select:-webkit-autofill:active{
-  -webkit-box-shadow:0 0 0 50px rgb(64 64 64 / var(--tw-bg-opacity)) inset; /* Change the color to your own background color */
+  /* Change the color to your own background color */
+  -webkit-box-shadow:0 0 0 50px rgb(64 64 64 / var(--tw-bg-opacity)) inset;
   -webkit-text-fill-color: #FFFFFF;
   caret-color: #FFFFFF;
 }
@@ -66,42 +62,8 @@ html.light {
 .light select:-webkit-autofill:hover,
 .light select:-webkit-autofill:focus,
 .light select:-webkit-autofill:active{
-  -webkit-box-shadow:0 0 0 50px #eee inset; /* Change the color to your own background color */
+  /* Change the color to your own background color */
+  -webkit-box-shadow:0 0 0 50px #eee inset;
   -webkit-text-fill-color: #000000;
   caret-color: #000000;
-}
-
-.react-input-emoji--container {
-  @apply !shadow-md;
-}
-
-.dark .react-input-emoji--container {
-  @apply !bg-neutral-800;
-  @apply !text-neutral-100;
-  @apply !border-neutral-700;
-}
-
-.light .react-input-emoji--container {
-  @apply !bg-neutral-100;
-  @apply !text-neutral-900;
-  @apply !border-neutral-200;
-}
-
-.react-input-emoji--button {
-  @apply !absolute;
-  @apply !right-0;
-  @apply z-10;
-}
-
-.react-input-emoji--wrapper {
-  @apply !mr-10
-}
-
-.post-form .react-emoji-picker--wrapper {
-  top: 50px !important;
-  bottom: auto !important;
-}
-
-.post-description a {
-  @apply !text-blue-500;
 }

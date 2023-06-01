@@ -113,7 +113,7 @@ const Register = () => {
                       First Name
                     </label>
                     <input
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                      className="w-full"
                       type="text"
                       id="firstName"
                       name="firstName"
@@ -130,7 +130,7 @@ const Register = () => {
                       Last Name
                     </label>
                     <input
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                      className="w-full"
                       type="text"
                       id="lastName"
                       name="lastName"
@@ -149,7 +149,7 @@ const Register = () => {
                       Email
                     </label>
                     <input
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                      className="w-full"
                       type="email"
                       id="email"
                       name="email"

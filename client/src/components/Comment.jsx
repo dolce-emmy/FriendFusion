@@ -49,6 +49,10 @@ const Comment = ({ toggleCommentForm }) => {
                         <h2 className="text-center text-xl font-semibold py-3">
                             Add Comment
                         </h2>
+            <div className="flex justify-center items-center h-screen mt-[-80px]">
+                <div className="w-96 border border-gray-200 rounded-md p-4 hover:border-blue-500 hover:shadow-lg">
+                    <div className="p-4 border-b">
+                        <h2 className="text-xl font-medium">Add Comment</h2>
                     </div>
                     <form className="p-4" onSubmit={onSubmitHandler}>
                         <div className="mb-4">
@@ -101,7 +105,11 @@ const Comment = ({ toggleCommentForm }) => {
 
                         <div className="flex justify-end pt-4">
                             <button
+
                                 className="flex cursor-pointer bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600"
+
+                                className="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
+
                                 onClick={toggleCommentForm}
                             >
                                 Cancel

@@ -8,6 +8,7 @@ import AudioIcon from "./icons/AudioIcon";
 import DocumentIcon from "./icons/DocumentIcon";
 import SpinnerIcon from "./icons/SpinnerIcon";
 import { useThemeContext } from "../context/ThemeContext";
+import PreviewImages from "./PreviewImages";
 
 const PostForm = () => {
   const { isDarkMode } = useThemeContext();
@@ -16,46 +17,67 @@ const PostForm = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const createPost = async (images = []) => {
+    try {
+      const data = {
+        user: user._id,
+        description,
+        images,
+      };
+      api.post("/posts", data).then((res) => {
+        updatePosts(res.data.data);
+        setDescription("");
+        setImages([]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const data = {
-      user: user._id,
-      description,
-      images,
-    };
-
-    api.post("/posts", data).then((res) => {
-      updatePosts(res.data.data);
-      setDescription("");
-      setImages([]);
-    });
+  const handleDeleteImage = (image) => {
+    setImages((prevImages) =>
+      prevImages.filter((img) => img.url !== image.url)
+    );
   };
 
   const handleImage = (e) => {
-    setLoading(true);
+    // setLoading(true);
     //call api to upload images
-    const formData = new FormData();
+    // const formData = new FormData();
     //here we are saying that if the target files length is not equal to 0
     if (e.target.files?.length !== 0) {
       Array.from(e.target.files).forEach((file) => {
-        formData.append("file", file, file.name);
+        // formData.append("file", file, file.name);
+        setImages((prevImages) => [
+          ...prevImages,
+          { url: URL.createObjectURL(file), name: file.name, original: file },
+        ]);
       });
     }
+  };
 
-    api
-      .post("/images/multiple", formData)
-      .then((res) => {
-        // get the image id
-        // set to the state
+  const onSubmitPost = async () => {
+    setLoading(true);
 
-        // the rest syntax is adding the old images to the new images
-        setImages(res.data.data.map((image) => image._id));
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
+    if (images.length) {
+      const formData = new FormData();
+      images.forEach((image) => {
+        formData.append("file", image.original, image.name);
       });
+
+      api
+        .post("/images/multiple", formData)
+        .then(async (res) => {
+          await createPost(res.data.data.map((image) => image._id));
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+    } else {
+      await createPost();
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,6 +95,19 @@ const PostForm = () => {
           value={description}
           onChange={setDescription}
           placeholder="What's Happening?"
+        />
+      </div>
+      <div className="flex flex-wrap gap-1 justify-center items-center relative">
+        {loading && (
+          <div className="w-full h-full absolute inset-0 bg-neutral-800/50 text-lg flex items-center justify-center z-20">
+            Posting...
+          </div>
+        )}
+        <PreviewImages
+          images={images}
+          smallSize
+          disableLightBox
+          onDeleteImage={handleDeleteImage}
         />
       </div>
       <div className="px-4 py-3 gap-2 flex items-center justify-between w-full max-w-full">
@@ -110,7 +145,7 @@ const PostForm = () => {
         <div className="">
           <button
             disabled={loading}
-            onClick={onSubmitHandler}
+            onClick={onSubmitPost}
             className="flex cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
           >
             {loading ? <SpinnerIcon /> : "Post"}

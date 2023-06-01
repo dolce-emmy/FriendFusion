@@ -83,10 +83,7 @@ function Login() {
                   <span className="font-medium">{message}</span>
                 </div>
               )}
-              <form onSubmit={handleLoginSubmit}
-              disabled={loading}
-              
-              >
+              <form onSubmit={handleLoginSubmit} disabled={loading}>
                 <div className="flex gap-4 mb-4">
                   <div>
                     <label
@@ -96,7 +93,7 @@ function Login() {
                       Email
                     </label>
                     <input
-                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                      className="w-full"
                       type="email"
                       id="email"
                       name="email"

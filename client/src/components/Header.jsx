@@ -61,9 +61,7 @@ const Header = () => {
                   type="text"
                   name="search"
                   placeholder="Search"
-                  className={`px-3 py-2 border rounded-full focus:outline-none focus:border-indigo-500 shadow-md ${
-                    isDarkMode ? "dark dark-border" : "light light-border"
-                  }`}
+                  className={"!rounded-full"}
                 />
                 <button
                   type="submit"
@@ -101,9 +99,13 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-2">
           {isDarkMode ? (
-            <MoonIcon onClick={toggleDarkMode} />
+            <button onClick={toggleDarkMode}>
+              <MoonIcon />
+            </button>
           ) : (
-            <SunIcon onClick={toggleDarkMode} />
+            <button onClick={toggleDarkMode}>
+              <SunIcon />
+            </button>
           )}
 
           <Link to="/comments">
