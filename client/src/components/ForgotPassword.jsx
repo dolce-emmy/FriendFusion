@@ -82,7 +82,7 @@ const ForgotPassword = () => {
                     Email
                   </label>
                   <input
-                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                    className="w-full"
                     type="email"
                     id="email"
                     name="email"

@@ -110,7 +110,7 @@ const ResetPassword = () => {
                     New Password
                   </label>
                   <input
-                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                    className="w-full"
                     type="password"
                     id="password"
                     value={password}
@@ -125,7 +125,7 @@ const ResetPassword = () => {
                     Confirm Password
                   </label>
                   <input
-                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500"
+                    className="w-full"
                     type="password"
                     id="confirmPassword"
                     value={confirmPassword}
