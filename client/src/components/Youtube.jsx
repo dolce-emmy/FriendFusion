@@ -36,7 +36,7 @@ const Youtube = () => {
         }
         return newIndex;
       });
-    }, 5000);
+    }, 1000000);
     // here we are clearing the interval so that we don't have multiple intervals running at the same time and causing issues
     return () => clearInterval(interval);
   }, [index]);
