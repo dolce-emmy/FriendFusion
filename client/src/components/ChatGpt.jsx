@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 
 import {
   MainContainer,
@@ -25,9 +26,9 @@ const ChatGpt = () => {
   const [messages, setMessages] = useState([
     {
       message: "I am your friend! Ask me anything?",
-      sender: "Alex",
+      sender: "Athena",
       direction: "outgoing",
-      avatar: "./alex.svg",
+      avatar: "./athena.svg",
       date: new Date(),
     },
   ]);
@@ -61,7 +62,7 @@ const ChatGpt = () => {
 
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
-      if (messageObject.sender === "Alex") {
+      if (messageObject.sender === "Athena") {
         role = "assistant";
       } else {
         role = "user";
@@ -105,9 +106,9 @@ const ChatGpt = () => {
             ...prevState,
             {
               message: data.choices[0].message?.content,
-              sender: "Alex",
+              sender: "Athena",
               direction: "outgoing",
-              avatar: "./alex.svg",
+              avatar: "./athena.svg",
               date: new Date(),
             },
           ]);
@@ -123,7 +124,7 @@ const ChatGpt = () => {
       } flex flex-col rounded-2xl shadow-md border-none`}
     >
       <h3 className=" text-center text-xl font-semibold py-3">
-        Hello, I am Alex
+        Hello, I am Athena
       </h3>
       <ChatContainer className="rounded-2xl">
         <MessageList
@@ -156,6 +157,7 @@ const ChatGpt = () => {
               }}
             >
               <Avatar src={message.avatar} name={message.sender} />
+              
             </Message>
           ))}
         </MessageList>
