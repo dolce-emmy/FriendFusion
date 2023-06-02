@@ -6,6 +6,7 @@ import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import Header from "./Header";
 import { useThemeContext } from "../context/ThemeContext";
 import SpinnerIcon from "./icons/SpinnerIcon";
+import PhotoIcon from "./icons/PhotoIcon";
 
 const Profile = () => {
   const { isDarkMode } = useThemeContext();
@@ -136,7 +137,8 @@ const Profile = () => {
                 className="shadow-xl rounded-full h-28 w-28 align-middle border-none -m-16 my-0.5 -ml-30 lg:-ml-16 max-w-250-px"
               />
               <label className="flex gap-1 cursor-pointer" htmlFor="image">
-                <span>Upload Photo</span>
+                
+                <span className=" flex gap-2 text-md font-bold mb-2" ><PhotoIcon/> Add Photo</span>
                 <input
                   type="file"
                   id="image"

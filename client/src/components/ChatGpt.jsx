@@ -136,7 +136,7 @@ const ChatGpt = () => {
             typing ? (
               <TypingIndicator
                 className={isDarkMode ? "dark" : "light"}
-                content="Alex is typing..."
+                content="Athena is typing..."
               />
             ) : null
           }
