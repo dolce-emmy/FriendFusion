@@ -52,7 +52,7 @@ const ToggleFriendButton = ({ user }) => {
             onClick={() => handleAddFriend(user?._id)}
             className={`${
               isDarkMode ? "dark-hover" : "light-hover"
-            } ml-auto rounded-full w-10 h-10 flex items-center justify-center shrink-0`}
+            } btn ml-auto !rounded-full w-10 h-10 !p-0`}
           >
             <HandleAddFriendIcon />
           </button>
@@ -61,7 +61,7 @@ const ToggleFriendButton = ({ user }) => {
             onClick={() => handleRemoveFriend(user?._id)}
             className={`${
               isDarkMode ? "dark-hover" : "light-hover"
-            } ml-auto rounded-full w-10 h-10 flex items-center justify-center shrink-0`}
+            } btn ml-auto !rounded-full w-10 h-10 !p-0`}
           >
             <HandleRemoveFriendIcon />
           </button>

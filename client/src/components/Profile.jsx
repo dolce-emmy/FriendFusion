@@ -231,7 +231,7 @@ const Profile = () => {
             </div>
 
             <div className="flex justify-end mt-6">
-              <button className="bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6">
+              <button className="btn mt-6">
                 {loading ? <SpinnerIcon /> : "Save"}
               </button>
             </div>
