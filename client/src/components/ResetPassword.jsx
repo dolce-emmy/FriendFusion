@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import bgImage from "../bg.png";
 import ForgotPasswordIcon from "./icons/ForgotPasswordIcon";
 import { useThemeContext } from "../context/ThemeContext";
+import { useNavigate, Link } from "react-router-dom";
+import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 
 const ResetPassword = () => {
     const { isDarkMode } = useThemeContext();
@@ -143,6 +145,17 @@ const ResetPassword = () => {
                                 >
                                     Reset Password
                                 </button>
+                                <Link
+                                    to="/login"
+                                    target="_blank"
+                                    className={`${
+                                        isDarkMode
+                                            ? "dark-hover"
+                                            : "light-hover"
+                                    } absolute left-3 top-3 p-2 rounded-full`}
+                                >
+                                    <ArrowLeftIcon />
+                                </Link>
                             </form>
                         </div>
                     </div>
