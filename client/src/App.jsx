@@ -12,7 +12,6 @@ import Alert from "./components/Alert";
 import PublicProfile from "./components/PublicProfile";
 import NotFound from "./components/NotFound";
 import ResetPassword from "./components/ResetPassword";
-import ChatGptRegister from "./components/ChatGptRegister";
 
 function App() {
     return (
