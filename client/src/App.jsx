@@ -28,7 +28,6 @@ function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/comments" element={<Comment />} />
           <Route path="/alerts" element={<Alert />} />
-          <Route path="/register-chat" element={<ChatGptRegister />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppContextProvider>
