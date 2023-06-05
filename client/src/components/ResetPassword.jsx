@@ -5,6 +5,7 @@ import ForgotPasswordIcon from "./icons/ForgotPasswordIcon";
 import { useThemeContext } from "../context/ThemeContext";
 import { useNavigate, Link } from "react-router-dom";
 import ArrowLeftIcon from "./icons/ArrowLeftIcon";
+import { PasswordField } from "./PasswordField";
 
 const ResetPassword = () => {
     const { isDarkMode } = useThemeContext();
@@ -14,6 +15,7 @@ const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -21,6 +23,10 @@ const ResetPassword = () => {
 
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
     const handleSubmit = async (e) => {
@@ -117,7 +123,9 @@ const ResetPassword = () => {
                                     </label>
                                     <input
                                         className="w-full"
-                                        type="password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
                                         id="password"
                                         value={password}
                                         onChange={handlePasswordChange}
@@ -132,11 +140,25 @@ const ResetPassword = () => {
                                     </label>
                                     <input
                                         className="w-full"
-                                        type="password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
                                         id="confirmPassword"
                                         value={confirmPassword}
                                         onChange={handleConfirmPasswordChange}
                                     />
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            className="mr-2"
+                                            checked={showPassword}
+                                            onChange={toggleShowPassword}
+                                        />
+                                        Show Password
+                                    </label>
                                 </div>
 
                                 <button
