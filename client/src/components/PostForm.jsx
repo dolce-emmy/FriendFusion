@@ -144,9 +144,9 @@ const PostForm = () => {
         </div>
         <div className="">
           <button
-            disabled={loading}
+            disabled={loading || !description || !images.length}
             onClick={onSubmitPost}
-            className="flex cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+            className="ml-auto btn"
           >
             {loading ? <SpinnerIcon /> : "Post"}
           </button>

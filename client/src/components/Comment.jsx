@@ -32,88 +32,81 @@ const Comment = ({ toggleCommentForm }) => {
     };
 
     return (
-        <>
-            <Header />
-            <div className="flex justify-center items-center h-screen mt-[-80px]">
-                <div
-                    className={`${
-                        isDarkMode ? "dark" : "light"
-                    } flex flex-col gap-4 items-center justify-center bg-neutral-500 bg-neutral-500 rounded-2xl p-4 shadow-md text-left`}
-                >
-                    <div className="p-3 border-b">
-                        <h2 className="text-center text-xl font-semibold py-3">
-                            Add Comment
-                        </h2>
-                    </div>
-                    <form className="p-4" onSubmit={onSubmitHandler}>
-                        <div className="mb-4">
-                            <label
-                                className="text-xl font mb-4"
-                                htmlFor="question1"
-                            >
-                                How Can we Help You?
-                            </label>
-                            <input
-                                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                                type="text"
-                                name="question1"
-                                id="question1"
-                                placeholder="Your Comments"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                className="text-xl font mb-4"
-                                htmlFor="question2"
-                            >
-                                How Can we Improve
-                            </label>
-                            <input
-                                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                                type="text"
-                                name="question2"
-                                id="question2"
-                                placeholder="Your Comments"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                className="text-xl font mb-4"
-                                htmlFor="message"
-                            >
-                                Details
-                            </label>
-                            <textarea
-                                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                                name="message"
-                                id="message"
-                                placeholder="Enter your message"
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex justify-end pt-4">
-                            <button
-                                className="flex cursor-pointer bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600"
-                                onClick={toggleCommentForm}
-                            >
-                                Cancel
-                            </button>
-
-                            <button
-                                disabled={loading}
-                                onClick={onSubmitHandler}
-                                className="flex cursor-pointer ml-auto bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
-                            >
-                                {loading ? <SpinnerIcon /> : "Post"}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+      <>
+        <Header />
+        <div className="flex justify-center items-center h-screen mt-[-80px]">
+          <div
+            className={`${
+              isDarkMode ? "dark" : "light"
+            } flex flex-col gap-4 items-center justify-center rounded-2xl p-4 shadow-md text-left`}
+          >
+            <div className="p-3 border-b">
+              <h2 className="text-center text-xl font-semibold py-3">
+                Add Comment
+              </h2>
             </div>
-        </>
+            <form className="p-4" onSubmit={onSubmitHandler}>
+              <div className="mb-4">
+                <label className="text-xl font mb-4" htmlFor="question1">
+                  How Can we Help You?
+                </label>
+                <input
+                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  type="text"
+                  name="question1"
+                  id="question1"
+                  placeholder="Your Comments"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="text-xl font mb-4" htmlFor="question2">
+                  How Can we Improve
+                </label>
+                <input
+                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  type="text"
+                  name="question2"
+                  id="question2"
+                  placeholder="Your Comments"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="text-xl font mb-4" htmlFor="message">
+                  Details
+                </label>
+                <textarea
+                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  name="message"
+                  id="message"
+                  placeholder="Enter your message"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex justify-end pt-4">
+                <button
+                  className={`${
+                    isDarkMode ? "dark-hover" : "light-hover"
+                  } py-2 px-4 rounded-md`}
+                  onClick={toggleCommentForm}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  disabled={loading}
+                  onClick={onSubmitHandler}
+                  className="ml-auto btn"
+                >
+                  {loading ? <SpinnerIcon /> : "Post"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </>
     );
 };
 

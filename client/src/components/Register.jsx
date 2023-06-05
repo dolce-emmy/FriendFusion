@@ -2,7 +2,6 @@ import { useState } from "react";
 import api from "../api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
-import bgImage from "../bg.png";
 import RegisterIcon from "./icons/RegisterIcon";
 import { useThemeContext } from "../context/ThemeContext";
 
@@ -67,12 +66,14 @@ const Register = () => {
       >
         <div className="md:flex w-full">
           <div
-            className="hidden md:block w-1/2 bg-indigo-600 p-10 absolute left-0 inset-y-0"
-            style={{ backgroundImage: `url(${bgImage})` }}
+            className={`hidden lg:block bg-gradient w-1/2 absolute left-0 inset-y-0`}
           >
-            <RegisterIcon />
+            <span className="block bg-[url('./bg.png')] absolute object-cover object-center w-full h-full -z-1"></span>
+            <span className="block z-10 absolute left-0 inset-y-0 px-10">
+              <RegisterIcon />
+            </span>
           </div>
-          <div className="w-full md:w-1/2 py-10 mx-auto flex flex-col gap-4 justify-center items-center absolute right-0 inset-y-0">
+          <div className="w-full lg:w-1/2 py-10 mx-auto flex flex-col gap-4 justify-center items-center absolute right-0 inset-y-0">
             <h1 className="text-3xl font-bold text-center mb-10">
               Create your account
             </h1>
@@ -166,7 +167,7 @@ const Register = () => {
                   </div>
                 </div>
                 <button
-                  className="cursor-pointer block w-full bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300 mt-6"
+                  className="btn block w-full mt-6"
                   type="submit"
                   onClick={handleSubmit}
                 >
