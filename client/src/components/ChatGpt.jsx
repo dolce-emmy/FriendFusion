@@ -155,9 +155,9 @@ const ChatGpt = () => {
                 sentTime: message.date?.toString(),
                 direction: message.direction,
               }}
+              type="text"
             >
               <Avatar src={message.avatar} name={message.sender} />
-              
             </Message>
           ))}
         </MessageList>
