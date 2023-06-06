@@ -144,7 +144,7 @@ const PostForm = () => {
         </div>
         <div className="">
           <button
-            disabled={loading || !description || !images.length}
+            disabled={loading || (!description && !images.length)}
             onClick={onSubmitPost}
             className="ml-auto btn"
           >
