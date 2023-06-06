@@ -12,6 +12,8 @@ import SunIcon from "./icons/SunIcon";
 import SearchIcon from "./icons/SearchIcon";
 import LogoIcon from "./icons/LogoIcon";
 import { useThemeContext } from "../context/ThemeContext";
+import Dropdown from "./Dropdown";
+import ProfileIcon from "./icons/ProfileIcon";
 
 const Header = () => {
   const { user } = useAppContext();
@@ -51,10 +53,12 @@ const Header = () => {
           <h1>
             <Link to="/" className="flex items-center gap-2">
               <LogoIcon />
-              <span className="text-xl font-semibold">Friend Fusion</span>
+              <span className="text-xl font-semibold hidden sm:block">
+                Friend Fusion
+              </span>
             </Link>
           </h1>
-          <div className="relative ml-10">
+          <div className="relative sm:ml-10">
             <form onSubmit={handleSearch} className="ml-5">
               <div className="relative">
                 <input
@@ -98,29 +102,69 @@ const Header = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {isDarkMode ? (
-            <button onClick={toggleDarkMode}>
-              <MoonIcon />
-            </button>
-          ) : (
-            <button onClick={toggleDarkMode}>
-              <SunIcon />
-            </button>
-          )}
+          <Dropdown
+            icon={<ProfileIcon className="w-8 h-8" />}
+            label={user?.firstName}
+          >
+            {isDarkMode ? (
+              <button
+                className={`${
+                  isDarkMode ? "dark-hover" : "light-hover"
+                } menu-item`}
+                onClick={toggleDarkMode}
+              >
+                <MoonIcon />
+                <span>Change Theme</span>
+              </button>
+            ) : (
+              <button
+                className={`${
+                  isDarkMode ? "dark-hover" : "light-hover"
+                } menu-item`}
+                onClick={toggleDarkMode}
+              >
+                <SunIcon />
+                <span>Change Theme</span>
+              </button>
+            )}
 
-          <Link to="/comments">
-            <CommentIcon />
-          </Link>
-          <Link to="/alerts">
-            <AlertIcon />
-          </Link>
-          <Link to="/help">
-            <HelpIcon />
-          </Link>
-          <span>Welcome {user?.firstName}</span>
-          <button onClick={handleLogout}>
-            <LogoutIcon />
-          </button>
+            <Link
+              className={`${
+                isDarkMode ? "dark-hover" : "light-hover"
+              } menu-item`}
+              to="/comments"
+            >
+              <CommentIcon />
+              <span>Comments</span>
+            </Link>
+            <Link
+              className={`${
+                isDarkMode ? "dark-hover" : "light-hover"
+              } menu-item`}
+              to="/alerts"
+            >
+              <AlertIcon />
+              <span>Alerts</span>
+            </Link>
+            <Link
+              className={`${
+                isDarkMode ? "dark-hover" : "light-hover"
+              } menu-item`}
+              to="/help"
+            >
+              <HelpIcon />
+              <span>Help</span>
+            </Link>
+            <button
+              className={`${
+                isDarkMode ? "dark-hover" : "light-hover"
+              } menu-item`}
+              onClick={handleLogout}
+            >
+              <LogoutIcon />
+              <span>Logout</span>
+            </button>
+          </Dropdown>
         </div>
       </div>
     </header>

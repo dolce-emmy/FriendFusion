@@ -93,6 +93,12 @@
 }
 /* React Chat UI Kit Custom CSS Start */
 
+/* Menu CSS start */
+.menu-item {
+  @apply flex items-center gap-2 py-3 px-4 w-full;
+}
+/* Menu CSS end */
+
 /* Post Form CSS Start */
 .post-form .react-emoji-picker--wrapper {
   top: 50px !important;

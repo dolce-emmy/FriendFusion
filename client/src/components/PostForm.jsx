@@ -111,7 +111,7 @@ const PostForm = () => {
         />
       </div>
       <div className="px-4 py-3 gap-2 flex items-center justify-between w-full max-w-full">
-        <div className="flex gap-4 items-center justify-between">
+        <div className="flex gap-4 items-center flex-wrap">
           <button className="flex gap-1 cursor-pointer px-2">
             <label className="flex gap-1 cursor-pointer" htmlFor="image">
               <span>
