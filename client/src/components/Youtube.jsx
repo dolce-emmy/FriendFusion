@@ -56,7 +56,7 @@ const Youtube = () => {
         <div className="p-4 flex flex-col gap-2">
           <h4>{video[index].snippet.title}</h4>
           <iframe
-            className="h-60"
+            className="h-60 w-full"
             src={`https://www.youtube.com/embed/${video[index].id}`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
