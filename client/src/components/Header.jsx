@@ -104,9 +104,9 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <Dropdown
             icon={<ProfileIcon className="w-8 h-8" />}
-            label={user?.firstName}
+            label={`Welcome, ${user?.firstName}!`}
           >
-            {isDarkMode ? (
+            {!isDarkMode ? (
               <button
                 className={`${
                   isDarkMode ? "dark-hover" : "light-hover"
@@ -114,7 +114,7 @@ const Header = () => {
                 onClick={toggleDarkMode}
               >
                 <MoonIcon />
-                <span>Change Theme</span>
+                <span>Dark Theme</span>
               </button>
             ) : (
               <button
@@ -124,7 +124,7 @@ const Header = () => {
                 onClick={toggleDarkMode}
               >
                 <SunIcon />
-                <span>Change Theme</span>
+                <span>Light Theme</span>
               </button>
             )}
 

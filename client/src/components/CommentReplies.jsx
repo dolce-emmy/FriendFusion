@@ -32,7 +32,7 @@ const CommentReply = ({
     <>
       <span>{content}</span>
       {user?._id === currentUser?._id && (
-        <span className="flex justify-between block mt-1">
+        <span className="flex justify-between mt-1">
           <span
             className="block text-sm text-neutral-500 cursor-pointer hover:underline"
             //onClick={() => handleDeleteReplz(_id)}
@@ -46,8 +46,13 @@ const CommentReply = ({
   );
 
   return (
-    <div key={_id}>
-      <UserBasicInfo user={user} extraInfo={extraInfo} timeStamp={createdAt} />
+    <div key={_id} className="mb-2">
+      <UserBasicInfo
+        dense
+        user={user}
+        extraInfo={extraInfo}
+        timeStamp={createdAt}
+      />
     </div>
   );
 };

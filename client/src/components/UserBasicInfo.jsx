@@ -11,6 +11,7 @@ const UserBasicInfo = ({
   handleOnClick,
   showToggleFriend,
   timeStamp,
+  dense,
 }) => {
   const { _id, firstName, lastName, image } = user ?? {};
   const navigate = useNavigate();
@@ -33,10 +34,16 @@ const UserBasicInfo = ({
         className={`flex items-center gap-3 w-full`}
       >
         <img
-          className="h-14 w-14 rounded-full object-cover shrink-0"
+          className={`rounded-full object-cover shrink-0 ${
+            dense ? "w-12 h-12" : "w-14 h-14"
+          }`}
           src={image?.url || "https://placehold.co/60x60/png"}
         />
-        <div className="text-left text-md antialiased flex-grow">
+        <div
+          className={`text-left antialiased flex-grow ${
+            dense ? "text-sm" : "text-md"
+          }`}
+        >
           <div className="flex justify-between">
             <p className="font-semibold">
               {firstName} {lastName}
