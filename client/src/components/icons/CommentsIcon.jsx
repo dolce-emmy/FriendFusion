@@ -1,13 +1,13 @@
 import React from "react";
 
-const CommentsIcon = () => {
+const CommentsIcon = ({ className }) => {
   return (
     <svg
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="w-6 h-6"
+      className={`w-6 h-6 ${className}`}
     >
       <path
         strokeLinecap="round"

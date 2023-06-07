@@ -61,7 +61,7 @@ const PostComment = ({
   const extraInfo = (
     <>
       <span>{content}</span>
-      <span className="flex justify-between block mt-1">
+      <span className="flex justify-between mt-1">
         {user?._id === currentUser._id && (
           <span
             className="block text-sm text-neutral-500 cursor-pointer hover:underline"
@@ -72,10 +72,10 @@ const PostComment = ({
         )}
         <span
           onClick={toggleReplies}
-          className="flex gap-1 text-sm items-center cursor-pointer ml-auto"
+          className="flex gap-1 text-xs items-center cursor-pointer ml-auto"
         >
           <span>
-            <CommentsIcon />
+            <CommentsIcon className="w-4 h-4" />
           </span>
           <span>{comment.replies.length} Replies</span>
         </span>
@@ -87,16 +87,16 @@ const PostComment = ({
     <div key={_id}>
       <UserBasicInfo user={user} extraInfo={extraInfo} timeStamp={createdAt} />
 
-      <div className="px-8 mt-4">
-        {showReplies && (
+      {showReplies && (
+        <div className="px-8">
           <CommentReplies
             key={_id}
             comment={comment}
             onAddReplyForComment={handleAddReplyForComment}
             onDeleteReplyForComment={handleDeleteReplyForComment}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

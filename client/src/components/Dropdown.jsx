@@ -14,7 +14,7 @@ const Dropdown = ({ className, Icon, icon, label, children }) => {
         } ${className}`}
       >
         <div className="flex gap-1 items-center">
-          {label && <span className="ml-2 hidden lg:block">{label}</span>}
+          {label && <span className="ml-2 hidden md:block">{label}</span>}
           {Icon && <Icon />}
           {icon}
         </div>
