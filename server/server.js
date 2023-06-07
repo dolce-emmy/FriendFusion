@@ -1,4 +1,5 @@
 import express from "express";
+import { readFile } from "fs/promises";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -12,7 +13,7 @@ import usersRoute from "./routes/usersRoute.js";
 
 import fileUpload from "express-fileupload";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./docs/swagger.json" assert { type: "json" };
+
 
 // we will import the routes here
 
@@ -24,7 +25,13 @@ dotenv.config();
 
 const app = express();
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(
+    JSON.parse(await readFile(new URL("./docs/swagger.json", import.meta.url)))
+  )
+);
 
 // middlewares
 app.use(express.json());
