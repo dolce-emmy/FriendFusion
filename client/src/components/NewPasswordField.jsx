@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ShowTogglePasswordIcon from "./icons/ShowTogglePasswordIcon";
 import HideTogglePasswordIcon from "./icons/HideTogglePasswordIcon";
 
-export const PasswordField = ({ value, onChange }) => {
+export const NewPasswordField = ({ value, onChange }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePassword = (e) => {
@@ -13,7 +13,7 @@ export const PasswordField = ({ value, onChange }) => {
     return (
         <div className="relative">
             <label className="block text-sm font-bold mb-2" htmlFor="password">
-                Password
+                New Password
             </label>
             <input
                 className="w-full"
