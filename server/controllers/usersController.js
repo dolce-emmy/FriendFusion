@@ -102,20 +102,33 @@ export const updateUser = async (req, res) => {
         } = req.body;
 
         const updateUser = await UserCollection.findByIdAndUpdate(
-            id,
-            {
-                image,
-                firstName,
-                lastName,
-                occupation,
-                location,
-                birthday,
-                mobile,
+          id,
+          {
+            image,
+            firstName,
+            lastName,
+            occupation,
+            location,
+            birthday,
+            mobile,
+          },
+          {
+            new: true,
+          }
+        ).populate([
+          {
+            path: "image",
+            model: "Image",
+          },
+          {
+            path: "friends",
+            model: "User",
+            populate: {
+              path: "image",
+              model: "Image",
             },
-            {
-                new: true,
-            }
-        );
+          },
+        ]);
 
         res.status(200).json({ success: true, data: updateUser });
     } catch (error) {
