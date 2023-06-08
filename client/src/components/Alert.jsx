@@ -52,7 +52,7 @@ const Alert = ({ toggleCommentForm }) => {
                   Name:
                 </label>
                 <input
-                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  className="w-full"
                   type="text"
                   name="question1"
                   id="question1"
@@ -66,7 +66,7 @@ const Alert = ({ toggleCommentForm }) => {
                   Message:
                 </label>
                 <textarea
-                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  className="w-full"
                   name="message"
                   id="message"
                   placeholder="Enter your message"
