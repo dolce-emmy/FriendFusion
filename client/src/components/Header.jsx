@@ -132,15 +132,6 @@ const Header = () => {
               className={`${
                 isDarkMode ? "dark-hover" : "light-hover"
               } menu-item`}
-              to="/comments"
-            >
-              <CommentIcon />
-              <span>Comments</span>
-            </Link>
-            <Link
-              className={`${
-                isDarkMode ? "dark-hover" : "light-hover"
-              } menu-item`}
               to="/alerts"
             >
               <AlertIcon />
@@ -154,6 +145,15 @@ const Header = () => {
             >
               <HelpIcon />
               <span>Help</span>
+            </Link>
+            <Link
+              className={`${
+                isDarkMode ? "dark-hover" : "light-hover"
+              } menu-item`}
+              to="/feedback"
+            >
+              <CommentIcon />
+              <span>Feedback</span>
             </Link>
             <button
               className={`${
