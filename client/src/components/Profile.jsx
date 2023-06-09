@@ -9,36 +9,16 @@ import SpinnerIcon from "./icons/SpinnerIcon";
 import PhotoIcon from "./icons/PhotoIcon";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
   const { user, setUser } = useAppContext();
   const [loading, setLoading] = useState(false);
-  console.log(user);
-
-  const navigate = useNavigate();
-  // const [formData, setFormData] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   location: "",
-  //   occupation: "",
-  //   mobile: "",
-  //   birthDate: "",
-  //   profilePicture: ""
-
-  // });
 
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
-  // Handling the change
-  //{
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  //   setSubmitted(false);
-  // };
-
   // Handling the form submission
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -137,8 +117,9 @@ const Profile = () => {
                 className="shadow-xl rounded-full h-28 w-28 align-middle border-none -m-16 my-0.5 -ml-30 lg:-ml-16 max-w-250-px"
               />
               <label className="flex gap-1 cursor-pointer" htmlFor="image">
-                
-                <span className=" flex gap-2 text-md font-bold mb-2" ><PhotoIcon/> Add Photo</span>
+                <span className=" flex gap-2 text-md font-bold mb-2">
+                  <PhotoIcon /> Add Photo
+                </span>
                 <input
                   type="file"
                   id="image"
@@ -150,10 +131,14 @@ const Profile = () => {
             </div>
             <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-bold mb-2">
+                <label
+                  className="block text-sm font-bold mb-2"
+                  htmlFor="firstName"
+                >
                   First Name
                 </label>
                 <input
+                  id="firstName"
                   name="firstName"
                   defaultValue={user?.firstName}
                   className="w-full"
@@ -161,10 +146,14 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="lastName"
+                >
                   Last Name
                 </label>
                 <input
+                  id="lastName"
                   name="lastName"
                   defaultValue={user?.lastName}
                   className="w-full"
@@ -172,10 +161,14 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <input
+                  id="email"
                   name="email"
                   className="w-full"
                   defaultValue={user?.email}
@@ -183,10 +176,14 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="occupation"
+                >
                   Occupation
                 </label>
                 <input
+                  id="occupation"
                   name="occupation"
                   placeholder="enter your occupation"
                   defaultValue={user?.occupation}
@@ -195,10 +192,14 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="mobile"
+                >
                   Mobile
                 </label>
                 <input
+                  id="mobile"
                   name="mobile"
                   defaultValue={user?.mobile}
                   className="w-full"
@@ -206,24 +207,35 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2 ">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="location"
+                >
                   Location
                 </label>
                 <input
-                  name="enter your location"
-                  placeholder="location"
+                  id="location"
+                  name="location"
+                  placeholder="Enter your Location"
                   defaultValue={user?.location}
                   className="w-full"
                   type="text"
                 />
               </div>
               <div>
-                <label className="label block text-sm font-bold mb-2">
+                <label
+                  className="label block text-sm font-bold mb-2"
+                  htmlFor="birthday"
+                >
                   Birthday
                 </label>
                 <input
+                  id="birthday"
                   name="birthday"
-                  defaultValue={user?.birthday}
+                  defaultValue={
+                    user?.birthday &&
+                    new Date(user.birthday).toISOString().split("T")[0]
+                  }
                   className="w-full"
                   type="date"
                 />
@@ -231,7 +243,7 @@ const Profile = () => {
             </div>
 
             <div className="flex justify-end mt-6">
-              <button className="btn mt-6">
+              <button className="btn mt-6" type="submit">
                 {loading ? <SpinnerIcon /> : "Save"}
               </button>
             </div>
