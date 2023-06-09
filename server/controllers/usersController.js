@@ -21,9 +21,20 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await UserCollection.findOne({ email }).populate(
-            "friends image"
-        );
+        const user = await UserCollection.findOne({ email }).populate([
+          {
+            path: "image",
+            model: "Image",
+          },
+          {
+            path: "friends",
+            model: "User",
+            populate: {
+              path: "image",
+              model: "Image",
+            },
+          },
+        ]);
         if (user) {
             const verifyPassword = bcrypt.compareSync(password, user.password);
             if (verifyPassword) {
