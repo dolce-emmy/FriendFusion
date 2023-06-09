@@ -13,6 +13,7 @@ const Profile = () => {
   const { isDarkMode } = useThemeContext();
   const { user, setUser } = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
@@ -113,8 +114,11 @@ const Profile = () => {
             <div className="flex flex-col items-center gap-4 mb-8">
               <img
                 alt={user?.firstName}
-                src={user?.image?.url}
-                className="shadow-xl rounded-full h-28 w-28 align-middle border-none -m-16 my-0.5 -ml-30 lg:-ml-16 max-w-250-px"
+                src={
+                  (selectedImage && URL.createObjectURL(selectedImage)) ||
+                  user?.image?.url
+                }
+                className="shadow-xl rounded-full h-28 w-28 align-middle border-none -m-16 my-0.5 -ml-30 lg:-ml-16 max-w-250-px object-cover object-center"
               />
               <label className="flex gap-1 cursor-pointer" htmlFor="image">
                 <span className=" flex gap-2 text-md font-bold mb-2">
@@ -126,6 +130,9 @@ const Profile = () => {
                   name="file"
                   className="hidden"
                   accept="image/*"
+                  onChange={(e) => {
+                    setSelectedImage(e.target?.files[0]);
+                  }}
                 />
               </label>
             </div>

@@ -88,7 +88,7 @@ const PostForm = () => {
     >
       <div className="flex items-center px-4 py-3 w-full gap-1 post-form">
         <img
-          className="h-14 w-14 rounded-full"
+          className="h-14 w-14 rounded-full object-cover object-center"
           src={user?.image?.url || "https://placehold.co/60x60/png"}
         />
         <InputEmoji
