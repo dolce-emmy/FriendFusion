@@ -57,9 +57,10 @@ const Youtube = () => {
           <h4>{video[index].snippet.title}</h4>
           <iframe
             className="h-60 w-full"
-            src={`https://www.youtube.com/embed/${video[index].id}`}
+            src={`https://www.youtube.com/embed/${video[index].id}?rel=0&mute=1&controls=1`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
           ></iframe>
 
           {/* <a target="_blank" href={`https://youtu.be/${video[index].id}`}>
