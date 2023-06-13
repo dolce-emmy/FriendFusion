@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.dark {
+  @apply !bg-neutral-900 !text-neutral-100;
+}
+
+html.light {
+  @apply !bg-neutral-200 !text-neutral-900;
+}
+
+.light input, .light textarea, .light select {
+  @apply bg-neutral-100 border border-neutral-200;
+  @apply px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 shadow-md;
+}
+
+.dark input, .dark textarea, .dark select {
+  @apply !bg-neutral-800 border border-neutral-600;
+  @apply px-3 py-2 rounded-md focus:outline-none focus:border-indigo-500 shadow-md;
+}
+
+.btn {
+  @apply flex items-center justify-center shrink-0 cursor-pointer shadow-md text-white text-sm font-bold py-2 px-4 rounded-md transition duration-300;
+  @apply bg-gradient-to-r hover:from-indigo-900 hover:to-violet-800 from-indigo-800 to-violet-700;
+}
+
+.bg-gradient {
+  @apply bg-gradient-to-r hover:from-indigo-900 hover:to-violet-800 from-indigo-800 to-violet-700;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active,
+.dark textarea:-webkit-autofill,
+.dark textarea:-webkit-autofill:hover,
+.dark textarea:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill:active,
+.dark select:-webkit-autofill,
+.dark select:-webkit-autofill:hover,
+.dark select:-webkit-autofill:focus,
+.dark select:-webkit-autofill:active{
+  /* Change the color to your own background color */
+  -webkit-box-shadow:0 0 0 50px rgb(64 64 64 / var(--tw-bg-opacity)) inset;
+  -webkit-text-fill-color: #FFFFFF;
+  caret-color: #FFFFFF;
+}
+
+.light input:-webkit-autofill,
+.light input:-webkit-autofill:hover,
+.light input:-webkit-autofill:focus,
+.light input:-webkit-autofill:active,
+.light textarea:-webkit-autofill,
+.light textarea:-webkit-autofill:hover,
+.light textarea:-webkit-autofill:focus,
+.light textarea:-webkit-autofill:active,
+.light select:-webkit-autofill,
+.light select:-webkit-autofill:hover,
+.light select:-webkit-autofill:focus,
+.light select:-webkit-autofill:active{
+  /* Change the color to your own background color */
+  -webkit-box-shadow:0 0 0 50px #eee inset;
+  -webkit-text-fill-color: #000000;
+  caret-color: #000000;
+}

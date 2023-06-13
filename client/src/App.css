@@ -1,0 +1,141 @@
+#root {
+  margin: 0 auto;
+}
+
+/* Dark and Light Util Classes Start */
+.dark {
+  @apply !bg-neutral-800;
+  @apply !text-neutral-100;
+}
+
+.dark-border {
+  @apply !border-neutral-600;
+}
+
+.dark-hover {
+  @apply !bg-neutral-600;
+  @apply hover:!bg-neutral-700;
+}
+
+.light {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+}
+
+.light-border {
+  @apply !border-neutral-200;
+}
+
+.light-hover {
+  @apply !bg-neutral-200;
+  @apply hover:!bg-neutral-300;
+}
+/* Dark and Light Util Classes End */
+
+
+/* React Chat UI Kit Custom CSS Start */
+.dark .cs-message-input {
+  @apply !bg-neutral-800;
+  @apply !text-neutral-100;
+  @apply !border-neutral-700;
+}
+
+.dark .cs-message__content, .dark .cs-message-input__content-editor-wrapper, .dark .cs-message-input__content-editor, .dark .cs-typing-indicator {
+  @apply !bg-neutral-700;
+  @apply !text-neutral-100;
+}
+
+.dark .cs-message-input__content-editor[data-placeholder]:empty:before {
+  @apply !text-neutral-500;
+}
+
+.dark .cs-button--send, .dark .cs-typing-indicator__text {
+  @apply !text-neutral-100;
+}
+
+.dark .cs-typing-indicator__dot {
+  @apply !bg-neutral-100;
+}
+
+.light .cs-message-input {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+  @apply !border-neutral-200;
+}
+
+.light .cs-message__content, .light .cs-message-input__content-editor-wrapper, .light .cs-message-input__content-editor, .light .cs-typing-indicator {
+  @apply !bg-neutral-200;
+  @apply !text-neutral-900;
+}
+
+.light .cs-message-input__content-editor[data-placeholder]:empty:before {
+  @apply !text-neutral-500;
+}
+
+.light .cs-button--send, .light .cs-typing-indicator__text {
+  @apply !text-neutral-900;
+}
+
+.light .cs-typing-indicator__dot {
+  @apply !bg-neutral-900;
+}
+
+.cs-message-separator {
+  @apply !hidden;
+}
+
+.ps__thumb-y {
+  @apply !bg-neutral-100;
+}
+
+.ps__rail-y.ps--clicking {
+  @apply !bg-neutral-100;
+}
+/* React Chat UI Kit Custom CSS Start */
+
+/* Menu CSS start */
+.menu-item {
+  @apply flex items-center gap-2 py-3 px-4 w-full;
+}
+/* Menu CSS end */
+
+/* Post Form CSS Start */
+.post-form .react-emoji-picker--wrapper {
+  top: 50px !important;
+  bottom: auto !important;
+}
+/* Post Form CSS End */
+
+/* Post CSS Start */
+.post-description a {
+  @apply !text-blue-500;
+}
+/* Post CSS End */
+
+/* React Input Emoji Custom CSS Start */
+.react-input-emoji--container {
+  @apply !shadow-md;
+}
+
+.dark .react-input-emoji--container {
+  @apply !bg-neutral-800;
+  @apply !text-neutral-100;
+  @apply !border-neutral-700;
+}
+
+.light .react-input-emoji--container {
+  @apply !bg-neutral-100;
+  @apply !text-neutral-900;
+  @apply !border-neutral-200;
+}
+
+.react-input-emoji--button {
+  @apply !absolute;
+  @apply !right-0;
+  @apply z-10;
+}
+
+.react-input-emoji--wrapper {
+  @apply !mr-10
+}
+/* React Input Emoji Custom CSS End */
