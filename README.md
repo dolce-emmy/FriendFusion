@@ -199,7 +199,6 @@ View all screenshots [here](https://github.com/dolce-emmy/FriendFusion/tree/main
         <img alt="profile-upload" src="./client/public/Profile-upload.png" />
       </td>
     </tr>
-
   </tbody>
 </table>
 
