@@ -51,17 +51,19 @@ const Youtube = () => {
                 <VideoIcon /> Trending Videos
             </h3>
 
-            {/*here we are saying that if the length of the video array is greater than 0, then we want to display the video at the index of the index state variable   */}
-            {video.length > 0 && (
-                <div className="p-4 flex flex-col gap-2 w-full">
-                    <h4>{video[index].snippet.title}</h4>
-                    <iframe
-                        className="h-60"
-                        src={`https://www.youtube.com/embed/${video[index].id}?rel=0&mute=1&controls=1`}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                    ></iframe>
+
+      {/*here we are saying that if the length of the video array is greater than 0, then we want to display the video at the index of the index state variable   */}
+      {video.length > 0 && (
+        <div className="p-4 flex flex-col gap-2 w-full">
+          <h4>{video[index].snippet.title}</h4>
+          <iframe
+            className="h-60"
+            src={`https://www.youtube.com/embed/${video[index].id}?rel=0&mute=1&controls=1`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+
 
                     {/* <a target="_blank" href={`https://youtu.be/${video[index].id}`}>
             <img
