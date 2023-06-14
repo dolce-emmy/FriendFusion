@@ -11,13 +11,11 @@
       </td>
     </tr>
     <tr>
-    <tr>
       <td colspan="2">Figma Flowchart</td>
     </tr>
       <td>
         <a href="https://www.figma.com/file/RTSxIGkPnyv4BMhFgYlCCh/FriendFusion?type=design&node-id=0-1&t=92cgK3oTDzvvtoQ9-0"><img src="./client/public/Figma-Flowchart.png" /></a>
       </td>
-    
   </tbody>
 </table>
 
