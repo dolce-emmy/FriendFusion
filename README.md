@@ -7,19 +7,14 @@
     </tr>
     <tr>
       <td>
-
       <a href="https://trello.com/1/cards/6447a044c7ecc3ccc06128f9/attachments/64807072a3aabc197e66ca7c/download/FriendFusion_Social_Media.drawio.png"><img src="./client/public/flowchart.png" /></a>
-
       </td>
     </tr>
     <tr>
       <td colspan="2">Figma Flowchart</td>
     </tr>
       <td>
-
         <a href="https://www.figma.com/file/RTSxIGkPnyv4BMhFgYlCCh/FriendFusion?type=design&node-id=0-1&t=92cgK3oTDzvvtoQ9-0"><img src="./client/public/Figma-Flowchart.png" /></a>
-
-      
       </td>
   </tbody>
 </table>
@@ -176,13 +171,10 @@ View all screenshots [here](https://github.com/dolce-emmy/FriendFusion/tree/main
 4. Run
    - Start the API server: `npm start` (http://localhost:4000)
       <td>
-
         <img alt="Login" src="./client/public/Login.png" />
       </td>
       <td>
         <img alt="Register" src="./client/public/Register.png" />
-
-        
       </td>
     </tr>
     <tr>
@@ -190,13 +182,10 @@ View all screenshots [here](https://github.com/dolce-emmy/FriendFusion/tree/main
     </tr>
     <tr>
       <td>
-
         <img alt="Web" src="./client/public/FriendFusion.png" />
       </td>
       <td>
         <img alt="Web" src="./client/public/FriendFusion-web.png" />
-
-       
       </td>
     </tr>
     <tr>
@@ -204,14 +193,13 @@ View all screenshots [here](https://github.com/dolce-emmy/FriendFusion/tree/main
     </tr>
     <tr>
       <td>
-
         <img alt="profile" src="./client/public/Profile.png" />
       </td>
       <td>
         <img alt="profile-upload" src="./client/public/Profile-upload.png" />
-
       </td>
     </tr>
+
   </tbody>
 </table>
 
