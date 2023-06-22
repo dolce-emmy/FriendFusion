@@ -182,6 +182,7 @@ View all screenshots [here](https://github.com/dolce-emmy/FriendFusion/tree/main
     </tr>
     <tr>
       <td>
+
         <img alt="Web" src="./client/public/FriendFusion.png" />
       </td>
       <td>
