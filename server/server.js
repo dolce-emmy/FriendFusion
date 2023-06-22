@@ -37,7 +37,13 @@ app.use(
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use(cors({ origin: "http://localhost:5173", exposedHeaders: ["token"] }));
+// app.use(cors({ origin: "http://localhost:5173", exposedHeaders: ["token"] }));
+app.use(express.static("views/dist"))
+app.use(
+    fileUpload({
+        useTempFiles: true,
+    })
+);
 app.use(
     fileUpload({
         useTempFiles: true,
@@ -61,6 +67,9 @@ cloudinary.v2.config({
 });
 
 // routes
+app.get("/", (req, res) => {
+    res.sendFile("./views/dist/index.html", { root: "." })
+})
 
 app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
